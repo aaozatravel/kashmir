@@ -49,7 +49,7 @@ font-size:13px;
 /* ================= HERO ================= */
 .hero{
 height:40vh;
-background:url('../images/kashmir.jpg') center/cover no-repeat;
+background:url('../kashmir.jpg') center/cover no-repeat;
 display:flex;
 flex-direction:column;
 justify-content:center;
