@@ -1,0 +1,106 @@
+<!DOCTYPE html>  <html lang="en">  
+<head>  
+<meta charset="UTF-8">  
+<meta name="viewport" content="width=device-width, initial-scale=1.0">  
+<title>Avoza Travels Kashmir - Tour Packages</title>  <meta name="description" content="Book Kashmir tour packages with Avoza Travels. Hotels, cabs, guides, photoshoot, and full travel planning included. Gulmarg, Sonmarg, Srinagar tours available.">  <meta name="keywords" content="Kashmir tour, Gulmarg package, Sonmarg tour, Srinagar travel, Avoza Travels, Kashmir tourism">  <meta name="author" content="Avoza Travels Kashmir">  <meta name="robots" content="index, follow">  <link rel="stylesheet" href="css/style.css">  
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>  
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>  
+</head>  <body>  <header>  
+<div class="logo">  
+<img src="images/logo.jpg">  
+<span>Aaoza Travel Kashmir</span>  
+</div>  <nav>  
+<a href="index.html">Home</a>  
+<a href="about.html">About</a>  
+<a href="tour.html">Tours</a>  
+<a href="gallery.html">Gallery</a>  
+<a href="contact.html">Contact</a>  
+</nav>  
+</header>  <section class="hero">  
+<h1>Explore Kashmir With Aaoza Travel</h1>  
+<p>Discover Paradise on Earth</p>  <a href="tour-details.html">  
+<button>View tour</button>  
+</a>  
+</section>  <section class="services">  
+<h2>Our Services</h2>  <div class="services-container">  <div class="service-card">  
+<img src="images/cab.png">  
+<h3>Travels Cab</h3>  
+</div>  <a href="hotels.html" class="service-link">  
+<div class="service-card">  
+<img src="images/ayaan.png">  
+<h3>Hotels</h3>  
+</div>  
+</a>  <a href="tour.html">  
+<div class="service-card">  
+    <img src="images/room.png">  
+    <h3>Tours</h3>  
+</div>  
+</a>  <a href="reels.html" class="service-link">  
+<div class="service-card">  
+<img src="images/reel.png">  
+<h3>Reel Video Shoot</h3>  
+</div>  
+</a>  <div class="service-card">  
+<img src="images/food.png">  
+<h3>Food</h3>  
+</div>  <div class="service-card">  
+<img src="images/guide.png">  
+<h3>Guide</h3>  
+</div>  <div class="service-card">  
+<img src="images/driver.png">  
+<h3>Driver</h3>  
+</div>  </div>  
+</section>  <section class="ad-banner">  
+<img src="https://i.ibb.co/DgH7zymX/jammu-kashmir-banner.webp">  
+<div class="ad-text">  
+<h2>Special Kashmir Offer</h2>  
+<p>Book now and get 30% OFF</p>  
+<button>Book Now</button>  
+</div>  
+</section>  
+<!--  </section>  
+-->  
+<!--map-->  
+<section class="kashmir-map">  
+<h2>Live Kashmir Map</h2>  
+<div id="map"></div>  
+</section>  
+
+  <div class="bottom-nav">  <a href="index.html" class="nav-item">  
+<img src="https://cdn-icons-png.flaticon.com/512/1946/1946488.png">  
+<span>Home</span>  
+</a>  <a href="tour.html" class="nav-item">  
+<img src="https://cdn-icons-png.flaticon.com/512/3126/3126647.png">  
+<span>Tours</span>  
+</a>  <a href="my-booking.html" class="nav-item">  
+<img src="https://cdn-icons-png.flaticon.com/512/1170/1170678.png">  
+<span>Your booking</span>  
+</a>  <a href="account.html" class="nav-item">  
+<img src="https://cdn-icons-png.flaticon.com/512/1946/1946429.png">  
+<span>Account</span>  
+</a>  </div>  <script>  
+var map = L.map('map', {  
+    dragging: false,  
+    tap: false,  
+    scrollWheelZoom: false  
+}).setView([34.0837, 74.7973], 8);  
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {  
+maxZoom: 18,  
+}).addTo(map);  
+map.on('click', function(e){  
+L.marker([e.latlng.lat, e.latlng.lng])  
+.addTo(map)  
+.bindPopup("Selected Place")  
+.openPopup();  
+});  
+// two finger move enable  
+map.on('touchstart', function(e){  
+    if(e.originalEvent.touches.length === 2){  
+        map.dragging.enable();  
+    }  
+});  
+map.on('touchend', function(){  
+    map.dragging.disable();  
+});  
+</script>  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>  <script src="js/supabase.js"></script>  <script src="js/main.js"></script>  </body>  
+</html> 

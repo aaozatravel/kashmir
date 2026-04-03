@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Account</title>
+
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/account.css">
+
+<style>
+.progress-box{
+margin-top:20px;
+background:#fff;
+padding:15px;
+border-radius:8px;
+}
+
+.progress-item{
+display:flex;
+justify-content:space-between;
+padding:6px 0;
+border-bottom:1px dashed #ddd;
+}
+
+.tick{color:green;font-weight:bold;}
+.cross{color:red;font-weight:bold;}
+</style>
+
+</head>
+
+<body class="account-body" onload="initPage()">
+
+<div class="account-header">
+<img src="images/logo.jpg" class="account-header-logo">
+<h2>Aaoza Travels Kashmir</h2>
+</div>
+
+<div class="account-container">
+
+<div class="profile-card">
+<img src="images/user.png" class="profile-avatar">
+<h3 id="userName">Guest User</h3>
+<p id="userPhone">Phone: Not Available</p>
+<p id="userEmail">Email: Not Available</p>
+</div>
+
+<div class="progress-box">
+<h3>Trip Target Map</h3>
+<div id="progressContainer">No trip data</div>
+</div>
+
+<div class="guide-login-box">
+<h3>Guide Login</h3>
+<input type="email" id="guideEmail" placeholder="Guide Email">
+<input type="password" id="guidePassword" placeholder="Guide Password">
+<button onclick="loginGuide()">Login as Guide</button>
+</div>
+
+<div class="account-box" id="userAuth">
+<h4 id="formTitle">Login</h4>
+
+<input type="text" id="name" placeholder="Full Name">
+<input type="text" id="phone" placeholder="Phone Number">
+<input type="email" id="email" placeholder="Email">
+<input type="password" id="password" placeholder="Password">
+
+<p style="text-align:right;font-size:12px;cursor:pointer;color:#e53935"
+onclick="forgotPassword()">Forgot Password?</p>
+
+<div class="account-btns">
+<button class="login-btn" onclick="loginUser()">Login</button>
+<button class="signup-btn" onclick="signupUser()">Signup</button>
+</div>
+
+<p style="text-align:center;margin-top:10px;cursor:pointer;color:#1e88e5"
+onclick="toggleMode()">Create account</p>
+
+</div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase.js"></script>
+
+<script>
+
+let signupMode = false;
+
+function initPage(){
+document.getElementById("name").style.display="none";
+document.getElementById("phone").style.display="none";
+loadUserProfile();
+loadProgress();
+
+// slower refresh (fix overwrite bug)
+setInterval(loadProgress,5000);
+}
+
+function toggleMode(){
+signupMode = !signupMode;
+
+const formTitle = document.getElementById("formTitle");
+const nameField = document.getElementById("name");
+const phoneField = document.getElementById("phone");
+
+if(signupMode){
+formTitle.innerText="Signup";
+nameField.style.display="block";
+phoneField.style.display="block";
+}else{
+formTitle.innerText="Login";
+nameField.style.display="none";
+phoneField.style.display="none";
+}
+}
+
+function capitalizeFirst(str){
+return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+async function signupUser(){
+
+const name = document.getElementById("name");
+const phone = document.getElementById("phone");
+const email = document.getElementById("email");
+const password = document.getElementById("password");
+
+if(!signupMode){
+alert("Switch to signup mode");
+return;
+}
+
+if(!name.value || !phone.value || !email.value || !password.value){
+alert("Fill all fields");
+return;
+}
+
+const fullName = capitalizeFirst(name.value.trim());
+
+const { error } = await supabaseClient.auth.signUp({
+email: email.value,
+password: password.value
+})
+
+if(error){
+alert(error.message);
+return;
+}
+
+await supabaseClient
+.from("users")
+.insert({
+name: fullName,
+phone: phone.value,
+email: email.value
+})
+
+await supabaseClient.auth.signInWithPassword({
+email: email.value,
+password: password.value
+})
+
+alert("Signup success");
+loadUserProfile();
+}
+
+async function loginUser(){
+
+const email = document.getElementById("email");
+const password = document.getElementById("password");
+
+const { error } = await supabaseClient.auth.signInWithPassword({
+email: email.value,
+password: password.value
+})
+
+if(error){
+alert(error.message);
+return;
+}
+
+alert("Login success");
+loadUserProfile();
+}
+
+async function forgotPassword(){
+const email = document.getElementById("email").value
+
+if(!email){
+alert("Enter your email first")
+return
+}
+
+await supabaseClient.auth.resetPasswordForEmail(email,{
+redirectTo: window.location.origin + "/reset-password.html"
+})
+
+alert("Password reset link sent to email")
+}
+
+async function loginGuide(){
+
+const guideEmail = document.getElementById("guideEmail");
+const guidePassword = document.getElementById("guidePassword");
+
+const { data, error } = await supabaseClient
+.from("guides")
+.select("*")
+.eq("email", guideEmail.value)
+.eq("password", guidePassword.value)
+.single()
+
+if(error || !data){
+alert("Invalid guide login")
+return
+}
+
+localStorage.setItem("guide", JSON.stringify(data))
+window.location.href="guide-dashboard.html"
+}
+
+async function loadUserProfile(){
+
+const { data:{ user } } = await supabaseClient.auth.getUser()
+if(!user) return
+
+const { data } = await supabaseClient
+.from("users")
+.select("*")
+.eq("email", user.email)
+.single()
+
+if(!data) return
+
+userName.innerText = data.name
+userPhone.innerText = "Phone: " + data.phone
+userEmail.innerText = "Email: " + data.email
+}
+
+async function loadProgress(){
+
+const { data:{ user } } = await supabaseClient.auth.getUser()
+if(!user) return
+
+const { data } = await supabaseClient
+.from("bookings")
+.select("*")
+.eq("user_email", user.email)
+.order("created_at",{ascending:false})
+.limit(1)
+
+if(!data || data.length === 0) return
+
+const booking = data[0]
+
+let parsed = {}
+try{
+parsed = JSON.parse(booking.traveller_details || "{}")
+}catch(e){}
+
+let places = parsed.places || []
+let activities = parsed.activities || []
+let gondola = parsed.gondola || []
+
+let hotelDays = booking.hotel_days || []
+if(typeof hotelDays === "string"){
+try{ hotelDays = JSON.parse(hotelDays) }catch(e){}
+}
+
+let progress = booking.progress || {}
+
+if(typeof progress === "string"){
+try{
+progress = JSON.parse(progress)
+}catch(e){
+progress = {}
+}
+}
+
+if(!progress) progress = {}
+
+const progressContainer = document.getElementById("progressContainer")
+progressContainer.innerHTML = ""
+
+let html = ""
+
+hotelDays.forEach((d,i)=>{
+let key="hotel_"+i
+html += `<div class="progress-item">
+<span>${d.day} - ${d.hotel}</span>
+<span class="${progress[key]?'tick':'cross'}">${progress[key]?'✔':'✖'}</span>
+</div>`
+})
+
+places.forEach((p,i)=>{
+let key="place_"+i
+html += `<div class="progress-item">
+<span>${p.name}</span>
+<span class="${progress[key]?'tick':'cross'}">${progress[key]?'✔':'✖'}</span>
+</div>`
+})
+
+activities.forEach((a,i)=>{
+let key="activity_"+i
+html += `<div class="progress-item">
+<span>${a.name}</span>
+<span class="${progress[key]?'tick':'cross'}">${progress[key]?'✔':'✖'}</span>
+</div>`
+})
+
+gondola.forEach((g,i)=>{
+let key="gondola_"+i
+html += `<div class="progress-item">
+<span>${g}</span>
+<span class="${progress[key]?'tick':'cross'}">${progress[key]?'✔':'✖'}</span>
+</div>`
+})
+
+progressContainer.innerHTML = html || "No trip assigned"
+}
+
+</script>
+
+</body>
+</html>

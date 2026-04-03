@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hotels - Aaoza Travel Kashmir</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+<button class="back-btn" onclick="history.back()">← Back</button>
+<header>
+<div class="logo">
+<img src="https://i.ibb.co/7tXWb6LN/file-000000003e4071fa90b830d235ec710c.png">
+<span>Aaoza Travel Kashmir</span>
+</div>
+
+<nav>
+<a href="index.html">Home</a>
+<a href="about.html">About</a>
+<a href="tours.html">Tours</a>
+<a href="hotels.html">Hotels</a>
+<a href="contact.html">Contact</a>
+</nav>
+</header>
+
+<section class="packages">
+<h2>Select Your Hotel</h2>
+
+<div class="hotel-container">
+
+<!-- Hotel 1 -->
+<div class="hotel-card">
+<img src="https://images.unsplash.com/photo-1566073771259-6a8506099945">
+<h3>Hotel Hilltop Gulmarg</h3>
+<p>Comfortable stay in Gulmarg with mountain view</p>
+
+<div class="select-box">
+<label>
+<input type="checkbox" onclick="selectHotel('Hotel Hilltop Gulmarg')">
+Select Hotel
+</label>
+</div>
+
+<a href="https://share.google/UqqYrwkqMbkaPaIEu" target="_blank">
+<button>View Details</button>
+</a>
+
+</div>
+
+<!-- Hotel 2 -->
+<div class="hotel-card">
+<img src="https://images.unsplash.com/photo-1551882547-ff40c63fe5fa">
+<h3>Hotel Royal Srinagar</h3>
+<p>Luxury stay near Dal Lake</p>
+
+<div class="select-box">
+<label>
+<input type="checkbox" onclick="selectHotel('Hotel Royal Srinagar')">
+Select Hotel
+</label>
+</div>
+
+<button>View Details</button>
+</div>
+
+<!-- Hotel 3 -->
+<div class="hotel-card">
+<img src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb">
+<h3>Hotel Pine View Pahalgam</h3>
+<p>Nature view rooms in Pahalgam</p>
+
+<div class="select-box">
+<label>
+<input type="checkbox" onclick="selectHotel('Hotel Pine View Pahalgam')">
+Select Hotel
+</label>
+</div>
+
+<button>View Details</button>
+</div>
+
+</div>
+
+</section>
+
+<script src="js/hotels.js"></script>
+</body>
+</html>

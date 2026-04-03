@@ -1,0 +1,262 @@
+<!DOCTYPE html><html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Booking</title>
+<link rel="stylesheet" href="css/style.css">
+</head><body><button class="back-btn" onclick="history.back()">← Back</button>
+
+<div class="booking-header">
+<img src="images/logo.jpg" class="booking-logo">
+<div class="booking-title">Aaoza Travels Kashmir</div>
+</div><section class="booking-page"><div class="step-title">2 Add traveller details</div><div class="traveller-box"><div class="traveller-row">
+<span>Adult (Above 12 yrs)</span>
+<div class="counter">
+<button>-</button>
+<span id="adultCount">0</span>
+<button>+</button>
+</div>
+</div><div class="traveller-row">
+<span>Child (5-11 yrs)</span>
+<div class="counter">
+<button>-</button>
+<span id="childCount">0</span>
+<button>+</button>
+</div>
+</div><div class="traveller-row">
+<span>Infant (0-1 yrs)</span>
+<div class="counter">
+<button>-</button>
+<span id="infantCount">0</span>
+<button>+</button>
+</div>
+</div></div><div class="step-title">3 Select Accommodation</div><div class="room-table"><div class="room-row header">
+<span>Room Type</span>
+<span>Price</span>
+<span>Qty</span>
+</div><div class="room-row">
+<span>Single Bedroom</span>
+<span>₹6999</span>
+<div class="counter">
+<button onclick="changeRoom('single',-1)">-</button>
+<span id="singleRoom">0</span>
+<button onclick="changeRoom('single',1)">+</button>
+</div>
+</div><div class="room-row">
+<span>Double Bedroom</span>
+<span>₹8999</span>
+<div class="counter">
+<button onclick="changeRoom('double',-1)">-</button>
+<span id="doubleRoom">0</span>
+<button onclick="changeRoom('double',1)">+</button>
+</div>
+</div></div><div class="traveller-note">
+Note: Phone number is required only for members above 10 years. 
+For children aged 10 or below, "Not required" will appear automatically.
+</div><div class="step-title">4 Traveller Details</div><div class="member-table"><div class="member-row header">
+<span>Name</span>
+<span>Gender</span>
+<span>Age</span>
+<span>Phone</span>
+</div><div id="travellerRows"></div></div><button class="confirm-btn" onclick="saveBooking()">Continue Booking</button>
+
+</section><script>
+
+function changeRoom(type, value){
+let id = type === "single" ? "singleRoom" : "doubleRoom"
+let el = document.getElementById(id)
+
+let num = parseInt(el.innerText) || 0
+num = num + value
+
+if(num < 0) num = 0
+el.innerText = num
+}
+
+function updateTravellers(){
+
+let adult = parseInt(document.getElementById("adultCount").innerText);
+let child = parseInt(document.getElementById("childCount").innerText);
+let infant = parseInt(document.getElementById("infantCount").innerText);
+
+let total = adult + child + infant;
+let container = document.getElementById("travellerRows");
+
+let oldData = [];
+document.querySelectorAll("#travellerRows .member-row").forEach(row=>{
+oldData.push({
+name: row.querySelector(".name")?.value || "",
+gender: row.querySelector(".gender")?.value || "Male",
+age: row.querySelector(".age")?.value || "",
+phone: row.querySelector(".phone")?.value || ""
+});
+});
+
+container.innerHTML = "";
+
+for(let i=0;i<total;i++){
+
+let data = oldData[i] || {};
+
+container.innerHTML += `
+<div class="member-row">
+<input type="text" class="name" placeholder="Name" value="${data.name}">
+<select class="gender">
+<option ${data.gender=="Male"?"selected":""}>Male</option>
+<option ${data.gender=="Female"?"selected":""}>Female</option>
+</select>
+<input type="number" class="age" placeholder="Age" value="${data.age}">
+<input type="text" class="phone" placeholder="Phone" value="${data.phone}">
+</div>
+`;
+}
+
+document.querySelectorAll(".age").forEach(age=>{
+age.addEventListener("input", function(){
+
+let row = this.closest(".member-row");
+let phone = row.querySelector(".phone");
+
+if(this.value <= 10){
+phone.value="";
+phone.disabled=true;
+phone.placeholder="Not required";
+}else{
+phone.disabled=false;
+phone.placeholder="Phone";
+}
+
+});
+});
+
+}
+
+document.querySelectorAll(".traveller-box .counter").forEach(counter => {
+
+let minus = counter.children[0];
+let number = counter.children[1];
+let plus = counter.children[2];
+
+plus.addEventListener("click", ()=>{
+number.innerText = parseInt(number.innerText) + 1;
+updateTravellers();
+});
+
+minus.addEventListener("click", ()=>{
+let value = parseInt(number.innerText);
+if(value > 0){
+number.innerText = value - 1;
+updateTravellers();
+}
+});
+
+});
+
+</script><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="js/supabase.js"></script><script>
+
+async function saveBooking(){
+
+const { data: { user } } = await supabaseClient.auth.getUser()
+
+if(!user){
+alert("Please login first")
+return
+}
+
+const tour = localStorage.getItem("selectedTour")
+const month = localStorage.getItem("selectedMonth")
+const image = localStorage.getItem("selectedImage")
+const departure = localStorage.getItem("selectedDeparture")
+
+const activities = JSON.parse(localStorage.getItem("selectedActivities") || "[]")
+const gondola = JSON.parse(localStorage.getItem("selectedGondola") || "[]")
+const gondolaTotal = parseInt(localStorage.getItem("gondolaTotal") || 0)
+
+const places = JSON.parse(localStorage.getItem("selectedPlaces") || "[]")
+const placesTotal = parseInt(localStorage.getItem("placesTotal") || 0)
+
+const adults = parseInt(document.getElementById("adultCount").innerText) || 0
+const child = parseInt(document.getElementById("childCount").innerText) || 0
+const infant = parseInt(document.getElementById("infantCount").innerText) || 0
+
+const singleRoom = parseInt(document.getElementById("singleRoom").innerText) || 0
+const doubleRoom = parseInt(document.getElementById("doubleRoom").innerText) || 0
+
+let travellers = []
+
+document.querySelectorAll("#travellerRows .member-row").forEach(row=>{
+travellers.push({
+name: row.querySelector(".name").value,
+gender: row.querySelector(".gender").value,
+age: row.querySelector(".age").value,
+phone: row.querySelector(".phone").value
+})
+})
+
+let basePrice = parseInt(localStorage.getItem("selectedPrice")?.replace(/[^0-9]/g,'')) || 0
+
+let totalTravellers = adults + child
+
+let singlePrice = 6999 * singleRoom
+let doublePrice = 8999 * doubleRoom
+
+/* activities */
+let activityTotal = 0
+activities.forEach(act=>{
+activityTotal += act.price * totalTravellers
+})
+
+/* gondola */
+let gondolaPrice = gondolaTotal * totalTravellers
+
+/* places */
+let placeTotal = placesTotal
+
+let total =
+(basePrice * totalTravellers)
++ activityTotal
++ placeTotal
++ gondolaPrice
++ singlePrice
++ doublePrice
+
+const bookingData = {  
+travellers: travellers,  
+adults: adults,  
+child: child,  
+infant: infant,  
+activities: activities,  
+gondola: gondola,
+places: places,
+places_total: placeTotal,
+gondola_price: gondolaTotal,
+single_room: singleRoom,
+double_room: doubleRoom,
+departure: departure,  
+total: total  
+}
+
+const { error } = await supabaseClient
+.from("bookings")
+.insert([{
+user_email: user.email,
+tour_name: tour,
+travel_month: month,
+package_image: image,
+traveller_details: JSON.stringify(bookingData),
+status: "pending"
+}])
+
+if(error){
+alert("❌ Booking not saved")
+console.log(error)
+return
+}
+
+alert("✅ Booking Request Sent")
+window.location.href = "account.html"
+
+}
+
+</script></body>
+</html>

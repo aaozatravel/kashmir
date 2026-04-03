@@ -1,0 +1,134 @@
+.booking-header{
+padding:15px;
+text-align:center;
+background:#1e88e5;
+color:white;
+font-size:18px;
+}
+.booking-wrapper{
+padding:15px;
+}
+/* GRID */
+.booking-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+gap:15px;
+}
+/* card */
+.booking-card{
+background:white;
+border-radius:14px;
+overflow:hidden;
+box-shadow:0 5px 15px rgba(0,0,0,0.1);
+}
+/* image */
+.booking-img{
+width:100%;
+height:180px;
+object-fit:cover;
+}
+/* top info */
+.booking-top{
+padding:12px 15px;
+}
+.booking-top h3{
+margin-bottom:5px;
+color:#1e88e5;
+}
+.booking-top p{
+margin:2px 0;
+font-size:13px;
+}
+/* table */
+.booking-table{
+width:100%;
+border-collapse:collapse;
+}
+.booking-table th{
+background:#f1f5f9;
+padding:10px;
+font-size:13px;
+text-align:left;
+}
+.booking-table td{
+padding:10px;
+border-top:1px solid #eee;
+font-size:13px;
+}
+.booking-table tr:hover{
+background:#f9fbff;
+}
+.no-booking{
+text-align:center;
+padding:20px;
+font-size:14px;
+}
+/* mobile */
+@media(max-width:600px){
+.booking-grid{
+grid-template-columns:1fr;
+}
+.booking-img{
+height:160px;
+}
+.booking-table th,
+.booking-table td{
+font-size:12px;
+padding:8px;
+}
+}
+.booking-card{
+background:#fff;
+border-radius:12px;
+margin-bottom:20px;
+box-shadow:0 5px 15px rgba(0,0,0,0.1);
+overflow:hidden;
+}
+.booking-img{
+width:100%;
+height:200px;
+object-fit:cover;
+}
+.booking-content{
+padding:15px;
+}
+.tour-title{
+margin-bottom:10px;
+}
+.section{
+background:#f5f7fa;
+padding:10px;
+border-radius:8px;
+margin-top:10px;
+}
+.section h3{
+margin-bottom:5px;
+}
+.status{
+font-weight:bold;
+text-transform:capitalize;
+}
+.status-accepted{ color:green; }
+.status-pending{ color:orange; }
+.status-rejected{ color:red; }
+.status-waiting{ color:#007bff; }
+.guide-id img{
+width:120px;
+margin-top:8px;
+border-radius:6px;
+border:1px solid #ddd;
+}
+.price-box{
+margin-top:15px;
+font-size:20px;
+font-weight:bold;
+color:#2e7d32;
+text-align:right;
+}
+.day-hotel-box{
+padding:10px;
+margin-bottom:8px;
+border:1px solid #eee;
+border-radius:8px;
+background:#fafafa;
+}

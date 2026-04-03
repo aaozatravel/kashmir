@@ -1,0 +1,150 @@
+/* ================= ACCOUNT PAGE ================= */
+
+.account-body{
+background:#f5f6fa;
+font-family:sans-serif;
+}
+
+/* HEADER */
+.account-header{
+text-align:center;
+padding:20px 10px;
+background:white;
+box-shadow:0 2px 8px rgba(0,0,0,0.08);
+}
+
+.account-header-logo{
+height:50px;
+margin-bottom:5px;
+}
+
+/* CONTAINER */
+.account-container{
+padding:15px;
+}
+
+/* PROFILE */
+.profile-card{
+background:white;
+padding:15px;
+border-radius:16px;
+text-align:center;
+box-shadow:0 4px 12px rgba(0,0,0,0.08);
+}
+
+.profile-avatar{
+width:90px;
+height:90px;
+border-radius:50%;
+object-fit:cover;
+margin-bottom:8px;
+border:3px solid #e91e63;
+}
+
+/* GUIDE LOGIN */
+.guide-login-box{
+margin-top:15px;
+background:white;
+padding:15px;
+border-radius:16px;
+box-shadow:0 4px 12px rgba(0,0,0,0.08);
+}
+
+.guide-login-box input{
+width:100%;
+padding:10px;
+margin-top:8px;
+border:1px solid #ddd;
+border-radius:8px;
+}
+
+.guide-login-box button{
+width:100%;
+margin-top:10px;
+background:#e91e63;
+color:white;
+border:none;
+padding:10px;
+border-radius:10px;
+}
+
+/* LOGIN BOX */
+.account-box{
+margin-top:15px;
+background:white;
+padding:15px;
+border-radius:16px;
+box-shadow:0 4px 12px rgba(0,0,0,0.08);
+}
+
+.account-box input{
+width:100%;
+padding:10px;
+margin-top:8px;
+border:1px solid #ddd;
+border-radius:8px;
+}
+
+/* BUTTONS */
+.account-btns{
+display:flex;
+gap:10px;
+margin-top:10px;
+}
+
+.login-btn{
+flex:1;
+background:#e91e63;
+color:white;
+border:none;
+padding:10px;
+border-radius:10px;
+}
+
+.signup-btn{
+flex:1;
+background:#f1f1f1;
+border:none;
+padding:10px;
+border-radius:10px;
+}
+
+/* PROGRESS BOX */
+.progress-box{
+margin-top:20px;
+background:#fff;
+padding:15px;
+border-radius:16px;
+box-shadow:0 4px 12px rgba(0,0,0,0.08);
+}
+
+.progress-item{
+display:flex;
+justify-content:space-between;
+padding:8px 0;
+border-bottom:1px dashed #ddd;
+font-size:13px;
+}
+
+.progress-item:last-child{
+border-bottom:none;
+}
+
+.tick{
+color:green;
+font-weight:bold;
+}
+
+.cross{
+color:red;
+font-weight:bold;
+}
+
+/* MOBILE */
+@media(max-width:768px){
+
+.account-btns{
+flex-direction:column;
+}
+
+}

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kashmir Tours</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<section class="tour-section">
+<h2>Popular Kashmir Tours</h2>
+
+<div class="tour-grid">
+
+<!-- CARD 1 -->
+<div class="tour-card">
+<div class="tour-img-box">
+<img src="tour-images/gulmarg.jpg">
+<span class="tour-days">4N/5D</span>
+</div>
+
+<div class="tour-body">
+<h3>Magical Kashmir Economy</h3>
+
+<div class="tour-meta">
+<span>1 State</span>
+<span>4 Cities</span>
+<span>23 Dates</span>
+</div>
+
+<div class="tour-includes">
+🚗 🍽️ 📸 🏨
+</div>
+
+<div class="tour-price">
+₹15,599
+</div>
+
+<div class="tour-btns">
+<a href="tour-details.html"
+class="view-btn"
+onclick="selectTour('Magical Kashmir Economy','tour-images/gulmarg.jpg')">
+View Tour
+</a>
+</div>
+
+<div class="tour-extra">
+<span>📲 WhatsApp</span>
+<span>📧 Get Itinerary</span>
+</div>
+
+</div>
+</div>
+
+
+<!-- CARD 2 -->
+<div class="tour-card">
+<div class="tour-img-box">
+<img src="images/pahalgam.jpg">
+<span class="tour-days">5N/6D</span>
+</div>
+
+<div class="tour-body">
+<h3>Glorious Kashmir</h3>
+
+<div class="tour-meta">
+<span>1 State</span>
+<span>5 Cities</span>
+<span>41 Dates</span>
+</div>
+
+<div class="tour-includes">
+🚗 🍽️ 📸 🏨
+</div>
+
+<div class="tour-price">
+₹41,990
+</div>
+
+<div class="tour-btns">
+<a href="tour-details.html"
+class="view-btn"
+onclick="selectTour('Glorious Kashmir','images/pahalgam.jpg')">
+View Tour
+</a>
+</div>
+
+<div class="tour-extra">
+<span>📲 WhatsApp</span>
+<span>📧 Get Itinerary</span>
+</div>
+
+</div>
+</div>
+
+</div>
+</section>
+
+
+<script>
+function selectTour(name,image){
+localStorage.setItem("selectedTour", name)
+localStorage.setItem("selectedImage", image)
+}
+</script>
+
+</body>
+</html>

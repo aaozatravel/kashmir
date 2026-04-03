@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Your Bookings</title>
+
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/my-booking.css">
+
+</head>
+
+<body onload="loadUserBookings()">
+
+<header class="booking-header">
+<h2>Your Bookings</h2>
+</header>
+
+<div class="booking-wrapper">
+
+<div class="booking-grid" id="userBookingContainer">
+<!-- bookings will load here -->
+</div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase.js"></script>
+<script src="js/user-booking.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Guide Dashboard</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial;
+background:#f4f6fb;
+}
+
+/* HEADER */
+.top-header{
+background:#1c3faa;
+color:white;
+padding:15px;
+display:flex;
+align-items:center;
+gap:10px;
+}
+
+.top-header img{
+width:40px;
+height:40px;
+}
+
+.container{
+display:flex;
+gap:15px;
+padding:15px;
+flex-wrap:wrap;
+}
+
+/* LEFT CARD */
+.id-card{
+width:320px;
+background:white;
+border-radius:15px;
+overflow:hidden;
+box-shadow:0 5px 20px rgba(0,0,0,0.15);
+height:fit-content;
+}
+
+.id-header{
+background:#1c3faa;
+color:white;
+text-align:center;
+padding:15px;
+}
+
+.id-body{
+text-align:center;
+padding:20px;
+}
+
+.id-body img{
+width:100px;
+height:100px;
+border-radius:50%;
+border:3px solid #1c3faa;
+object-fit:cover;
+}
+
+.logout-btn{
+margin:15px;
+width:90%;
+padding:10px;
+background:red;
+color:white;
+border:none;
+border-radius:8px;
+}
+
+.download-btn{
+margin:0 15px 10px 15px;
+width:90%;
+padding:10px;
+background:#1c3faa;
+color:white;
+border:none;
+border-radius:8px;
+}
+
+/* RIGHT SIDE */
+.right-section{
+flex:1;
+min-width:300px;
+}
+
+/* BOX */
+.box{
+background:white;
+border-radius:15px;
+padding:15px;
+box-shadow:0 5px 20px rgba(0,0,0,0.15);
+margin-bottom:15px;
+}
+
+.progress-item{
+display:flex;
+justify-content:space-between;
+padding:8px 0;
+border-bottom:1px solid #eee;
+}
+
+.update-btn{
+margin-top:10px;
+width:100%;
+padding:10px;
+background:#1c3faa;
+color:white;
+border:none;
+border-radius:8px;
+}
+
+.success{
+color:green;
+text-align:center;
+margin-top:8px;
+}
+
+.call-btn{
+width:100%;
+padding:12px;
+background:#28a745;
+color:white;
+border:none;
+border-radius:10px;
+font-size:16px;
+}
+
+.id-header img{
+display:block;
+margin:auto;
+}
+
+.modal{
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.6);
+justify-content:center;
+align-items:center;
+z-index:999;
+}
+
+.modal-box{
+background:white;
+padding:20px;
+width:90%;
+max-width:400px;
+border-radius:12px;
+}
+
+.founder{
+display:flex;
+align-items:center;
+justify-content:space-between;
+margin:10px 0;
+padding:8px;
+border-bottom:1px solid #eee;
+}
+
+.founder img{
+width:45px;
+height:45px;
+border-radius:50%;
+object-fit:cover;
+}
+
+.founder button{
+background:#28a745;
+color:white;
+border:none;
+padding:6px 10px;
+border-radius:6px;
+}
+
+</style>
+</head>
+
+<body onload="initGuidePage()">
+
+<!-- HEADER -->
+<div class="top-header">
+<img src="images/logo.jpg">
+<h3>Aaoza Travels Kashmir</h3>
+</div>
+
+<div class="container">
+
+<!-- LEFT -->
+<div class="id-card" id="idCard">
+
+<div class="id-header">
+<img src="images/logoidty.jpg" style="width:50px;margin-bottom:5px;">
+<h3>Aaoza Travels Kashmir</h3>
+<p style="margin:0;font-size:13px;">Official Tour Guide</p>
+</div>
+
+<div class="id-body">
+<img id="guidePhoto" src="images/user.png" crossorigin="anonymous">
+<h3 id="guideName"></h3>
+<p id="guidePhone"></p>
+<p id="guideEmail"></p>
+</div>
+
+<button class="download-btn" onclick="downloadID()">Download Identity Card</button>
+<button class="logout-btn" onclick="logoutGuide()">Logout</button>
+
+</div>
+
+<!-- RIGHT -->
+<div class="right-section">
+
+<!-- TRIP CONTROL -->
+<div class="box">
+<h3>Trip Control</h3>
+<div id="progressControl"></div>
+<button class="update-btn" onclick="saveProgress()">Update Progress</button>
+<div id="msg" class="success"></div>
+</div>
+
+<!-- PREVIEW -->
+<div class="box">
+<h3>Preview</h3>
+<div id="previewBox"></div>
+</div>
+
+<!-- CALL FOUNDERS -->
+<div class="box">
+<h3>Guide Call Founders</h3>
+<button class="call-btn" onclick="openCallModal()">📞 Call Admin</button>
+</div>
+
+<div id="callModal" class="modal">
+<div class="modal-box">
+
+<h3>Call Founders</h3>
+
+<div class="founder">
+<img src="images/aamir.jpg">
+<div>
+<b>Founder</b>
+<p>+91 7051932522</p>
+</div>
+<button onclick="callNumber('+917051932522')">Call</button>
+</div>
+
+<div class="founder">
+<img src="images/amir.jpg">
+<div>
+<b>Co-Founder</b>
+<p>+91 8899737138</p>
+</div>
+<button onclick="callNumber('+918899737138')">Call</button>
+</div>
+
+<div class="founder">
+<img src="images/owais.jpg">
+<div>
+<b>Co-Founder</b>
+<p>+91 7051654368</p>
+</div>
+<button onclick="callNumber('+917051654368')">Call</button>
+</div>
+
+<button class="update-btn" onclick="closeCallModal()">Close</button>
+
+</div>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase.js"></script>
+
+<script>
+
+let currentBookingId = null
+let tempProgress = {}
+
+function initGuidePage(){
+loadGuide()
+loadGuideProgress()
+// realtime not needed, avoid reset
+// setInterval(loadGuideProgress,5000)
+}
+
+function loadGuide(){
+
+const guide = JSON.parse(localStorage.getItem("guide"))
+if(!guide){ window.location.href="account.html"; return }
+
+guideName.innerText = guide.name
+guidePhone.innerText = "Phone: " + guide.phone
+guideEmail.innerText = "Email: " + guide.email
+
+const img = guide.photo || guide.photo_url || guide.image || guide.avatar
+if(img){ guidePhoto.src = img }
+
+}
+
+async function loadGuideProgress(){
+
+const guide = JSON.parse(localStorage.getItem("guide"))
+if(!guide) return
+
+const { data, error } = await supabaseClient
+.from("bookings")
+.select("*")
+.eq("guide_email", guide.email)
+.eq("status","assigned")
+.order("created_at",{ascending:false})
+.limit(1)
+.single()
+
+if(error || !data){
+progressControl.innerHTML="No booking assigned to you"
+return
+}
+
+currentBookingId = data.id
+
+let parsed = {}
+try{ parsed = JSON.parse(data.traveller_details || "{}") }catch(e){}
+
+let places = parsed.places || []
+let activities = parsed.activities || []
+let gondola = parsed.gondola || []
+
+let hotelDays = data.hotel_days || []
+if(typeof hotelDays === "string"){
+try{ hotelDays = JSON.parse(hotelDays) }catch(e){}
+}
+
+let saved = data.progress || {}
+
+if(typeof saved === "string"){
+try{
+saved = JSON.parse(saved)
+}catch(e){
+saved = {}
+}
+}
+
+tempProgress = saved
+
+let html = ""
+
+/* HOTEL */
+hotelDays.forEach((d,i)=>{
+let key="hotel_"+i
+html += `
+<div class="progress-item">
+<span>${d.day} - ${d.hotel}</span>
+<input type="checkbox"
+${tempProgress[key]?"checked":""}
+onchange="tempProgress['${key}']=this.checked;updatePreview()">
+</div>`
+})
+
+/* PLACES */
+places.forEach((p,i)=>{
+let key="place_"+i
+html += `
+<div class="progress-item">
+<span>${p.name}</span>
+<input type="checkbox"
+${tempProgress[key]?"checked":""}
+onchange="tempProgress['${key}']=this.checked;updatePreview()">
+</div>`
+})
+
+/* ACTIVITIES */
+activities.forEach((a,i)=>{
+let key="activity_"+i
+html += `
+<div class="progress-item">
+<span>${a.name}</span>
+<input type="checkbox"
+${tempProgress[key]?"checked":""}
+onchange="tempProgress['${key}']=this.checked;updatePreview()">
+</div>`
+})
+
+/* GONDOLA */
+gondola.forEach((g,i)=>{
+let key="gondola_"+i
+html += `
+<div class="progress-item">
+<span>${g}</span>
+<input type="checkbox"
+${tempProgress[key]?"checked":""}
+onchange="tempProgress['${key}']=this.checked;updatePreview()">
+</div>`
+})
+
+progressControl.innerHTML = html
+updatePreview()
+
+}
+
+function updatePreview(){
+
+let html=""
+Object.keys(tempProgress).forEach(k=>{
+html += `
+<div class="progress-item">
+<span>${k}</span>
+<span>${tempProgress[k]?"✔":"✖"}</span>
+</div>`
+})
+previewBox.innerHTML = html
+
+}
+
+async function saveProgress(){
+
+// get latest from DB
+const { data } = await supabaseClient
+.from("bookings")
+.select("progress")
+.eq("id", currentBookingId)
+.single()
+
+let progress = data?.progress || {}
+
+if(typeof progress === "string"){
+try{
+progress = JSON.parse(progress)
+}catch(e){
+progress = {}
+}
+}
+
+// merge
+progress = {...progress, ...tempProgress}
+
+await supabaseClient
+.from("bookings")
+.update({progress:progress})
+.eq("id", currentBookingId)
+
+msg.innerText="Progress Updated Successfully"
+setTimeout(()=>msg.innerText="",2000)
+
+}
+
+function downloadID(){
+
+const card = document.getElementById("idCard")
+const img = document.getElementById("guidePhoto")
+
+if(!img.complete){
+img.onload = () => captureCard()
+}else{
+captureCard()
+}
+
+function captureCard(){
+html2canvas(card,{
+useCORS:true,
+scale:2
+}).then(canvas=>{
+const link = document.createElement("a")
+link.download = "Guide-ID-Card.png"
+link.href = canvas.toDataURL("image/png")
+link.click()
+})
+}
+
+}
+
+function openCallModal(){
+document.getElementById("callModal").style.display="flex"
+}
+
+function closeCallModal(){
+document.getElementById("callModal").style.display="none"
+}
+
+function callNumber(num){
+window.location.href="tel:"+num
+}
+
+function logoutGuide(){
+localStorage.removeItem("guide")
+window.location.href="account.html"
+}
+
+</script>
+
+</body>
+</html>
