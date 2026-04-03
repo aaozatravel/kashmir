@@ -105,7 +105,7 @@ hotelDaysHtml += `
 html += `
 <div class="booking-card">
 
-<img src="${b.package_image || ''}" class="booking-img">
+<img src="${(b.package_image || '').replace('images/','').replace('tour-images/','')}" class="booking-img">
 
 <div class="booking-content">
 
