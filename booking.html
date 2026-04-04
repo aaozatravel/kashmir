@@ -152,21 +152,26 @@ updateTravellers();
 
 });
 
-</script><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="supabase.js"></script><script>
+</script><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="supabase.js"></script>
+  <script>
 
+    <script>
 async function saveBooking(){
+
+try{
 
 const { data: { user } } = await supabaseClient.auth.getUser()
 
 if(!user){
 alert("Please login first")
+window.location.href="login.html"
 return
 }
 
-const tour = localStorage.getItem("selectedTour")
-const month = localStorage.getItem("selectedMonth")
-const image = localStorage.getItem("selectedImage")
-const departure = localStorage.getItem("selectedDeparture")
+const tour = localStorage.getItem("selectedTour") || ""
+const month = localStorage.getItem("selectedMonth") || ""
+const image = localStorage.getItem("selectedImage") || ""
+const departure = localStorage.getItem("selectedDeparture") || ""
 
 const activities = JSON.parse(localStorage.getItem("selectedActivities") || "[]")
 const gondola = JSON.parse(localStorage.getItem("selectedGondola") || "[]")
@@ -186,10 +191,10 @@ let travellers = []
 
 document.querySelectorAll("#travellerRows .member-row").forEach(row=>{
 travellers.push({
-name: row.querySelector(".name").value,
-gender: row.querySelector(".gender").value,
-age: row.querySelector(".age").value,
-phone: row.querySelector(".phone").value
+name: row.querySelector(".name")?.value || "",
+gender: row.querySelector(".gender")?.value || "",
+age: row.querySelector(".age")?.value || "",
+phone: row.querySelector(".phone")?.value || ""
 })
 })
 
@@ -200,16 +205,12 @@ let totalTravellers = adults + child
 let singlePrice = 6999 * singleRoom
 let doublePrice = 8999 * doubleRoom
 
-/* activities */
 let activityTotal = 0
 activities.forEach(act=>{
-activityTotal += act.price * totalTravellers
+activityTotal += (act.price || 0) * totalTravellers
 })
 
-/* gondola */
 let gondolaPrice = gondolaTotal * totalTravellers
-
-/* places */
 let placeTotal = placesTotal
 
 let total =
@@ -221,19 +222,19 @@ let total =
 + doublePrice
 
 const bookingData = {  
-travellers: travellers,  
-adults: adults,  
-child: child,  
-infant: infant,  
-activities: activities,  
-gondola: gondola,
-places: places,
+travellers,
+adults,
+child,
+infant,
+activities,
+gondola,
+places,
 places_total: placeTotal,
 gondola_price: gondolaTotal,
 single_room: singleRoom,
 double_room: doubleRoom,
-departure: departure,  
-total: total  
+departure,
+total
 }
 
 const { error } = await supabaseClient
@@ -248,15 +249,21 @@ status: "pending"
 }])
 
 if(error){
+console.log("Supabase error:", error)
 alert("❌ Booking not saved")
-console.log(error)
 return
 }
 
 alert("✅ Booking Request Sent")
 window.location.href = "account.html"
 
+}catch(e){
+console.log("JS error:", e)
+alert("❌ Booking not saved")
 }
 
-</script></body>
+}
+</script>
+
+</body>
 </html>
