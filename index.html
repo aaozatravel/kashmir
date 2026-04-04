@@ -7,6 +7,17 @@
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#d40000">
 
+    <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+<script>
+window.OneSignalDeferred = window.OneSignalDeferred || [];
+OneSignalDeferred.push(async function(OneSignal) {
+  await OneSignal.init({
+    appId: "5bdd9645-3652-455e-9519-a1a3cda9e20b",
+    notifyButton: { enable: true }
+  });
+});
+</script>
+
 <link rel="stylesheet" href="style.css">  
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>  
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>  
