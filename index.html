@@ -129,6 +129,30 @@ document.getElementById("navMenu").classList.toggle("active")
 }
 </script>
 
+    <script>
+let deferredPrompt;
+
+window.addEventListener('beforeinstallprompt', (e) => {
+e.preventDefault();
+deferredPrompt = e;
+
+setTimeout(()=>{
+if(deferredPrompt){
+deferredPrompt.prompt();
+
+deferredPrompt.userChoice.then((choiceResult)=>{
+if(choiceResult.outcome === 'accepted'){
+console.log('User accepted install');
+}else{
+console.log('User dismissed');
+}
+deferredPrompt = null;
+});
+}
+},3000); // 3 second baad popup
+});
+    </script>
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="supabase.js"></script>
 <script src="main.js"></script>
