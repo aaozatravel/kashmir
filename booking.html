@@ -99,6 +99,9 @@ for(let i=0;i<total;i++){
 
 let data = oldData[i] || {};
 
+// infant detect
+let isInfant = i >= (adult + child);
+
 container.innerHTML += `
 <div class="member-row">
 <input type="text" class="name" placeholder="Name" value="${data.name}">
@@ -106,8 +109,15 @@ container.innerHTML += `
 <option ${data.gender=="Male"?"selected":""}>Male</option>
 <option ${data.gender=="Female"?"selected":""}>Female</option>
 </select>
-<input type="number" class="age" placeholder="Age" value="${data.age}">
-<input type="number" class="phone" placeholder="Phone" value="${data.phone}">
+
+<input type="number" class="age" placeholder="Age"
+value="${isInfant ? 1 : data.age}"
+${isInfant ? "readonly" : ""}>
+
+<input type="number" class="phone"
+placeholder="${isInfant ? 'Not required' : 'Phone'}"
+${isInfant ? "disabled" : ""}
+value="${isInfant ? '' : data.phone}">
 </div>
 `;
 }
