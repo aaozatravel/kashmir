@@ -40,30 +40,53 @@ flex-wrap:wrap;
 .id-card{
 width:320px;
 background:white;
-border-radius:15px;
+border-radius:12px;
 overflow:hidden;
 box-shadow:0 5px 20px rgba(0,0,0,0.15);
-height:fit-content;
+border:3px solid #0f7b43;
 }
 
 .id-header{
-background:#1c3faa;
+background:#0f7b43;
 color:white;
 text-align:center;
 padding:15px;
 }
 
+.id-header img{
+width:60px;
+margin-bottom:5px;
+}
+
 .id-body{
 text-align:center;
-padding:20px;
+padding:15px;
 }
 
 .id-body img{
-width:100px;
-height:100px;
+width:110px;
+height:110px;
 border-radius:50%;
-border:3px solid #1c3faa;
+border:4px solid #0f7b43;
 object-fit:cover;
+margin-bottom:8px;
+}
+
+.id-tag{
+background:#0f7b43;
+color:white;
+display:inline-block;
+padding:5px 15px;
+border-radius:6px;
+font-size:13px;
+margin:5px 0;
+}
+
+.id-footer{
+padding:10px;
+font-size:12px;
+text-align:center;
+border-top:1px solid #eee;
 }
 
 .logout-btn{
@@ -201,16 +224,27 @@ border-radius:6px;
 <div class="id-card" id="idCard">
 
 <div class="id-header">
-<img src="logoidty.jpg" style="width:50px;margin-bottom:5px;">
+<img src="logoidty.jpg">
 <h3>Aaoza Travels Kashmir</h3>
-<p style="margin:0;font-size:13px;">Official Tour Guide</p>
 </div>
 
 <div class="id-body">
 <img id="guidePhoto" src="user.png" crossorigin="anonymous">
+
 <h3 id="guideName"></h3>
+
+<div class="id-tag" id="guideTag">
+Guide Identity Card
+</div>
+
 <p id="guidePhone"></p>
 <p id="guideEmail"></p>
+</div>
+
+<div class="id-footer">
+<b>Aaoza Travels Kashmir</b><br>
+Trusted Kashmir Tour Partner<br>
+Founders: Aamir • Amir • Owais
 </div>
 
 <button class="download-btn" onclick="downloadID()">Download Identity Card</button>
@@ -302,6 +336,8 @@ if(!guide){ window.location.href="account.html"; return }
 guideName.innerText = guide.name
 guidePhone.innerText = "Phone: " + guide.phone
 guideEmail.innerText = "Email: " + guide.email
+document.getElementById("guideTag").innerText =
+guide.tag || "Guide Identity Card"
 
 const img = guide.photo || guide.photo_url || guide.image || guide.avatar
 if(img){ guidePhoto.src = img }
