@@ -200,22 +200,28 @@ phone: row.querySelector(".phone")?.value || ""
 
 let basePrice = parseInt(localStorage.getItem("selectedPrice")?.replace(/[^0-9]/g,'')) || 0
 
-let totalTravellers = adults + child
+// adult + child only (infant ignore)
+let payingTravellers = adults + child
 
+// rooms fixed
 let singlePrice = 6999 * singleRoom
 let doublePrice = 8999 * doubleRoom
 
+// activities multiply
 let activityTotal = 0
 activities.forEach(act=>{
-activityTotal += (act.price || 0) * totalTravellers
+activityTotal += (act.price || 0) * payingTravellers
 })
 
-let gondolaPrice = gondolaTotal * totalTravellers
-let placeTotal = placesTotal
+// gondola multiply
+let gondolaPrice = gondolaTotal * payingTravellers
 
+// places multiply
+let placeTotal = placesTotal * payingTravellers
+
+// FINAL TOTAL
 let total =
-(basePrice * totalTravellers)
-+ activityTotal
+activityTotal
 + placeTotal
 + gondolaPrice
 + singlePrice
