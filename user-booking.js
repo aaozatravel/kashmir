@@ -185,3 +185,18 @@ function downloadInvoice(id){
 localStorage.setItem("invoiceBookingId", id)
 window.open("invoice.html", "_blank")
 }
+
+// page load
+loadUserBookings()
+
+// realtime update
+supabaseClient
+.channel('booking_updates')
+.on(
+'postgres_changes',
+{ event: '*', schema: 'public', table: 'bookings' },
+payload => {
+loadUserBookings()
+}
+)
+.subscribe()
