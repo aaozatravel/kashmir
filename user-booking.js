@@ -150,6 +150,29 @@ ${b.guide_id_card ? `
 </div>
 
 <div class="section">
+<h3>Cab Details</h3>
+
+<p><b>Cab Number:</b> ${b.cab_number || "-"}</p>
+<p><b>Driver Name:</b> ${b.driver_name || "-"}</p>
+
+${b.cab_photo ? `
+<div style="margin-top:5px">
+<b>Cab Photo:</b>
+<img src="${b.cab_photo}" style="width:100%;border-radius:8px;margin-top:5px;">
+</div>
+` : ""}
+
+${b.driver_photo ? `
+<div style="margin-top:5px">
+<b>Driver Photo:</b>
+<img src="${b.driver_photo}" style="width:120px;border-radius:8px;margin-top:5px;">
+</div>
+` : ""}
+
+</div>
+
+
+<div class="section">
 <h3>Hotel Details</h3>
 <p><b>Hotel:</b> ${b.hotel_name || "Pending"}</p>
 <p><b>Room No:</b> ${b.room_number || "-"}</p>
