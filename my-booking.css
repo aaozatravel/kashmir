@@ -1,3 +1,4 @@
+/* HEADER */
 .booking-header{
 padding:15px;
 text-align:center;
@@ -26,6 +27,7 @@ overflow:hidden;
 box-shadow:0 10px 25px rgba(0,0,0,0.08);
 transition:0.3s;
 border:1px solid #e8ecff;
+padding-bottom:15px;
 }
 
 .booking-card:hover{
@@ -40,30 +42,19 @@ height:190px;
 object-fit:cover;
 }
 
-/* CONTENT */
-.booking-content{
-padding:15px;
-}
-
-.tour-title{
-margin-bottom:8px;
+/* TITLE */
+.booking-card h2{
+padding:12px 15px 0;
 color:#1a237e;
 font-size:18px;
-font-weight:600;
 }
 
-/* SECTION */
-.section{
-background:#f5f7ff;
-padding:10px;
-border-radius:10px;
-margin-top:10px;
-border:1px solid #eef1ff;
-}
-
-.section h3{
+/* SECTION TITLE */
+.booking-card h3{
+margin-top:15px;
 margin-bottom:6px;
-color:#3949ab;
+padding:0 15px;
+color:#303f9f;
 }
 
 /* TABLE */
@@ -73,8 +64,6 @@ width:100%;
 border-collapse:collapse;
 margin-top:8px;
 background:white;
-border-radius:10px;
-overflow:hidden;
 }
 
 .trip-table th,
@@ -92,28 +81,41 @@ border-bottom:1px solid #f0f0f0;
 font-size:13px;
 }
 
-/* STATUS */
-.status{
-font-weight:bold;
-text-transform:capitalize;
+/* accommodation */
+.booking-card > div{
+margin:0 15px;
 }
 
-.status-accepted{ color:#2e7d32; }
-.status-pending{ color:#ff9800; }
-.status-rejected{ color:#e53935; }
-.status-waiting{ color:#1e88e5; }
+.booking-card > div:not(.price-box){
+background:#ffffff;
+padding:10px;
+border-radius:10px;
+border:1px solid #eee;
+}
 
-/* GUIDE */
-.guide-id img{
-width:120px;
-margin-top:8px;
+/* guide box */
+.booking-card img{
+max-width:100%;
 border-radius:8px;
-border:1px solid #ddd;
+}
+
+/* cab images spacing */
+.booking-card img + img{
+margin-top:8px;
+}
+
+/* day wise hotel */
+.day-hotel-box{
+background:#ffffff;
+padding:10px;
+margin-top:8px;
+border-radius:10px;
+border:1px solid #eee;
 }
 
 /* PRICE BOX */
 .price-box{
-margin-top:15px;
+margin:15px;
 font-size:22px;
 font-weight:bold;
 color:white;
@@ -125,32 +127,36 @@ border-radius:10px;
 
 /* BUTTON */
 .booking-card button{
-width:100%;
+width:calc(100% - 30px);
+margin:0 15px;
 margin-top:10px;
-padding:10px;
+padding:11px;
 border:none;
 background:#1a237e;
 color:white;
 border-radius:8px;
 font-weight:600;
 cursor:pointer;
+transition:0.2s;
 }
 
 .booking-card button:hover{
 background:#0d154f;
 }
 
-/* DAY HOTEL */
-.day-hotel-box{
-padding:10px;
-margin-bottom:8px;
-border:1px solid #eee;
-border-radius:8px;
-background:#fafafa;
+/* travellers table highlight */
+.traveller-table tr:hover{
+background:#f8faff;
+}
+
+/* trip table highlight */
+.trip-table tr:hover{
+background:#f8faff;
 }
 
 /* MOBILE */
 @media(max-width:600px){
+
 .booking-grid{
 grid-template-columns:1fr;
 }
@@ -166,4 +172,9 @@ height:160px;
 font-size:12px;
 padding:7px;
 }
+
+.price-box{
+font-size:18px;
+}
+
 }
