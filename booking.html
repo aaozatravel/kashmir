@@ -213,6 +213,9 @@ let basePrice = parseInt(localStorage.getItem("selectedPrice")?.replace(/[^0-9]/
 // adult + child only (infant ignore)
 let payingTravellers = adults + child
 
+// departure multiply
+let departureTotal = basePrice * payingTravellers
+
 // rooms fixed
 let singlePrice = 6999 * singleRoom
 let doublePrice = 8999 * doubleRoom
@@ -231,7 +234,8 @@ let placeTotal = placesTotal * payingTravellers
 
 // FINAL TOTAL
 let total =
-activityTotal
+departureTotal
++ activityTotal
 + placeTotal
 + gondolaPrice
 + singlePrice
