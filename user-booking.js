@@ -32,7 +32,9 @@ let travellers = parsed.travellers || []
 let total = parsed.total || 0
 let activities = parsed.activities || []
 let departure = parsed.departure || "-"
-let adults = parsed.adults || travellers.length || 1
+let adults = parsed.adults || 0
+let child = parsed.child || 0
+let travellersCount = adults + child   // infant ignore
 
 let gondola = parsed.gondola || []
 let gondolaPrice = parsed.gondola_price || 0
@@ -50,8 +52,7 @@ places.forEach(p=>{
 
 let name = p.name || p.place || "-"
 let price = Number(p.price || p.cost || 0)
-let travellersCount = Number(p.travellers || adults || 1)
-let totalPlace = p.total || (price * travellersCount)
+let totalPlace = price * travellersCount
 
 placesHtml += `
 <p>
@@ -119,12 +120,12 @@ html += `
 <p><b>Adults:</b> ${adults}</p>
 <p><b>Activities:</b> ${activities.map(a => a.name).join(", ") || "-"}</p>
 <p><b>Gondola:</b> ${gondola.join(", ") || "-"}</p>
-<p><b>Gondola Price:</b> ₹ ${gondolaPrice}</p>
+<p><b>Gondola Price:</b> ₹ ${gondolaPrice * travellersCount}</p>
 
 <p><b>Places:</b></p>
 ${placesHtml}
 
-<p><b>Places Price:</b> ₹ ${placesTotal}</p>
+<p><b>Places Price:</b> ₹ ${placesTotal * travellersCount}</p>
 
 </div>
 
