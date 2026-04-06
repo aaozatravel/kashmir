@@ -42,12 +42,13 @@ let gondolaPrice = parsed.gondola_price || 0
 /* correct places calculation */
 let placesTotal = 0
 places.forEach(p=>{
-let price = Number(p.price || 0)
+let price = Number(p.total || 0)
 placesTotal += price
 })
 
 /* departure price */
-let departurePrice = parsed.departure_price || 0
+let departurePrice =
+Number(String(parsed.departure_price || 0).replace(/[₹,]/g,""))
 
 let singleRoom = parsed.single_room || 0
 let doubleRoom = parsed.double_room || 0
@@ -55,7 +56,10 @@ let doubleRoom = parsed.double_room || 0
 let singleTotal = singleRoom * 6999
 let doubleTotal = doubleRoom * 8999
 
-let baseTotal = (gondolaPrice + placesTotal + departurePrice)
+let baseTotal =
+Number(gondolaPrice) +
+Number(placesTotal) +
+Number(departurePrice)
 
 let grandTotal = 0
 
@@ -121,7 +125,7 @@ ${places.map(p=>`${p.name} ₹${p.price}`).join(", ")}
 <br><b>Total:</b> ₹${placesTotal}
 </td></tr>
 <tr><td>Departure</td><td>
-${parsed.departure} - ₹${departurePrice}
+${parsed.departure || "-"} - ₹${departurePrice}}
 </td></tr>
 <tr><td>Subtotal</td><td>₹ ${baseTotal}</td></tr>
 </table>
