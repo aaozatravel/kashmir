@@ -227,10 +227,10 @@ activityTotal += (act.price || 0) * payingTravellers
 })
 
 // gondola multiply
-let gondolaPrice = gondolaTotal * payingTravellers
+let gondolaPrice = gondolaTotal
 
 // places multiply
-let placeTotal = placesTotal * payingTravellers
+let placeTotal = placesTotal
 
 // FINAL TOTAL
 let total =
@@ -254,6 +254,7 @@ gondola_price: gondolaTotal,
 single_room: singleRoom,
 double_room: doubleRoom,
 departure,
+departure_price: basePrice,  // ⭐ ye add karo
 total
 }
 
