@@ -38,7 +38,16 @@ let child = parsed.child || 0
 let travellersCount = adults + child
 
 let gondolaPrice = parsed.gondola_price || 0
-let placesTotal = parsed.places_total || 0
+
+/* correct places calculation */
+let placesTotal = 0
+places.forEach(p=>{
+let price = Number(p.price || 0)
+placesTotal += price
+})
+
+/* departure price */
+let departurePrice = parsed.departure_price || 0
 
 let singleRoom = parsed.single_room || 0
 let doubleRoom = parsed.double_room || 0
@@ -46,7 +55,7 @@ let doubleRoom = parsed.double_room || 0
 let singleTotal = singleRoom * 6999
 let doubleTotal = doubleRoom * 8999
 
-let baseTotal = (gondolaPrice + placesTotal)
+let baseTotal = (gondolaPrice + placesTotal + departurePrice)
 
 let grandTotal = 0
 
