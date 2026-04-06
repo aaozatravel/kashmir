@@ -116,8 +116,13 @@ html += `
 <tr><th colspan="2">Trip Details</th></tr>
 <tr><td>Activities</td><td>${activities.map(a=>a.name).join(", ")}</td></tr>
 <tr><td>Gondola</td><td>${gondola.join(", ")} - ₹${gondolaPrice}</td></tr>
-<tr><td>Places</td><td>${places.map(p=>p.name).join(", ")} - ₹${placesTotal}</td></tr>
-<tr><td>Departure</td><td>${parsed.departure}</td></tr>
+<tr><td>Places</td><td>
+${places.map(p=>`${p.name} ₹${p.price}`).join(", ")}
+<br><b>Total:</b> ₹${placesTotal}
+</td></tr>
+<tr><td>Departure</td><td>
+${parsed.departure} - ₹${departurePrice}
+</td></tr>
 <tr><td>Subtotal</td><td>₹ ${baseTotal}</td></tr>
 </table>
 
