@@ -29,75 +29,68 @@ parsed = JSON.parse(b.traveller_details || "{}")
 }catch(e){}
 
 let travellers = parsed.travellers || []
-let total = parsed.total || 0
 let activities = parsed.activities || []
-let departure = parsed.departure || "-"
+let gondola = parsed.gondola || []
+let places = parsed.places || []
+
 let adults = parsed.adults || 0
 let child = parsed.child || 0
-let travellersCount = adults + child   // infant ignore
+let travellersCount = adults + child
 
-let gondola = parsed.gondola || []
 let gondolaPrice = parsed.gondola_price || 0
-
-let places = parsed.places || []
 let placesTotal = parsed.places_total || 0
 
-let travellerNames = travellers.map(t=>t.name).join(", ")
+let singleRoom = parsed.single_room || 0
+let doubleRoom = parsed.double_room || 0
 
-/* places html */
-let placesHtml = "-"
-if(Array.isArray(places) && places.length){
-placesHtml = ""
-places.forEach(p=>{
+let singleTotal = singleRoom * 6999
+let doubleTotal = doubleRoom * 8999
 
-let name = p.name || p.place || "-"
-let price = Number(p.price || p.cost || 0)
-let totalPlace = price * travellersCount
+let baseTotal = (gondolaPrice + placesTotal)
 
-placesHtml += `
-<p>
-${name} - ₹${price} x ${travellersCount} = ₹${totalPlace}
-</p>
+let grandTotal = 0
+
+/* travellers table */
+let travellersHtml = ""
+
+travellers.forEach(t=>{
+
+let price = baseTotal
+let phone = t.phone || "Not required"
+
+if(t.age <= 1) return  // ignore infant
+
+grandTotal += price
+
+travellersHtml += `
+<tr>
+<td>${t.name}</td>
+<td>${t.age}</td>
+<td>${t.gender}</td>
+<td>${phone}</td>
+<td>₹ ${price}</td>
+</tr>
 `
 })
-}
+
+/* accommodation */
+let accommodationTotal = singleTotal + doubleTotal
+grandTotal += accommodationTotal
 
 /* day wise hotel */
 let hotelDaysHtml = "-"
+let hotelDays = b.hotel_days || []
 
-let hotelDays = b.hotel_days
-
-if(!hotelDays){
-hotelDays = []
-}
-
-// string parse
 if(typeof hotelDays === "string"){
-try{
-hotelDays = JSON.parse(hotelDays)
-}catch(e){
-hotelDays = []
-}
+try{ hotelDays = JSON.parse(hotelDays) }catch(e){}
 }
 
-// object to array
-if(!Array.isArray(hotelDays) && typeof hotelDays === "object"){
-hotelDays = Object.values(hotelDays)
-}
-
-if(Array.isArray(hotelDays) && hotelDays.length){
+if(Array.isArray(hotelDays)){
 hotelDaysHtml = ""
-
 hotelDays.forEach(d=>{
-
-let contact = d.contact || d.phone || d.mobile || "-"
-
 hotelDaysHtml += `
-<div style="border:1px solid #eee;padding:10px;margin-bottom:8px;border-radius:8px;background:#fafafa">
-<div><b>${d.day || "-"}</b></div>
-<div>🏨 Hotel: ${d.hotel || "-"}</div>
-<div>🛏 Room: ${d.room || "-"}</div>
-<div>📞 Contact: ${contact}</div>
+<div>
+<b>${d.day}</b> - ${d.hotel} - Room ${d.room} - ${d.contact}
 </div>
 `
 })
@@ -106,114 +99,79 @@ hotelDaysHtml += `
 html += `
 <div class="booking-card">
 
-<img src="${(b.package_image || '').replace('images/','').replace('tour-images/','')}" class="booking-img">
+<img src="${b.package_image}" class="booking-img">
 
-<div class="booking-content">
+<h2>${b.tour_name}</h2>
 
-<h2 class="tour-title">${b.tour_name}</h2>
+<table class="trip-table">
+<tr><th colspan="2">Trip Details</th></tr>
+<tr><td>Activities</td><td>${activities.map(a=>a.name).join(", ")}</td></tr>
+<tr><td>Gondola</td><td>${gondola.join(", ")} - ₹${gondolaPrice}</td></tr>
+<tr><td>Places</td><td>${places.map(p=>p.name).join(", ")} - ₹${placesTotal}</td></tr>
+<tr><td>Departure</td><td>${parsed.departure}</td></tr>
+<tr><td>Subtotal</td><td>₹ ${baseTotal}</td></tr>
+</table>
 
-<div class="section">
-<h3>Trip Details</h3>
-<p><b>Month:</b> ${b.travel_month}</p>
-<p><b>Departure:</b> ${departure}</p>
-<p><b>Travellers:</b> ${travellerNames}</p>
-<p><b>Adults:</b> ${adults}</p>
-<p><b>Activities:</b> ${activities.map(a => a.name).join(", ") || "-"}</p>
-<p><b>Gondola:</b> ${gondola.join(", ") || "-"}</p>
-<p><b>Gondola Price:</b> ₹ ${gondolaPrice * travellersCount}</p>
+<h3>Travellers</h3>
+<table class="traveller-table">
+<tr>
+<th>Name</th>
+<th>Age</th>
+<th>Gender</th>
+<th>Phone</th>
+<th>Price</th>
+</tr>
+${travellersHtml}
+</table>
 
-<p><b>Places:</b></p>
-${placesHtml}
-
-<p><b>Places Price:</b> ₹ ${placesTotal * travellersCount}</p>
-
+<h3>Accommodation</h3>
+<div>
+Single Bedroom x ${singleRoom} = ₹ ${singleTotal}<br>
+Double Bedroom x ${doubleRoom} = ₹ ${doubleTotal}
 </div>
 
-<div class="section">
-<h3>Status</h3>
-<p class="status status-${b.status}">
-${b.status || "pending"}
-</p>
+<h3>Guide</h3>
+<div>
+<img src="${b.guide_id_card || ""}" style="width:120px"><br>
+${b.guide_name || "Pending"}<br>
+${b.guide_phone || "-"}<br>
+${b.guide_email || "-"}
 </div>
 
-<div class="section">
-<h3>Guide Details</h3>
-<p><b>Name:</b> ${b.guide_name || "Not Assigned"}</p>
-<p><b>Phone:</b> ${b.guide_phone || "-"}</p>
-<p><b>Email:</b> ${b.guide_email || "-"}</p>
-
-${b.guide_id_card ? `
-<div class="guide-id">
-<img src="${b.guide_id_card}" alt="Guide ID">
-</div>
-` : ""}
-
+<h3>Cab</h3>
+<div>
+Cab Number: ${b.cab_number || "-"}<br>
+Driver: ${b.driver_name || "-"}<br>
+<img src="${b.cab_photo || ""}" style="width:100%"><br>
+<img src="${b.driver_photo || ""}" style="width:120px">
 </div>
 
-<div class="section">
-<h3>Cab Details</h3>
-
-<p><b>Cab Number:</b> ${b.cab_number || "-"}</p>
-<p><b>Driver Name:</b> ${b.driver_name || "-"}</p>
-
-${b.cab_photo ? `
-<div style="margin-top:5px">
-<b>Cab Photo:</b>
-<img src="${b.cab_photo}" style="width:100%;border-radius:8px;margin-top:5px;">
-</div>
-` : ""}
-
-${b.driver_photo ? `
-<div style="margin-top:5px">
-<b>Driver Photo:</b>
-<img src="${b.driver_photo}" style="width:120px;border-radius:8px;margin-top:5px;">
-</div>
-` : ""}
-
-</div>
-
-
-<div class="section">
-<h3>Hotel Details</h3>
-<p><b>Hotel:</b> ${b.hotel_name || "Pending"}</p>
-<p><b>Room No:</b> ${b.room_number || "-"}</p>
-<p><b>Hotel Contact:</b> ${b.hotel_contact || "-"}</p>
-</div>
-
-<div class="section">
 <h3>Day Wise Hotel</h3>
 ${hotelDaysHtml}
-</div>
 
+<h2>Grand Total</h2>
 <div class="price-box">
-₹ ${total}
+₹ ${grandTotal}
 </div>
 
-<div class="invoice-btn">
 <button onclick="downloadInvoice('${b.id}')">
-📄 Download Invoice
+Download Invoice
 </button>
-</div>
 
-</div>
 </div>
 `
 })
 
 document.getElementById("userBookingContainer").innerHTML = html
-
 }
 
-/* invoice function */
 function downloadInvoice(id){
 localStorage.setItem("invoiceBookingId", id)
 window.open("invoice.html", "_blank")
 }
 
-// page load
 loadUserBookings()
 
-// realtime update
 supabaseClient
 .channel('booking_updates')
 .on(
