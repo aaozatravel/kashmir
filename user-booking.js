@@ -48,7 +48,8 @@ placesTotal += price
 
 /* departure price */
 let departurePrice =
-Number(String(parsed.departure_price || 0).replace(/[₹,]/g,""))
+Number(String(parsed.selectedPrice || parsed.departure_price || 0)
+.replace(/[₹,]/g,""))
 
 let singleRoom = parsed.single_room || 0
 let doubleRoom = parsed.double_room || 0
@@ -125,7 +126,7 @@ ${places.map(p=>`${p.name} ₹${p.price}`).join(", ")}
 <br><b>Total:</b> ₹${placesTotal}
 </td></tr>
 <tr><td>Departure</td><td>
-${parsed.departure || "-"} - ₹${departurePrice}}
+${parsed.departure || "-"} - ₹${departurePrice}
 </td></tr>
 <tr><td>Subtotal</td><td>₹ ${baseTotal}</td></tr>
 </table>
