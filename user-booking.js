@@ -38,6 +38,8 @@ let child = parsed.child || 0
 let travellersCount = adults + child
 
 let gondolaPrice = parsed.gondola_price || 0
+let activitiesTotal = (activities || [])
+.reduce((t,a)=> t + Number(a.price || 0),0)
 
 /* correct places calculation */
 let placesTotal = 0
@@ -60,7 +62,8 @@ let doubleTotal = doubleRoom * 8999
 let baseTotal =
 Number(gondolaPrice) +
 Number(placesTotal) +
-Number(departurePrice)
+Number(departurePrice) +
+Number(activitiesTotal)
 
 let grandTotal = 0
 
@@ -123,7 +126,10 @@ Status: ${status}
 
 <table class="trip-table">
 <tr><th colspan="2">Trip Details</th></tr>
-<tr><td>Activities</td><td>${activities.map(a=>a.name).join(", ")}</td></tr>
+<tr><td>Activities</td><td>
+${activities.map(a=>`${a.name} ₹${a.price}`).join(", ")}
+<br><b>Total:</b> ₹${activitiesTotal}
+</td></tr>
 <tr><td>Gondola</td><td>${gondola.join(", ")} - ₹${gondolaPrice}</td></tr>
 <tr><td>Places</td><td>
 ${places.map(p=>`${p.name} ₹${p.price}`).join(", ")}
