@@ -22,7 +22,7 @@ return
 let html = ""
 
 data.forEach(b=>{
-
+let status = b.status || "pending"
 let parsed = {}
 try{
 parsed = JSON.parse(b.traveller_details || "{}")
@@ -117,6 +117,10 @@ html += `
 
 <h2>${b.tour_name}</h2>
 
+<div class="status status-${status}">
+Status: ${status}
+</div>
+
 <table class="trip-table">
 <tr><th colspan="2">Trip Details</th></tr>
 <tr><td>Activities</td><td>${activities.map(a=>a.name).join(", ")}</td></tr>
@@ -173,9 +177,17 @@ ${hotelDaysHtml}
 ₹ ${grandTotal}
 </div>
 
+${status === "assigned" ? `
 <button onclick="downloadInvoice('${b.id}')">
 Download Invoice
 </button>
+` : `
+<div style="margin-top:10px;padding:10px;background:#f5f5f5;border-radius:8px;text-align:center;font-weight:600">
+${status === "waiting" ? "Waiting for confirmation" :
+status === "rejected" ? "Booking Rejected" :
+"Pending"}
+</div>
+`}
 
 </div>
 `
