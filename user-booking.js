@@ -21,9 +21,26 @@ return
 
 let html = ""
 
-data.forEach(b=>{
+for (const b of data){
 let admin = b.admin_details || {}
 let status = b.status || "pending"
+let guidePhoto = ""
+let guidePhone = ""
+let guideName = ""
+
+if(admin.guide){
+const { data: guideData } = await supabaseClient
+.from("guides")
+.select("*")
+.eq("email", admin.guide)
+.single()
+
+if(guideData){
+guidePhoto = guideData.photo || ""
+guidePhone = guideData.phone || ""
+guideName = guideData.name || admin.guide
+}
+}
 if(status === "accepted") status = "assigned"
 let parsed = {}
 try{
@@ -163,7 +180,10 @@ Double Bedroom x ${doubleRoom} = ₹ ${doubleTotal}
 
 <h3>Guide</h3>  
 <div>  
-${admin.guide || "Pending"}  
+<img src="${guidePhoto}" style="width:120px"><br>
+${guideName || "Pending"}<br>
+${guidePhone || "-"}<br>
+${admin.guide || "-"}
 </div>
 
 <h3>Cab</h3>  
@@ -178,11 +198,50 @@ Phone: ${admin.driver_phone || "-"}<br>
 
 <h3>Day Wise Hotel</h3>
 
-<div>Day1: ${admin.hotel1 || "-"} Room: ${admin.hotel1_room || "-"}</div>
-<div>Day2: ${admin.hotel2 || "-"} Room: ${admin.hotel2_room || "-"}</div>
-<div>Day3: ${admin.hotel3 || "-"} Room: ${admin.hotel3_room || "-"}</div>
-<div>Day4: ${admin.hotel4 || "-"} Room: ${admin.hotel4_room || "-"}</div>
-<div>Day5: ${admin.hotel5 || "-"} Room: ${admin.hotel5_room || "-"}</div>
+<div>
+<b>Day1</b><br>
+<img src="${admin.hotel1_photo || ""}" style="width:100%"><br>
+${admin.hotel1 || "-"}<br>
+${admin.hotel1_address || "-"}<br>
+${admin.hotel1_contact || "-"}<br>
+Room: ${admin.hotel1_room || "-"}
+</div><br>
+
+<div>
+<b>Day2</b><br>
+<img src="${admin.hotel2_photo || ""}" style="width:100%"><br>
+${admin.hotel2 || "-"}<br>
+${admin.hotel2_address || "-"}<br>
+${admin.hotel2_contact || "-"}<br>
+Room: ${admin.hotel2_room || "-"}
+</div><br>
+
+<div>
+<b>Day3</b><br>
+<img src="${admin.hotel3_photo || ""}" style="width:100%"><br>
+${admin.hotel3 || "-"}<br>
+${admin.hotel3_address || "-"}<br>
+${admin.hotel3_contact || "-"}<br>
+Room: ${admin.hotel3_room || "-"}
+</div><br>
+
+<div>
+<b>Day4</b><br>
+<img src="${admin.hotel4_photo || ""}" style="width:100%"><br>
+${admin.hotel4 || "-"}<br>
+${admin.hotel4_address || "-"}<br>
+${admin.hotel4_contact || "-"}<br>
+Room: ${admin.hotel4_room || "-"}
+</div><br>
+
+<div>
+<b>Day5</b><br>
+<img src="${admin.hotel5_photo || ""}" style="width:100%"><br>
+${admin.hotel5 || "-"}<br>
+${admin.hotel5_address || "-"}<br>
+${admin.hotel5_contact || "-"}<br>
+Room: ${admin.hotel5_room || "-"}
+</div>
 
 <h2>Grand Total</h2>
 <div class="price-box">
@@ -203,7 +262,7 @@ status === "rejected" ? "Booking Rejected" :
 
 </div>
 `
-})
+}
 
 document.getElementById("userBookingContainer").innerHTML = html
 }
