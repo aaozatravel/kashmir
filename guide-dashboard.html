@@ -324,8 +324,6 @@ let tempProgress = {}
 function initGuidePage(){
 loadGuide()
 loadGuideProgress()
-// realtime not needed, avoid reset
-// setInterval(loadGuideProgress,5000)
 }
 
 function loadGuide(){
@@ -336,8 +334,6 @@ if(!guide){ window.location.href="account.html"; return }
 guideName.innerText = guide.name
 guidePhone.innerText = "Phone: " + guide.phone
 guideEmail.innerText = "Email: " + guide.email
-document.getElementById("guideTag").innerText =
-guide.tag || "Guide Identity Card"
 
 const img = guide.photo || guide.photo_url || guide.image || guide.avatar
 if(img){ guidePhoto.src = img }
@@ -349,114 +345,116 @@ async function loadGuideProgress(){
 const guide = JSON.parse(localStorage.getItem("guide"))
 if(!guide) return
 
-const { data, error } = await supabaseClient
+const { data } = await supabaseClient
 .from("bookings")
 .select("*")
 .order("created_at",{ascending:false})
 
-if(error || !data || data.length === 0){
-progressControl.innerHTML="No booking assigned to you"
+if(!data || data.length===0){
+progressControl.innerHTML="No booking"
 return
 }
 
 let booking = null
 
-// find booking assigned to this guide
 data.forEach(b=>{
+
 let admin = b.admin_details || {}
 
-if(typeof admin === "string"){
+if(typeof admin==="string"){
 try{ admin = JSON.parse(admin) }catch(e){}
 }
 
-if(admin.guide === guide.email && !booking){
+let assigned =
+admin.guide ||
+admin.guide_email ||
+admin.guideEmail ||
+admin.selectedGuide
+
+if(assigned === guide.email && !booking){
 booking = b
 }
+
 })
 
 if(!booking){
-progressControl.innerHTML="No booking assigned to you"
+progressControl.innerHTML="No trip assigned"
 return
 }
 
 currentBookingId = booking.id
 
-let parsed = {}
+let parsed={}
 try{ parsed = JSON.parse(booking.traveller_details || "{}") }catch(e){}
 
 let places = parsed.places || []
 let activities = parsed.activities || []
 let gondola = parsed.gondola || []
 
-let hotelDays = booking.hotel_days || []
-if(typeof hotelDays === "string"){
-try{ hotelDays = JSON.parse(hotelDays) }catch(e){}
-}
-
 let saved = booking.progress || {}
-
-if(typeof saved === "string"){
-try{
-saved = JSON.parse(saved)
-}catch(e){
-saved = {}
-}
+if(typeof saved==="string"){
+try{ saved = JSON.parse(saved) }catch(e){ saved={} }
 }
 
 tempProgress = saved
 
-let html = ""
-// ADMIN DETAILS
 let admin = booking.admin_details || {}
-
-if(typeof admin === "string"){
+if(typeof admin==="string"){
 try{ admin = JSON.parse(admin) }catch(e){}
 }
 
-/* CAB DETAIL */
+let html=""
+
+// CAB CONTROL
 if(admin.cab_name){
-html += `
-<div class="box">
-<h3>Cab Detail</h3>
-<img src="${admin.cab_photo}" style="width:100%;border-radius:10px"><br>
-Cab: ${admin.cab_name}<br>
-Number: ${admin.cab_number}<br>
-Driver: ${admin.driver_name}<br>
-Phone: ${admin.driver_phone}
-</div>`
-}
 
-/* HOTEL DAY WISE */
-for(let i=1;i<=5;i++){
-if(admin[\`hotel${i}\`]){
-html += `
-<div class="box">
-<h3>Day ${i}</h3>
-<img src="${admin[\`hotel${i}_photo\`]}" style="width:100%;border-radius:10px"><br>
-${admin[\`hotel${i}\`]}<br>
-${admin[\`hotel${i}_address\`]}<br>
-${admin[\`hotel${i}_contact\`]}<br>
-Room: ${admin[\`hotel${i}_room\`]}
-</div>`
-}
-}
+let key="cab"
 
-/* HOTEL */
-hotelDays.forEach((d,i)=>{
-let key="hotel_"+i
-html += `
+html+=`
 <div class="progress-item">
-<span>${d.day} - ${d.hotel}</span>
+<span>Cab - ${admin.cab_name}</span>
 <input type="checkbox"
 ${tempProgress[key]?"checked":""}
 onchange="tempProgress['${key}']=this.checked;updatePreview()">
 </div>`
-})
+}
 
-/* PLACES */
+// GUIDE CONTROL
+if(admin.guide){
+
+let key="guide"
+
+html+=`
+<div class="progress-item">
+<span>Guide - ${admin.guide}</span>
+<input type="checkbox"
+${tempProgress[key]?"checked":""}
+onchange="tempProgress['${key}']=this.checked;updatePreview()">
+</div>`
+}
+
+// HOTEL DAY WISE
+for(let i=1;i<=5;i++){
+
+if(admin[`hotel${i}`]){
+
+let key="hotelDay_"+i
+
+html+=`
+<div class="progress-item">
+<span>Day ${i} - ${admin[`hotel${i}`]}</span>
+<input type="checkbox"
+${tempProgress[key]?"checked":""}
+onchange="tempProgress['${key}']=this.checked;updatePreview()">
+</div>`
+
+}
+
+}
+
 places.forEach((p,i)=>{
 let key="place_"+i
-html += `
+html+=`
 <div class="progress-item">
 <span>${p.name}</span>
 <input type="checkbox"
@@ -465,10 +463,9 @@ onchange="tempProgress['${key}']=this.checked;updatePreview()">
 </div>`
 })
 
-/* ACTIVITIES */
 activities.forEach((a,i)=>{
 let key="activity_"+i
-html += `
+html+=`
 <div class="progress-item">
 <span>${a.name}</span>
 <input type="checkbox"
@@ -477,10 +474,9 @@ onchange="tempProgress['${key}']=this.checked;updatePreview()">
 </div>`
 })
 
-/* GONDOLA */
 gondola.forEach((g,i)=>{
 let key="gondola_"+i
-html += `
+html+=`
 <div class="progress-item">
 <span>${g}</span>
 <input type="checkbox"
@@ -498,19 +494,19 @@ function updatePreview(){
 
 let html=""
 Object.keys(tempProgress).forEach(k=>{
-html += `
+html+=`
 <div class="progress-item">
 <span>${k}</span>
 <span>${tempProgress[k]?"✔":"✖"}</span>
 </div>`
 })
+
 previewBox.innerHTML = html
 
 }
 
 async function saveProgress(){
 
-// get latest from DB
 const { data } = await supabaseClient
 .from("bookings")
 .select("progress")
@@ -519,15 +515,10 @@ const { data } = await supabaseClient
 
 let progress = data?.progress || {}
 
-if(typeof progress === "string"){
-try{
-progress = JSON.parse(progress)
-}catch(e){
-progress = {}
-}
+if(typeof progress==="string"){
+try{ progress = JSON.parse(progress) }catch(e){ progress={} }
 }
 
-// merge
 progress = {...progress, ...tempProgress}
 
 await supabaseClient
@@ -535,47 +526,12 @@ await supabaseClient
 .update({progress:progress})
 .eq("id", currentBookingId)
 
-msg.innerText="Progress Updated Successfully"
-setTimeout(()=>msg.innerText="",2000)
+msg.innerText="Progress Updated"
 
-}
-
-function downloadID(){
-
-const card = document.getElementById("idCard")
-const img = document.getElementById("guidePhoto")
-
-if(!img.complete){
-img.onload = () => captureCard()
-}else{
-captureCard()
-}
-
-function captureCard(){
-html2canvas(card,{
-useCORS:true,
-scale:2
-}).then(canvas=>{
-const link = document.createElement("a")
-link.download = "Guide-ID-Card.png"
-link.href = canvas.toDataURL("image/png")
-link.click()
-})
-}
-
-}
-
-function openCallModal(){
-document.getElementById("callModal").style.display="flex"
-}
-
-function closeCallModal(){
-document.getElementById("callModal").style.display="none"
-}
-
-function callNumber(num){
-window.location.href="tel:"+num
-}
+setTimeout(()=>{
+msg.innerText=""
+location.reload()
+},1000)
 
 function logoutGuide(){
 localStorage.removeItem("guide")
