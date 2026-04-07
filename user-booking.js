@@ -22,7 +22,9 @@ return
 let html = ""
 
 data.forEach(b=>{
+let admin = b.admin_details || {}
 let status = b.status || "pending"
+if(status === "accepted") status = "assigned"
 let parsed = {}
 try{
 parsed = JSON.parse(b.traveller_details || "{}")
@@ -159,24 +161,28 @@ Single Bedroom x ${singleRoom} = ₹ ${singleTotal}<br>
 Double Bedroom x ${doubleRoom} = ₹ ${doubleTotal}
 </div>
 
-<h3>Guide</h3>
-<div>
-<img src="${b.guide_id_card || ""}" style="width:120px"><br>
-${b.guide_name || "Pending"}<br>
-${b.guide_phone || "-"}<br>
-${b.guide_email || "-"}
+<h3>Guide</h3>  
+<div>  
+${admin.guide || "Pending"}  
 </div>
 
-<h3>Cab</h3>
-<div>
-Cab Number: ${b.cab_number || "-"}<br>
-Driver: ${b.driver_name || "-"}<br>
-<img src="${b.cab_photo || ""}" style="width:100%"><br>
-<img src="${b.driver_photo || ""}" style="width:120px">
+<h3>Cab</h3>  
+<div>  
+Cab: ${admin.cab_name || "-"}<br>
+Cab Number: ${admin.cab_number || "-"}<br>  
+Driver: ${admin.driver_name || "-"}<br>  
+Phone: ${admin.driver_phone || "-"}<br>  
+<img src="${admin.cab_photo || ""}" style="width:100%"><br>  
+<img src="${admin.driver_photo || ""}" style="width:120px">  
 </div>
 
 <h3>Day Wise Hotel</h3>
-${hotelDaysHtml}
+
+<div>Day1: ${admin.hotel1 || "-"} Room: ${admin.hotel1_room || "-"}</div>
+<div>Day2: ${admin.hotel2 || "-"} Room: ${admin.hotel2_room || "-"}</div>
+<div>Day3: ${admin.hotel3 || "-"} Room: ${admin.hotel3_room || "-"}</div>
+<div>Day4: ${admin.hotel4 || "-"} Room: ${admin.hotel4_room || "-"}</div>
+<div>Day5: ${admin.hotel5 || "-"} Room: ${admin.hotel5_room || "-"}</div>
 
 <h2>Grand Total</h2>
 <div class="price-box">
