@@ -352,32 +352,48 @@ if(!guide) return
 const { data, error } = await supabaseClient
 .from("bookings")
 .select("*")
-.eq("guide_email", guide.email)
-.eq("status","assigned")
 .order("created_at",{ascending:false})
-.limit(1)
-.single()
 
-if(error || !data){
+if(error || !data || data.length === 0){
 progressControl.innerHTML="No booking assigned to you"
 return
 }
 
-currentBookingId = data.id
+let booking = null
+
+// find booking assigned to this guide
+data.forEach(b=>{
+let admin = b.admin_details || {}
+
+if(typeof admin === "string"){
+try{ admin = JSON.parse(admin) }catch(e){}
+}
+
+if(admin.guide === guide.email && !booking){
+booking = b
+}
+})
+
+if(!booking){
+progressControl.innerHTML="No booking assigned to you"
+return
+}
+
+currentBookingId = booking.id
 
 let parsed = {}
-try{ parsed = JSON.parse(data.traveller_details || "{}") }catch(e){}
+try{ parsed = JSON.parse(booking.traveller_details || "{}") }catch(e){}
 
 let places = parsed.places || []
 let activities = parsed.activities || []
 let gondola = parsed.gondola || []
 
-let hotelDays = data.hotel_days || []
+let hotelDays = booking.hotel_days || []
 if(typeof hotelDays === "string"){
 try{ hotelDays = JSON.parse(hotelDays) }catch(e){}
 }
 
-let saved = data.progress || {}
+let saved = booking.progress || {}
 
 if(typeof saved === "string"){
 try{
@@ -390,6 +406,40 @@ saved = {}
 tempProgress = saved
 
 let html = ""
+// ADMIN DETAILS
+let admin = booking.admin_details || {}
+
+if(typeof admin === "string"){
+try{ admin = JSON.parse(admin) }catch(e){}
+}
+
+/* CAB DETAIL */
+if(admin.cab_name){
+html += `
+<div class="box">
+<h3>Cab Detail</h3>
+<img src="${admin.cab_photo}" style="width:100%;border-radius:10px"><br>
+Cab: ${admin.cab_name}<br>
+Number: ${admin.cab_number}<br>
+Driver: ${admin.driver_name}<br>
+Phone: ${admin.driver_phone}
+</div>`
+}
+
+/* HOTEL DAY WISE */
+for(let i=1;i<=5;i++){
+if(admin[\`hotel${i}\`]){
+html += `
+<div class="box">
+<h3>Day ${i}</h3>
+<img src="${admin[\`hotel${i}_photo\`]}" style="width:100%;border-radius:10px"><br>
+${admin[\`hotel${i}\`]}<br>
+${admin[\`hotel${i}_address\`]}<br>
+${admin[\`hotel${i}_contact\`]}<br>
+Room: ${admin[\`hotel${i}_room\`]}
+</div>`
+}
+}
 
 /* HOTEL */
 hotelDays.forEach((d,i)=>{
