@@ -246,11 +246,12 @@ Guide Identity Card
 Trusted Kashmir Tour Partner<br>
 Founders: Aamir • Amir • Owais
 </div>
-
+</div>
+<!-- BUTTONS OUTSIDE -->
 <button class="download-btn" onclick="downloadID()">Download Identity Card</button>
 <button class="logout-btn" onclick="logoutGuide()">Logout</button>
 
-</div>
+
 
 <!-- RIGHT -->
 <div class="right-section">
@@ -539,6 +540,18 @@ location.reload()
 function logoutGuide(){
 localStorage.removeItem("guide")
 window.location.href="account.html"
+}
+
+function openCallModal(){
+document.getElementById("callModal").style.display="flex"
+}
+
+function closeCallModal(){
+document.getElementById("callModal").style.display="none"
+}
+
+function callNumber(num){
+window.location.href = "tel:" + num
 }
 
 </script>
