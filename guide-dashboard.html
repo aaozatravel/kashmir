@@ -334,6 +334,7 @@ if(!guide){ window.location.href="account.html"; return }
 guideName.innerText = guide.name
 guidePhone.innerText = "Phone: " + guide.phone
 guideEmail.innerText = "Email: " + guide.email
+guideTag.innerText = guide.tag || "Guide Identity Card"
 
 const img = guide.photo || guide.photo_url || guide.image || guide.avatar
 if(img){ guidePhoto.src = img }
@@ -532,6 +533,8 @@ setTimeout(()=>{
 msg.innerText=""
 location.reload()
 },1000)
+
+}  // <-- YE MISSING THA
 
 function logoutGuide(){
 localStorage.removeItem("guide")
