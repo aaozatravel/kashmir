@@ -557,11 +557,15 @@ function downloadID(){
 
 const card = document.getElementById("idCard")
 
-html2canvas(card).then(canvas=>{
+html2canvas(card,{
+useCORS:true,
+allowTaint:true,
+scale:2
+}).then(canvas=>{
 
 const link = document.createElement("a")
 link.download = "Guide-ID-Card.png"
-link.href = canvas.toDataURL()
+link.href = canvas.toDataURL("image/png")
 link.click()
 
 })
