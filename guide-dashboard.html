@@ -553,6 +553,20 @@ document.getElementById("callModal").style.display="none"
 function callNumber(num){
 window.location.href = "tel:" + num
 }
+function downloadID(){
+
+const card = document.getElementById("idCard")
+
+html2canvas(card).then(canvas=>{
+
+const link = document.createElement("a")
+link.download = "Guide-ID-Card.png"
+link.href = canvas.toDataURL()
+link.click()
+
+})
+
+}
 
 </script>
 
