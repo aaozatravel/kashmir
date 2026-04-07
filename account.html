@@ -45,7 +45,6 @@ border-bottom:1px dashed #ddd;
 <p id="userEmail">Email: Not Available</p>
 
 <button onclick="logoutUser()" class="logout-btn">Logout</button>
-
 </div>
 
 <div class="progress-box">
@@ -71,7 +70,6 @@ async function initPage(){
 
 const { data:{ user } } = await supabaseClient.auth.getUser()
 
-// agar login nahi hai → login page
 if(!user){
 window.location.href="login.html"
 return
@@ -143,14 +141,11 @@ try{
 parsed = JSON.parse(booking.traveller_details || "{}")
 }catch(e){}
 
+let admin = booking.admin_details || {}
+
 let places = parsed.places || []
 let activities = parsed.activities || []
 let gondola = parsed.gondola || []
-
-let hotelDays = booking.hotel_days || []
-if(typeof hotelDays === "string"){
-try{ hotelDays = JSON.parse(hotelDays) }catch(e){}
-}
 
 let progress = booking.progress || {}
 
@@ -169,14 +164,59 @@ progressContainer.innerHTML = ""
 
 let html = ""
 
-hotelDays.forEach((d,i)=>{
-let key="hotel_"+i
+/* HOTELS */
+if(admin.hotel1){
 html += `<div class="progress-item">
-<span>${d.day} - ${d.hotel}</span>
-<span class="${progress[key]?'tick':'cross'}">${progress[key]?'✔':'✖'}</span>
+<span>🏨 Day1 - ${admin.hotel1}</span>
+<span class="cross">✖</span>
 </div>`
-})
+}
 
+if(admin.hotel2){
+html += `<div class="progress-item">
+<span>🏨 Day2 - ${admin.hotel2}</span>
+<span class="cross">✖</span>
+</div>`
+}
+
+if(admin.hotel3){
+html += `<div class="progress-item">
+<span>🏨 Day3 - ${admin.hotel3}</span>
+<span class="cross">✖</span>
+</div>`
+}
+
+if(admin.hotel4){
+html += `<div class="progress-item">
+<span>🏨 Day4 - ${admin.hotel4}</span>
+<span class="cross">✖</span>
+</div>`
+}
+
+if(admin.hotel5){
+html += `<div class="progress-item">
+<span>🏨 Day5 - ${admin.hotel5}</span>
+<span class="cross">✖</span>
+</div>`
+}
+
+/* CAB */
+if(admin.cab_name){
+html += `<div class="progress-item">
+<span>🚕 ${admin.cab_name} - ${admin.driver_name}</span>
+<span class="cross">✖</span>
+</div>`
+}
+
+/* GUIDE */
+if(admin.guide){
+html += `<div class="progress-item">
+<span>🧑‍💼 Guide - ${admin.guide}</span>
+<span class="cross">✖</span>
+</div>`
+}
+
+/* PLACES */
 places.forEach((p,i)=>{
 let key="place_"+i
 html += `<div class="progress-item">
@@ -185,6 +225,7 @@ html += `<div class="progress-item">
 </div>`
 })
 
+/* ACTIVITIES */
 activities.forEach((a,i)=>{
 let key="activity_"+i
 html += `<div class="progress-item">
@@ -193,6 +234,7 @@ html += `<div class="progress-item">
 </div>`
 })
 
+/* GONDOLA */
 gondola.forEach((g,i)=>{
 let key="gondola_"+i
 html += `<div class="progress-item">
@@ -204,7 +246,6 @@ html += `<div class="progress-item">
 progressContainer.innerHTML = html || "No trip assigned"
 }
 
-// 👇 yaha add karo
 async function logoutUser(){
 await supabaseClient.auth.signOut()
 window.location.href="login.html"
