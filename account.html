@@ -164,56 +164,48 @@ progressContainer.innerHTML = ""
 
 let html = ""
 
-/* HOTELS */
-if(admin.hotel1){
-html += `<div class="progress-item">
-<span>🏨 Day1 - ${admin.hotel1}</span>
-<span class="cross">✖</span>
-</div>`
-}
-
-if(admin.hotel2){
-html += `<div class="progress-item">
-<span>🏨 Day2 - ${admin.hotel2}</span>
-<span class="cross">✖</span>
-</div>`
-}
-
-if(admin.hotel3){
-html += `<div class="progress-item">
-<span>🏨 Day3 - ${admin.hotel3}</span>
-<span class="cross">✖</span>
-</div>`
-}
-
-if(admin.hotel4){
-html += `<div class="progress-item">
-<span>🏨 Day4 - ${admin.hotel4}</span>
-<span class="cross">✖</span>
-</div>`
-}
-
-if(admin.hotel5){
-html += `<div class="progress-item">
-<span>🏨 Day5 - ${admin.hotel5}</span>
-<span class="cross">✖</span>
-</div>`
-}
-
 /* CAB */
 if(admin.cab_name){
+
+let key="cab"
+
 html += `<div class="progress-item">
 <span>🚕 ${admin.cab_name} - ${admin.driver_name}</span>
-<span class="cross">✖</span>
+<span class="${progress[key]?'tick':'cross'}">
+${progress[key]?'✔':'✖'}
+</span>
 </div>`
 }
 
 /* GUIDE */
 if(admin.guide){
+
+let key="guide"
+
 html += `<div class="progress-item">
 <span>🧑‍💼 Guide - ${admin.guide}</span>
-<span class="cross">✖</span>
+<span class="${progress[key]?'tick':'cross'}">
+${progress[key]?'✔':'✖'}
+</span>
 </div>`
+}
+
+/* HOTEL DAYS */
+for(let i=1;i<=5;i++){
+
+if(admin["hotel"+i]){
+
+let key="hotelDay_"+i
+
+html += `<div class="progress-item">
+<span>🏨 Day ${i} - ${admin["hotel"+i]}</span>
+<span class="${progress[key]?'tick':'cross'}">
+${progress[key]?'✔':'✖'}
+</span>
+</div>`
+
+}
+
 }
 
 /* PLACES */
