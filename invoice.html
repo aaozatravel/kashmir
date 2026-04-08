@@ -1,216 +1,244 @@
-<!DOCTYPE html>    <html lang="en">    
-<head>    
-<meta charset="UTF-8">    
-<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-<title>Invoice</title>    <style>    
-body{    
-font-family: Arial;    
-background:#f5f5f5;    
-padding:20px;    
-}    
-    
-.invoice-box{    
-background:#fff;    
-padding:20px;    
-max-width:900px;    
-margin:auto;    
-border-radius:8px;    
-}    
-    
-.header{    
-display:flex;    
-align-items:center;    
-gap:15px;    
-border-bottom:2px solid #eee;    
-padding-bottom:10px;    
-}    
-    
-.logo{    
-width:70px;    
-}    
-    
-.section{    
-margin-top:20px;    
-}    
-    
-table{    
-width:100%;    
-border-collapse:collapse;    
-margin-top:10px;    
-}    
-    
-table, th, td{    
-border:1px solid #ddd;    
-}    
-    
-th, td{    
-padding:8px;    
-text-align:left;    
-}    
-    
-.total{    
-text-align:right;    
-font-size:20px;    
-font-weight:bold;    
-margin-top:20px;    
-}    
-    
-.note{    
-margin-top:20px;    
-font-size:14px;    
-color:#555;    
-}    
-    
-.print-btn{    
-margin-top:20px;    
-padding:10px 20px;    
-background:black;    
-color:white;    
-border:none;    
-cursor:pointer;    
-}    
-    
-.guide-img{    
-width:60px;    
-border-radius:6px;    
-margin-top:5px;    
-}    
-</style>    </head>    <body>    <div class="invoice-box">    <div class="header">    
-<img src="logo.jpg" class="logo">    
-<div>    
-<h2>Aaoza Travels Kashmir</h2>    
-<p>Phone: +91 XXXXXXXX</p>    
-<p>Email: info@aaozatravels.com</p>    
-</div>    
-</div>    <div class="section">    
-<h3>Booking Details</h3>    
-<p><b>Tour:</b> <span id="tourName"></span></p>    
-<p><b>Departure:</b> <span id="departure"></span></p>    
-</div>    <div class="section">    
-<h3>Traveller Details</h3>    
-<table>    
-<thead>    
-<tr>    
-<th>Name</th>    
-<th>Gender</th>    
-<th>Age</th>    
-<th>Phone</th>    
-</tr>    
-</thead>    
-<tbody id="travellerTable"></tbody>    
-</table>    
-</div>    <div class="section">    
-<h3>Activities</h3>    
-<div id="activityBox"></div>    
-</div>    <div class="section">    
-<h3>Gondola Tickets</h3>    
-<div id="gondolaBox"></div>    
-</div>    <div class="section">    
-<h3>Rooms</h3>    
-<div id="roomBox"></div>    
-</div>    <div class="section">    
-<h3>Guide Details</h3>    
-<img id="guidePhoto" class="guide-img">    
-<p>Name: <span id="guideName"></span></p>    
-<p>Phone: <span id="guidePhone"></span></p>    
-<p>Email: <span id="guideEmail"></span></p>    
-</div>    <div class="section">    
-<h3>Hotel Details</h3>    
-<p>Hotel: <span id="hotelName"></span></p>    
-<p>Room No: <span id="roomNumber"></span></p>    
-<p>Contact: <span id="hotelContact"></span></p>    
-</div>    <div class="total">    
-Grand Total: <span id="total"></span>    
-</div>    <div class="note">    
-Note: Hotels, rooms, guides, and cabs are included in the package." ✅    
-Note: All photoshoot, reels shoot and video shoot will be provided by Avoza Travels.
-</div>    <div style="margin-top:20px; display:flex; gap:10px;">    
-<button class="print-btn" onclick="downloadPDF()">    
-📄 Download Invoice    
-</button>    <button class="print-btn" onclick="window.print()">    
-🖨 Print Invoice    
-</button>    
-</div>    </div>    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>    <script src="supabase.js"></script>    <script>    
-async function loadInvoice(){    
-    
-const id = localStorage.getItem("invoiceBookingId")    
-    
-const { data } = await supabaseClient    
-.from("bookings")    
-.select("*")    
-.eq("id", id)    
-.single()    
-    
-let parsed = JSON.parse(data.traveller_details || "{}")    
-    
-let travellers = parsed.travellers || []    
-let activities = parsed.activities || []    
-let gondola = parsed.gondola || []    
-    
-let singleRoom = parsed.single_room || 0    
-let doubleRoom = parsed.double_room || 0    
-    
-document.getElementById("tourName").innerText = data.tour_name    
-document.getElementById("departure").innerText = parsed.departure    
-document.getElementById("total").innerText = "₹ " + parsed.total    
-    
-/* travellers */    
-let rows = ""    
-travellers.forEach(t=>{    
-rows += `    
-<tr>    
-<td>${t.name}</td>    
-<td>${t.gender}</td>    
-<td>${t.age}</td>    
-<td>${t.phone}</td>    
-</tr>    
-`    
-})    
-document.getElementById("travellerTable").innerHTML = rows    
-    
-/* activities */    
-document.getElementById("activityBox").innerHTML =    
-activities.map(a=>`${a.name} - ₹${a.price}`).join("<br>") || "-"    
-    
-/* gondola */    
-document.getElementById("gondolaBox").innerHTML =    
-gondola.join("<br>") || "-"    
-    
-/* rooms */    
-document.getElementById("roomBox").innerHTML =    
-`Single Room x ${singleRoom} <br> Double Room x ${doubleRoom}`    
-    
-/* guide */    
-document.getElementById("guideName").innerText = data.guide_name || "-"    
-document.getElementById("guidePhone").innerText = data.guide_phone || "-"    
-document.getElementById("guideEmail").innerText = data.guide_email || "-"    
-    
-if(data.guide_id_card){    
-document.getElementById("guidePhoto").src = data.guide_id_card    
-}    
-    
-/* hotel */    
-document.getElementById("hotelName").innerText = data.hotel_name || "-"    
-document.getElementById("roomNumber").innerText = data.room_number || "-"    
-document.getElementById("hotelContact").innerText = data.hotel_contact || "-"    
-    
-}    
-    
-loadInvoice()    
-<script>    
-function downloadPDF(){    
-    
-const printContents = document.querySelector(".invoice-box").innerHTML    
-const originalContents = document.body.innerHTML    
-    
-document.body.innerHTML = printContents    
-    
-window.print()    
-    
-document.body.innerHTML = originalContents    
-    
-location.reload()    
-    
-}    
-</script>    </body>    
-</html> 
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Invoice</title>
+
+<style>
+body{
+font-family:Arial;
+background:#f5f5f5;
+padding:20px;
+}
+
+.invoice{
+background:white;
+padding:20px;
+max-width:1000px;
+margin:auto;
+border-radius:10px;
+}
+
+.header{
+display:flex;
+align-items:center;
+gap:15px;
+border-bottom:2px solid #eee;
+padding-bottom:10px;
+}
+
+.logo{width:70px}
+
+.box{
+margin-top:20px;
+padding:15px;
+border:1px solid #eee;
+border-radius:8px;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+}
+
+th,td{
+border:1px solid #ddd;
+padding:8px;
+}
+
+.total{
+text-align:right;
+font-size:20px;
+font-weight:bold;
+margin-top:20px;
+}
+
+.print-btn{
+margin-top:15px;
+padding:10px 20px;
+background:black;
+color:white;
+border:none;
+}
+</style>
+
+</head>
+<body>
+
+<div class="invoice" id="invoice">
+
+<div class="header">
+<img src="logo.jpg" class="logo">
+<div>
+<h2>Aaoza Travels Kashmir</h2>
+<p>Phone: +91 7051932522</p>
+<p>Founders: Aamir • Amir • Owais</p>
+</div>
+</div>
+
+<div id="content"></div>
+
+<div class="total">
+Grand Total: ₹ <span id="grandTotal"></span>
+</div>
+
+<button class="print-btn" onclick="window.print()">Print</button>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase.js"></script>
+
+<script>
+
+const urlParams = new URLSearchParams(window.location.search)
+const bookingId = urlParams.get("id")
+
+loadInvoice()
+
+async function loadInvoice(){
+
+const { data } = await supabaseClient
+.from("bookings")
+.select("*")
+.eq("id", bookingId)
+.single()
+
+let parsed = JSON.parse(data.traveller_details || "{}")
+let admin = data.admin_details || {}
+
+if(typeof admin === "string"){
+try{ admin = JSON.parse(admin) }catch(e){}
+}
+
+let travellers = parsed.travellers || []
+let places = parsed.places || []
+let activities = parsed.activities || []
+
+let gondolaPrice = Number(parsed.gondola_price || 0)
+let gondolaName = parsed.gondola_name || "Gondola"
+
+let placesTotal = places.reduce((t,p)=>t+Number(p.price||p.total||0),0)
+let activitiesTotal = activities.reduce((t,a)=>t+Number(a.price||0),0)
+activitiesTotal += gondolaPrice
+
+let departurePrice = Number(parsed.departure_price || 0)
+let subtotal = placesTotal + activitiesTotal + departurePrice
+
+let travellerCount = travellers.length
+
+let singleRoom = Number(parsed.single_room || 0)
+let doubleRoom = Number(parsed.double_room || 0)
+
+let roomTotal = (singleRoom*6999)+(doubleRoom*8999)
+
+let grandTotal = (subtotal * travellerCount) + roomTotal
+
+document.getElementById("grandTotal").innerText = grandTotal
+
+let html = ""
+
+html += `
+<div class="box">
+<h3>Travellers</h3>
+<table>
+<tr>
+<th>Name</th>
+<th>Age</th>
+<th>Gender</th>
+<th>Phone</th>
+<th>Price</th>
+</tr>
+${travellers.map(t=>`
+<tr>
+<td>${t.name}</td>
+<td>${t.age}</td>
+<td>${t.gender}</td>
+<td>${t.phone}</td>
+<td>₹ ${subtotal}</td>
+</tr>`).join("")}
+</table>
+</div>
+`
+
+html += `
+<div class="box">
+<h3>Places</h3>
+${places.map(p=>`${p.name} - ₹${p.price || p.total}`).join("<br>")}
+<br><b>Total ₹${placesTotal}</b>
+</div>
+`
+
+html += `
+<div class="box">
+<h3>Activities</h3>
+${activities.map(a=>`${a.name} - ₹${a.price}`).join("<br>")}
+${gondolaPrice ? `<br>${gondolaName} - ₹${gondolaPrice}` : ""}
+<br><b>Total ₹${activitiesTotal}</b>
+</div>
+`
+
+html += `
+<div class="box">
+<h3>Rooms</h3>
+Single (${singleRoom}) = ₹${singleRoom*6999}<br>
+Double (${doubleRoom}) = ₹${doubleRoom*8999}<br>
+<b>Total ₹${roomTotal}</b>
+</div>
+`
+
+html += `
+<div class="box">
+<h3>Cab & Driver</h3>
+Cab: ${admin.cab_name || "-"}<br>
+Number: ${admin.cab_number || "-"}<br>
+Driver: ${admin.driver_name || "-"}<br>
+Phone: ${admin.driver_phone || "-"}
+</div>
+`
+
+html += `
+<div class="box">
+<h3>Guide</h3>
+Email: ${admin.guide || "-"}
+</div>
+`
+
+html += `
+<div class="box">
+<h3>Hotels</h3>
+${[1,2,3,4,5].map(i=>`
+<b>Day ${i}</b><br>
+${admin["hotel"+i] || "-"}<br>
+Room: ${admin["hotel"+i+"_room"] || "-"}<br>
+Contact: ${admin["hotel"+i+"_contact"] || "-"}<br><br>
+`).join("")}
+</div>
+`
+
+html += `
+<div class="box">
+<h3>Included Services</h3>
+✔ Reels Shoot<br>
+✔ Photography<br>
+✔ Video Shoot<br>
+✔ Trip Assistance
+</div>
+`
+
+html += `
+<div class="box">
+<h3>Subtotal Per Traveller</h3>
+₹ ${subtotal}
+</div>
+`
+
+document.getElementById("content").innerHTML = html
+
+}
+
+</script>
+
+</body>
+</html>
