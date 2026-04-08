@@ -124,30 +124,47 @@ document.getElementById("navMenu").classList.toggle("active")
 </script>
     <script>
 let deferredPrompt;
+const installBanner = document.getElementById("installBanner");
 const installBtn = document.getElementById("installBtn");
+
 // hide by default
-installBtn.style.display = "none";
-// check if already installed (PWA mode)
+installBanner.style.display = "none";
+
+// check if already installed (PWA)
 const isStandalone =
 window.matchMedia('(display-mode: standalone)').matches ||
 window.navigator.standalone === true;
+
 if(isStandalone){
-installBtn.style.display = "none";
+installBanner.style.display = "none";
 }else{
+
 window.addEventListener('beforeinstallprompt', (e)=>{
 e.preventDefault();
 deferredPrompt = e;
-installBtn.style.display = "inline-block";
+installBanner.style.display = "inline-flex";
 });
+
 installBtn.addEventListener("click", async ()=>{
 if(!deferredPrompt) return;
+
 deferredPrompt.prompt();
+
 const { outcome } = await deferredPrompt.userChoice;
+
 if(outcome === "accepted"){
-installBtn.style.display = "none";
+installBanner.style.display = "none";
+localStorage.setItem("appInstalled","yes");
 }
+
 deferredPrompt = null;
 });
+
+}
+
+// hide if installed previously
+if(localStorage.getItem("appInstalled") === "yes"){
+installBanner.style.display = "none";
 }
 const heroImages = [
 "kashmir.jpg",
