@@ -48,32 +48,86 @@ font-size:13px;
 
 /* ================= HERO ================= */
 .hero{
-height:40vh;
-background:url('kashmir.jpg') center/cover no-repeat;
+height:42vh;
 display:flex;
 flex-direction:column;
 justify-content:center;
 align-items:center;
 text-align:center;
 color:white;
+position:relative;
+overflow:hidden;
+border-bottom-left-radius:25px;
+border-bottom-right-radius:25px;
+
+/* original image */
+background:url('kashmir.jpg') center/cover no-repeat;
 }
 
-.hero h1{
-font-size:20px;
+/* remove color filter → sirf light animation */
+.hero::before{
+content:"";
+position:absolute;
+top:-80px;
+left:-80px;
+width:260px;
+height:260px;
+background:rgba(255,255,255,0.18);
+filter:blur(80px);
+border-radius:50%;
+animation:heroLight 10s infinite alternate;
+z-index:0;
 }
 
-.hero p{
-font-size:13px;
-margin-top:5px;
+/* second moving light */
+.hero{
+height:42vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+text-align:center;
+color:white;
+position:relative;
+overflow:hidden;
+border-bottom-left-radius:25px;
+border-bottom-right-radius:25px;
+
+background:url('kashmir.jpg') center/cover no-repeat;
+
+/* smooth animation */
+transition:background-image 1.2s ease-in-out;
+animation:heroZoom 8s infinite alternate;
+}
+
+@keyframes heroZoom{
+0%{background-size:100%}
+100%{background-size:110%}
+}
+
+.hero h1,
+.hero p,
+.hero button{
+z-index:1;
 }
 
 .hero button{
-margin-top:12px;
-padding:8px 18px;
-background:#1e88e5;
-border:none;
+background:#ff7a00;
 color:white;
-border-radius:6px;
+border:none;
+padding:12px 22px;
+border-radius:25px;
+font-size:15px;
+font-weight:bold;
+margin-top:10px;
+box-shadow:0 4px 15px rgba(0,0,0,0.25);
+cursor:pointer;
+transition:0.3s;
+}
+
+.hero button:hover{
+background:#ff9500;
+transform:translateY(-2px);
 }
 
 /* ================= SERVICES ================= */
@@ -1305,3 +1359,8 @@ cursor:pointer;
 box-shadow:0 3px 8px rgba(0,0,0,0.2);
 }
 
+/*our servise link*/
+.services a{
+text-decoration:none;
+color:inherit;
+}
