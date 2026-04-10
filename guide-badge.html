@@ -157,6 +157,37 @@ border-radius:30px;
 font-size:12px;
 font-weight:600;
 }
+.heart{
+font-size:18px;
+margin-right:5px;
+cursor:pointer;
+transition:0.2s;
+}
+
+.heart.liked{
+color:#e11d48;
+transform:scale(1.2);
+}
+
+.card-topbar{
+display:flex;
+align-items:center;
+gap:8px;
+margin-bottom:10px;
+justify-content:flex-start;
+}
+
+.card-topbar img{
+width:22px;
+height:22px;
+border-radius:50%;
+}
+
+.card-topbar span{
+font-size:12px;
+font-weight:600;
+color:#333;
+}
 
 </style>
 </head>
@@ -210,6 +241,13 @@ data.forEach(g=>{
 let rating = parseFloat(g.rating || 0).toFixed(1)
 let likes = g.likes || 0
 
+// ⭐ AUTO ROLE SYSTEM
+let role = g.type || 'Local Guide'
+
+if (role === "Local Guide" && likes >= 25) {
+    role = "Aaoza Guide"
+}
+
 let tick = likes >= 50 ? `
 <span class="tick">
     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -218,21 +256,20 @@ let tick = likes >= 50 ? `
     </svg>
 </span>` : "";
 
-
-
-
-
 let verified = likes >= 50 ? `<div class="badge">Verified Guide</div>` : ""
 
-html+=`
-
+html += `
 <div class="card">
+    <div class="card-topbar">
+        <img src="logo.jpg">
+        <span>Aaoza Travels</span>
+    </div>
 
 <img src="${g.photo || 'https://via.placeholder.com/150'}" class="avatar">
 
 <div class="name">${g.name} ${tick}</div>
 
-<div class="role">${g.type || 'Local Guide'}</div>
+<div class="role">${role}</div>
 
 <div class="exp">${g.experience || '5+ Years Experience'}</div>
 
@@ -246,8 +283,9 @@ html+=`
 <span class="star" onclick="rate('${g.id}',5)">★</span>
 </div>
 
-<div class="like-box" onclick="likeGuide('${g.id}')">
-❤️ <span id="like-${g.id}">${likes}</span> Likes
+<div class="like-box" onclick="likeGuide('${g.id}', this)">
+<span class="heart">🤍</span>
+<span id="like-${g.id}">${likes}</span> Likes
 </div>
 
 ${verified}
@@ -297,7 +335,7 @@ async function rate(id, stars) {
 
 
 // ❤️ LIKE (ONE TIME)
-async function likeGuide(id){
+async function likeGuide(id, el){
 
 if(localStorage.getItem("liked_"+id)){
 alert("You already liked ❤️")
@@ -310,6 +348,25 @@ let count = parseInt(likeEl.innerText || 0)
 count++
 likeEl.innerText = count
 
+// ❤️ heart change
+let heart = el.querySelector(".heart")
+heart.classList.add("liked")
+heart.textContent = "❤️"
+
+let card = likeEl.closest('.card')
+let roleEl = card.querySelector('.role')
+
+// 25 likes system
+if (count >= 25) {
+    await supabaseClient
+        .from("guides")
+        .update({ type: "Aaoza Guide" })
+        .eq("id", id)
+
+    roleEl.innerText = "Aaoza Guide"
+}
+
+// update DB likes
 await supabaseClient
 .from("guides")
 .update({ likes: count })
