@@ -222,15 +222,21 @@ const { data } = await supabaseClient
 .from("guides")
 .select("*")
 
-data.sort((a,b)=>{
+data.sort((a, b) => {
 
-const order = {
-"Senior Guide":1,
-"Aaoza Guide":2,
-"Local Guide":3
+function getRank(g){
+    if(g.type === "Senior Guide") return 1
+    if(g.verified) return 2
+    return 3
 }
 
-return (order[a.type] || 3) - (order[b.type] || 3)
+let diff = getRank(a) - getRank(b)
+
+if(diff === 0){
+    return (b.likes || 0) - (a.likes || 0)
+}
+
+return diff
 
 })
 
@@ -244,7 +250,10 @@ let likes = g.likes || 0
 // ⭐ AUTO ROLE SYSTEM
 let role = g.type
 
-if (g.verified) {
+if (g.type === "Senior Guide") {
+    role = "Senior Guide"
+} 
+else if (g.type === "Local Guide" && g.verified) {
     role = "Aaoza Guide"
 }
 
