@@ -189,6 +189,88 @@ font-weight:600;
 color:#333;
 }
 
+.premium-card{
+background: linear-gradient(145deg,#000000,#0b0b0b,#111111);
+color:#ffffff;
+border:1px solid #d4af37;
+box-shadow:0 20px 60px rgba(212,175,55,0.35);
+position:relative;
+overflow:hidden;
+}
+
+/* Golden shine overlay */
+.premium-card::before{
+content:"";
+position:absolute;
+top:-50%;
+left:-50%;
+width:200%;
+height:200%;
+background:linear-gradient(
+120deg,
+transparent,
+rgba(212,175,55,0.15),
+transparent
+);
+transform:rotate(25deg);
+animation:premiumShine 6s linear infinite;
+}
+
+@keyframes premiumShine{
+0%{ transform:translateX(-100%) rotate(25deg); }
+100%{ transform:translateX(100%) rotate(25deg); }
+}
+
+/* Name gold */
+.premium-card .name{
+color:#facc15;
+font-weight:700;
+}
+
+/* Role gold */
+.premium-card .role{
+color:#facc15;
+}
+
+/* Experience text */
+.premium-card .exp{
+color:#ddd;
+}
+
+/* Rating */
+.premium-card .rating-number{
+color:#facc15;
+}
+
+/* Badge premium */
+.premium-card .badge{
+background:linear-gradient(145deg,#facc15,#d4af37);
+color:#000;
+font-weight:700;
+}
+
+/* Avatar gold border */
+.premium-card .avatar{
+border:3px solid #d4af37;
+}
+
+/* Hover luxury lift */
+.premium-card:hover{
+transform:translateY(-6px);
+box-shadow:0 25px 70px rgba(212,175,55,0.5);
+transition:0.3s ease;
+}
+
+/* Topbar text */
+.premium-card .card-topbar span{
+color:#facc15;
+}
+
+/* Like text */
+.premium-card .like-box{
+color:#facc15;
+}
+
 </style>
 </head>
 
@@ -246,6 +328,7 @@ data.forEach(g=>{
 
 let rating = parseFloat(g.rating || 0).toFixed(1)
 let likes = g.likes || 0
+let premium = likes >= 100 ? "premium-card" : ""
 
 // ⭐ AUTO ROLE SYSTEM
 let role = g.type
@@ -266,9 +349,9 @@ let tick = likes >= 50 ? `
 </span>` : "";
 
 let verified = likes >= 50 ? `<div class="badge">Verified Guide</div>` : ""
-
+let premiumBadge = likes >= 100 ? `<div class="badge">Premium Guide</div>` : ""
 html += `
-<div class="card">
+<div class="card ${premium}">
     <div class="card-topbar">
         <img src="logo.jpg">
         <span>Aaoza Travels</span>
@@ -298,6 +381,7 @@ html += `
 </div>
 
 ${verified}
+${premiumBadge}
 
 </div>
 `
