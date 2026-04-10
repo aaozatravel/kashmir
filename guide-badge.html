@@ -271,6 +271,32 @@ color:#facc15;
 color:#facc15;
 }
 
+.share-btn{
+margin-top:12px;
+background:#fff;
+color:#2563eb;
+border:none;
+width:38px;
+height:38px;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+cursor:pointer;
+transition:0.2s;
+font-size:18px;
+}
+
+.share-btn:hover{
+transform:scale(1.1);
+background:#1d4ed8;
+}
+
+.premium-card .share-btn{
+background:#000;
+color:#d4af37;
+}
+
 </style>
 </head>
 
@@ -382,7 +408,11 @@ html += `
 
 ${verified}
 ${premiumBadge}
-
+<button class="share-btn" onclick="shareGuide('${g.name}', '${g.photo || ''}')">
+<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+<path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7a2.5 2.5 0 000-1.39l7-4.11A2.5 2.5 0 0018 7.91a2.5 2.5 0 10-2.5-2.5c0 .23.03.45.09.66l-7 4.11a2.5 2.5 0 100 3.64l7.05 4.14c-.05.19-.08.39-.08.6a2.5 2.5 0 102.5-2.5z"/>
+</svg>
+</button>
 </div>
 `
 
@@ -478,6 +508,22 @@ if (count >= 25) {
 }
 
 localStorage.setItem("liked_"+id,true)
+}
+
+function shareGuide(name, photo){
+
+const shareData = {
+title: "Aaoza Travels Guide",
+text: `Check out this professional guide: ${name} on Aaoza Travels Kashmir`,
+url: window.location.href
+}
+
+if(navigator.share){
+navigator.share(shareData)
+}else{
+alert("Sharing not supported on this device")
+}
+
 }
 
 </script>
