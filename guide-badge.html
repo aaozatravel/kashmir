@@ -394,36 +394,49 @@ document.getElementById("guideGrid").innerHTML=html
 
 // ⭐ RATE (ONE TIME)
 async function rate(id, stars) {
-    if (localStorage.getItem("rated_" + id)) {
-        alert("You already rated this guide ⭐");
-        return;
-    }
 
-    // 1. UI update karein (Stars color change)
-    const starBox = document.querySelector(`[data-id='${id}']`);
-    const starEls = starBox.querySelectorAll(".star");
-    starEls.forEach((s, i) => {
-        if (i < stars) s.classList.add("active");
-        else s.classList.remove("active");
-    });
+if (localStorage.getItem("rated_" + id)) {
+alert("You already rated this guide ⭐");
+return;
+}
 
-    // 2. Rating Number ko turant screen par badle (⭐ Number update)
-    // Hum card ke andar 'rating-number' class wali div ko dhoond kar text badal rahe hain
-    const card = starBox.closest('.card');
-    const ratingDisplay = card.querySelector('.rating-number');
-    ratingDisplay.innerHTML = `⭐ ${parseFloat(stars).toFixed(1)}`;
+const { data } = await supabaseClient
+.from("guides")
+.select("rating, rating_count")
+.eq("id", id)
+.single()
 
-    // 3. Supabase mein update karein
-    try {
-        await supabaseClient
-            .from("guides")
-            .update({ rating: stars })
-            .eq("id", id);
-            
-        localStorage.setItem("rated_" + id, true);
-    } catch (error) {
-        console.error("Error updating rating:", error);
-    }
+let currentRating = data.rating || 0
+let ratingCount = data.rating_count || 0
+
+// ⭐ average calculate
+let newCount = ratingCount + 1
+let newRating = ((currentRating * ratingCount) + stars) / newCount
+
+newRating = parseFloat(newRating.toFixed(1))
+
+// UI update
+const starBox = document.querySelector(`[data-id='${id}']`);
+const starEls = starBox.querySelectorAll(".star");
+
+starEls.forEach((s, i) => {
+if (i < stars) s.classList.add("active");
+else s.classList.remove("active");
+});
+
+const card = starBox.closest('.card');
+card.querySelector('.rating-number').innerHTML = `⭐ ${newRating}`
+
+// Supabase update
+await supabaseClient
+.from("guides")
+.update({
+rating: newRating,
+rating_count: newCount
+})
+.eq("id", id)
+
+localStorage.setItem("rated_" + id, true)
 }
 
 
