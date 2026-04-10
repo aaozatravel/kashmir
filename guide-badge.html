@@ -242,9 +242,9 @@ let rating = parseFloat(g.rating || 0).toFixed(1)
 let likes = g.likes || 0
 
 // ⭐ AUTO ROLE SYSTEM
-let role = g.type || 'Local Guide'
+let role = g.type
 
-if (role === "Local Guide" && likes >= 25) {
+if (g.verified) {
     role = "Aaoza Guide"
 }
 
@@ -348,7 +348,6 @@ let count = parseInt(likeEl.innerText || 0)
 count++
 likeEl.innerText = count
 
-// ❤️ heart change
 let heart = el.querySelector(".heart")
 heart.classList.add("liked")
 heart.textContent = "❤️"
@@ -356,24 +355,23 @@ heart.textContent = "❤️"
 let card = likeEl.closest('.card')
 let roleEl = card.querySelector('.role')
 
-// 25 likes system
-if (count >= 25) {
-    await supabaseClient
-        .from("guides")
-        .update({ type: "Aaoza Guide" })
-        .eq("id", id)
-
-    roleEl.innerText = "Aaoza Guide"
-}
-
-// update DB likes
+// ✅ ONLY ONE SUPABASE CALL
 await supabaseClient
 .from("guides")
 .update({ likes: count })
 .eq("id", id)
 
-localStorage.setItem("liked_"+id,true)
+// ⭐ VERIFIED LOGIC (ONLY ONCE)
+if (count >= 25) {
+    await supabaseClient
+        .from("guides")
+        .update({ verified: true })
+        .eq("id", id)
 
+    roleEl.innerText = "Aaoza Guide"
+}
+
+localStorage.setItem("liked_"+id,true)
 }
 
 </script>
