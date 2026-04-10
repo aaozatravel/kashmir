@@ -36,6 +36,9 @@
 <span>Aaoza Travels</span>
 <button id="installBtn">Install</button>
 </div>
+<div class="hero-guides">
+<div class="hero-guides-track" id="heroGuides"></div>
+</div>
 </section> <section class="services">  
 <h2>Our Services</h2>  <div class="services-container">  <div class="service-card">  
 <img src="cab.png">  
@@ -193,8 +196,16 @@ document.querySelector(".hero").style.backgroundImage =
 `url('${heroImages[heroIndex]}')`
 },4000)
     </script>
+
+    
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="supabase.js"></script>
 <script src="main.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  loadHeroGuides()
+})
+</script>
+
 </body>
 </html>
