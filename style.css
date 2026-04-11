@@ -919,50 +919,38 @@ height:200px;
 
 }
 
-/* ================= REELS PAGE ================= */
-
-.reels{
-padding:15px;
+/* FULL PAGE REELS */
+.reels-page{
+  height:100vh;
+  overflow:hidden;
+  background:black;
 }
 
-.reels h2{
-margin-bottom:12px;
-font-size:20px;
+/* vertical scroll snap */
+.reels-scroll{
+  height:100vh;
+  overflow-y:scroll;
+  scroll-snap-type:y mandatory;
 }
 
-/* GRID */
-.reels-container{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-gap:15px;
+/* hide scrollbar */
+.reels-scroll::-webkit-scrollbar{
+  display:none;
 }
 
-/* CARD */
 .reel{
-background:#000;
-border-radius:16px;
-overflow:hidden;
-box-shadow:0 4px 14px rgba(0,0,0,0.12);
+  height:100vh;
+  width:100%;
+  scroll-snap-align:start;
+  position:relative;
+  background:black;
 }
 
-/* VIDEO RATIO (REELS STYLE) */
+/* full screen video */
 .reel iframe{
-width:100%;
-height:460px;
-border:none;
-}
-
-/* MOBILE */
-@media(max-width:768px){
-
-.reels-container{
-grid-template-columns:1fr;
-}
-
-.reel iframe{
-height:520px;
-}
-
+  width:100%;
+  height:100%;
+  border:none;
 }
 
 /* ================= ABOUT PAGE ================= */
