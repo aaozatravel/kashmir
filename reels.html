@@ -3,59 +3,165 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Reel Video Shoot - Aaoza Travel</title>
-<link rel="stylesheet" href="style.css">
+<title>Reels - Aaoza Travel</title>
+
+<style>
+/* ===== PAGE ===== */
+body{
+  margin:0;
+  background:black;
+  font-family:Arial;
+  overflow:hidden;
+}
+
+/* HEADER */
+header{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  background:rgba(0,0,0,0.6);
+  color:white;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:10px 15px;
+  z-index:10;
+}
+
+header img{
+  width:35px;
+  border-radius:50%;
+}
+
+/* BACK BUTTON */
+.back-btn{
+  position:fixed;
+  top:60px;
+  left:10px;
+  z-index:10;
+  background:red;
+  color:white;
+  border:none;
+  padding:8px 12px;
+  border-radius:8px;
+}
+
+/* ===== REELS ===== */
+.reels-page{
+  height:100vh;
+}
+
+.reels-scroll{
+  height:100vh;
+  overflow-y:scroll;
+  scroll-snap-type:y mandatory;
+  scrollbar-width:none;
+}
+
+.reels-scroll::-webkit-scrollbar{
+  display:none;
+}
+
+/* REEL CARD */
+.reel{
+  height:100vh;
+  width:100%;
+  scroll-snap-align:start;
+  position:relative;
+  background:black;
+}
+
+/* VIDEO */
+.reel iframe{
+  width:100%;
+  height:100%;
+  border:none;
+}
+</style>
 </head>
 
 <body>
-<button class="back-btn" onclick="history.back()">← Back</button>
-<header>
-<div class="logo">
-<img src="https://i.ibb.co/7tXWb6LN/file-000000003e4071fa90b830d235ec710c.png">
-<span>Aaoza Travel Kashmir</span>
-</div>
 
-<nav>
-<a href="index.html">Home</a>
-<a href="about.html">About</a>
-<a href="tours.html">Tours</a>
-<a href="reels.html">Reels</a>
-<a href="contact.html">Contact</a>
-</nav>
+<header>
+<div style="display:flex;align-items:center;gap:10px;">
+<img src="logo.jpg">
+<b>Aaoza Reels</b>
+</div>
 </header>
 
-<section class="reels">
-<h2>Kashmir Reel Video Shoot</h2>
+<button class="back-btn" onclick="history.back()">← Back</button>
 
-<div class="reels-container">
+<section class="reels-page">
 
-<div class="reel">
-<iframe src="https://www.youtube.com/embed/MNkj0Z4wB5M"></iframe>
-</div>
+  <div class="reels-scroll">
 
-<div class="reel">
-<iframe src="https://www.youtube.com/embed/bY1xEfsZEow"></iframe>
-</div>
+    <div class="reel">
+      <iframe src="https://www.youtube.com/embed/MNkj0Z4wB5M?enablejsapi=1&mute=1"></iframe>
+    </div>
 
-<div class="reel">
-<iframe src="https://www.youtube.com/embed/tgbNymZ7vqY?autoplay=1&mute=1&loop=1&playlist=tgbNymZ7vqY"></iframe>
-</div>
+    <div class="reel">
+      <iframe src="https://www.youtube.com/embed/bY1xEfsZEow?enablejsapi=1&mute=1"></iframe>
+    </div>
 
-</div>
+    <div class="reel">
+      <iframe src="https://www.youtube.com/embed/tgbNymZ7vqY?enablejsapi=1&mute=1"></iframe>
+    </div>
+
+  </div>
 
 </section>
-  <div class="bottom-nav">  <a href="index.html" class="nav-item">  
-<img src="https://cdn-icons-png.flaticon.com/512/1946/1946488.png">  
-<span>Home</span>  
-</a>  <a href="tour.html" class="nav-item">  
-<img src="https://cdn-icons-png.flaticon.com/512/3126/3126647.png">  
-<span>Tours</span>  
-</a>  <a href="my-booking.html" class="nav-item">  
-<img src="https://cdn-icons-png.flaticon.com/512/1170/1170678.png">  
-<span>Your booking</span>  
-</a>  <a href="account.html" class="nav-item">  
-<img src="https://cdn-icons-png.flaticon.com/512/1946/1946429.png">  
-  <span>Account</span>
+
+<script>
+const reels = document.querySelectorAll(".reel iframe");
+const container = document.querySelector(".reels-scroll");
+
+function pauseAll(){
+  reels.forEach(v=>{
+    v.contentWindow.postMessage(
+      '{"event":"command","func":"pauseVideo","args":""}',
+      "*"
+    );
+  });
+}
+
+function muteAll(){
+  reels.forEach(v=>{
+    v.contentWindow.postMessage(
+      '{"event":"command","func":"mute","args":""}',
+      "*"
+    );
+  });
+}
+
+function playActive(index){
+  pauseAll();
+  muteAll();
+
+  reels[index].contentWindow.postMessage(
+    '{"event":"command","func":"playVideo","args":""}',
+    "*"
+  );
+
+  // UNMUTE ACTIVE REEL
+  setTimeout(()=>{
+    reels[index].contentWindow.postMessage(
+      '{"event":"command","func":"unMute","args":""}',
+      "*"
+    );
+  }, 600);
+}
+
+container.addEventListener("scroll", ()=>{
+  const index = Math.round(container.scrollTop / window.innerHeight);
+  playActive(index);
+});
+
+// auto play first reel
+window.onload = ()=>{
+  playActive(0);
+};
+</script>
 
 </body>
 </html>
