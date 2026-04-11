@@ -52,11 +52,19 @@ border-bottom:1px dashed #ddd;
 <div id="progressContainer">No trip data</div>
 </div>
 
-<div class="guide-login-box">
-<h3>Guide Login</h3>
+<div class="guide-access">
+
+<button class="guide-open-btn" onclick="toggleGuideLogin()">
+<img src="guide.png">
+<span>Guide Login</span>
+</button>
+
+<div class="guide-login-box" id="guideLoginBox" style="display:none;">
 <input type="email" id="guideEmail" placeholder="Guide Email">
 <input type="password" id="guidePassword" placeholder="Guide Password">
-<button onclick="loginGuide()">Login as Guide</button>
+<button onclick="loginGuide()">Login</button>
+</div>
+
 </div>
 
 </div>
@@ -65,6 +73,16 @@ border-bottom:1px dashed #ddd;
 <script src="supabase.js"></script>
 
 <script>
+
+function toggleGuideLogin(){
+const box = document.getElementById("guideLoginBox")
+
+if(box.style.display === "none"){
+box.style.display = "flex"
+}else{
+box.style.display = "none"
+}
+}
 
 async function initPage(){
 
