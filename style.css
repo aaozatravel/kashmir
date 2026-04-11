@@ -1430,4 +1430,44 @@ font-weight:600;
 100%{ transform:translateX(-50%); }
 }
 
-  
+/*========= HOME PAGE REELS ==========*/
+.reels-section{
+  padding:15px;
+}
+
+.reels-section h2{
+  margin-bottom:10px;
+  color:#1c3faa;
+  font-size:20px;
+  font-weight:700;
+}
+
+/* OUTER BOX */
+.reels-container{
+  display:flex;
+  gap:12px;
+  overflow-x:auto;
+  padding:15px;
+  background:linear-gradient(145deg,#0f0f0f,#111);
+  border-radius:16px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.4);
+  scroll-snap-type:x mandatory;
+  -webkit-overflow-scrolling:touch;
+}
+
+/* hide scrollbar */
+.reels-container::-webkit-scrollbar{
+  display:none;
+}
+
+/* REEL CARD (Shorts / TikTok size) */
+.reel-card{
+  flex:0 0 auto;
+  width:180px;
+  height:320px;
+  border-radius:14px;
+  overflow:hidden;
+  background:#000;
+  box-shadow:0 8px 20px rgba(0,0,0,0.5);
+  scroll-snap-align:start;
+  position:
