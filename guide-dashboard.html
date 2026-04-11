@@ -39,15 +39,74 @@ flex-wrap:wrap;
 /* LEFT CARD */
 .id-card{
 width:320px;
-background:white;
-border-radius:12px;
+background: linear-gradient(145deg,#0b0b0b,#111,#000);
+border-radius:16px;
 overflow:hidden;
-box-shadow:0 5px 20px rgba(0,0,0,0.15);
-border:3px solid #0f7b43;
+box-shadow:0 20px 60px rgba(212,175,55,0.25);
+border:2px solid #d4af37;
+color:white;
+}
+
+/* header */
+.id-header{
+background:linear-gradient(90deg,#000,#111,#000);
+color:#d4af37;
+text-align:center;
+padding:15px;
+border-bottom:1px solid #d4af37;
+}
+
+/* avatar */
+.id-body img{
+border-radius:50%;
+border:3px solid #d4af37;
+width:110px;
+height:110px;
+object-fit:cover;
+}
+
+/* name */
+#guideName{
+color:#facc15;
+font-weight:700;
+}
+
+/* badge */
+.id-tag{
+background:linear-gradient(45deg,#d4af37,#facc15);
+color:black;
+font-weight:bold;
+}
+
+/* footer */
+.id-footer{
+padding:10px;
+font-size:12px;
+text-align:center;
+border-top:1px solid #d4af37;
+color:#ddd;
+}
+
+/* glow effect */
+.id-card::before{
+content:"";
+position:absolute;
+width:200%;
+height:200%;
+top:-50%;
+left:-50%;
+background:linear-gradient(120deg,transparent,rgba(212,175,55,0.1),transparent);
+transform:rotate(25deg);
+animation:shine 6s linear infinite;
+}
+
+@keyframes shine{
+0%{transform:translateX(-100%) rotate(25deg);}
+100%{transform:translateX(100%) rotate(25deg);}
 }
 
 .id-header{
-background:#0f7b43;
+background:#1c3faa;
 color:white;
 text-align:center;
 padding:15px;
@@ -55,7 +114,10 @@ padding:15px;
 
 .id-header img{
 width:60px;
-margin-bottom:5px;
+height:60px;
+border-radius:50%;
+object-fit:cover;
+border:2px solid #d4af37; /* golden border optional */
 }
 
 .id-body{
@@ -207,6 +269,45 @@ padding:6px 10px;
 border-radius:6px;
 }
 
+.blue-tick{
+width:16px;
+height:16px;
+flex-shrink:0;
+display:inline-block;
+}
+
+.premium{
+background:linear-gradient(45deg,#FFD700,#FFC107);
+color:black;
+font-weight:bold;
+}
+.premium-card{
+background:linear-gradient(45deg,#FFD700,#FFC107);
+color:black;
+font-weight:bold;
+border-radius:10px;
+padding:6px 12px;
+}
+
+#guideName{
+text-align:center;
+}
+
+#nameRow{
+display:flex;
+justify-content:center;
+align-items:center;
+gap:6px;
+}
+
+#guideType{
+display:block;
+margin-top:4px;
+font-size:13px;
+color:#d4af37;
+font-weight:600;
+}
+
 </style>
 </head>
 
@@ -231,11 +332,21 @@ border-radius:6px;
 <div class="id-body">
 <img id="guidePhoto" src="user.png" crossorigin="anonymous">
 
-<h3 id="guideName"></h3>
+<h3 id="guideName">
 
-<div class="id-tag" id="guideTag">
-Guide Identity Card
-</div>
+    <span id="nameRow">
+        <span id="guideNameText"></span>
+        <svg id="guideTick" class="blue-tick" viewBox="0 0 24 24" width="16" height="16" xmlns="http://www.w3.org/2000/svg">
+            <path d="M22.25 12c0-1.43-.88-2.67-2.19-3.34.46-1.39.2-2.9-.81-3.91s-2.52-1.27-3.91-.81c-.67-1.31-1.91-2.19-3.34-2.19s-2.67.88-3.33 2.19c-1.4-.46-2.91-.2-3.92.81s-1.26 2.52-.8 3.91c-1.31.67-2.2 1.91-2.2 3.34s.89 2.67 2.2 3.34c-.46 1.39-.21 2.9.8 3.91s2.52 1.26 3.91.81c.67 1.31 1.91 2.19 3.34 2.19s2.68-.88 3.34-2.19c1.39.45 2.9.2 3.91-.81s1.27-2.52.81-3.91c1.31-.67 2.19-1.91 2.19-3.34z" fill="#1DA1F2"/>
+            <path d="M9.5 14.58l-2.79-2.79-1.21 1.21 4 4 8-8-1.21-1.21z" fill="#ffffff"/>
+        </svg>
+    </span>
+
+    <div id="guideType" class="role"></div>
+
+</h3>
+
+<div id="guideBadge" class="id-tag">Guide Identity Card</div>
 
 <p id="guidePhone"></p>
 <p id="guideEmail"></p>
@@ -327,18 +438,55 @@ loadGuide()
 loadGuideProgress()
 }
 
-function loadGuide(){
+async function loadGuide(){
 
 const guide = JSON.parse(localStorage.getItem("guide"))
 if(!guide){ window.location.href="account.html"; return }
 
-guideName.innerText = guide.name
-guidePhone.innerText = "Phone: " + guide.phone
-guideEmail.innerText = "Email: " + guide.email
-guideTag.innerText = guide.tag || "Guide Identity Card"
+// get latest data
+const { data } = await supabaseClient
+.from("guides")
+.select("*")
+.eq("email", guide.email)
+.single()
 
-const img = guide.photo || guide.photo_url || guide.image || guide.avatar
+if(!data) return
+
+// basic info
+guideNameText.innerText = data.name
+guidePhone.innerText = "Phone: " + data.phone
+guideEmail.innerText = "Email: " + data.email
+
+// TYPE SHOW (NEW)
+document.getElementById("guideType").innerText = data.type || "Local Guide"
+
+// image
+const img = data.photo || data.photo_url || data.image || data.avatar
 if(img){ guidePhoto.src = img }
+
+// =======================
+// BADGE + TICK LOGIC
+// =======================
+const likes = data.likes || 0
+
+// reset
+guideTick.style.display = "none"
+guideBadge.classList.remove("premium-card", "premium")
+guideBadge.innerText = "Guide Identity Card"
+
+// 100+ likes → Premium
+if(likes >= 100){
+    guideBadge.innerText = "Premium Guide"
+    guideBadge.classList.add("premium-card")
+    guideTick.style.display = "inline"
+}
+
+// 50–99 likes → Verified
+else if(likes >= 50){
+    guideBadge.innerText = "Verified Guide"
+    guideBadge.classList.add("premium")
+    guideTick.style.display = "inline"
+}
 
 }
 
