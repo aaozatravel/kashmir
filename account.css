@@ -158,3 +158,49 @@ color:white;
 border-radius:6px;
 cursor:pointer;
 }
+
+/*guide login hide*/
+
+.guide-access{
+margin-top:20px;
+}
+
+.guide-open-btn{
+display:flex;
+align-items:center;
+gap:8px;
+background:#000;
+color:#fff;
+border:none;
+padding:10px 15px;
+border-radius:30px;
+font-weight:600;
+cursor:pointer;
+}
+
+.guide-open-btn img{
+width:20px;
+height:20px;
+}
+
+.guide-login-box{
+margin-top:12px;
+display:flex;
+flex-direction:column;
+gap:8px;
+}
+
+.guide-login-box input{
+padding:10px;
+border-radius:6px;
+border:1px solid #ccc;
+}
+
+.guide-login-box button{
+background:#d40000;
+color:white;
+border:none;
+padding:10px;
+border-radius:6px;
+font-weight:bold;
+}
