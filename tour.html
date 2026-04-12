@@ -3,7 +3,33 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kashmir Tours</title>
+
+<title>Kashmir Tour Packages | Gulmarg, Sonmarg & Couple Tours | Aaoza Travels</title>
+
+<meta name="description" content="Explore best Kashmir tour packages by Aaoza Travels. Book Gulmarg, Sonmarg, Doodhpathri and couple tour packages at best prices.">
+<meta name="keywords" content="Kashmir tours, Gulmarg package, Sonmarg tour, Kashmir honeymoon package, couple tour Kashmir, Aaoza Travels, Kashmir trip packages">
+<meta name="author" content="Aaoza Travels Kashmir">
+
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://yourdomain.com/index.html">
+
+<!-- Open Graph -->
+<meta property="og:title" content="Kashmir Tour Packages | Aaoza Travels">
+<meta property="og:description" content="Book Kashmir tours including Gulmarg, Sonmarg & couple packages at best price.">
+<meta property="og:image" content="https://yourdomain.com/gulmarg.jpg">
+<meta property="og:url" content="https://yourdomain.com/index.html">
+<meta property="og:type" content="website">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Kashmir Tours | Aaoza Travels">
+<meta name="twitter:description" content="Best Kashmir tour packages for families & couples.">
+<meta name="twitter:image" content="https://yourdomain.com/gulmarg.jpg">
+
+<!-- Performance -->
+<link rel="preconnect" href="https://www.youtube.com">
+<link rel="preconnect" href="https://i.ytimg.com">
+
 <link rel="stylesheet" href="style.css">
 </head>
 
@@ -56,14 +82,14 @@ View Tour
 
 
 <!-- CARD 2 -->
-<div class="tour-card">
+<div class="tour-card couple-card">
 <div class="tour-img-box">
 <img src="sonmarg.jpg">
 <span class="tour-days">5N/6D</span>
 </div>
 
 <div class="tour-body">
-<h3>Couple Tour beautiful package</h3>
+<h3>💑 Couple Tour</h3>
 
 <div class="tour-meta">
 <span>1 State</span>
@@ -72,23 +98,21 @@ View Tour
 </div>
 
 <div class="tour-includes">
-🚗 🍽️ 📸 🏨
+🚗 🍽️ 📸 🏨 💖
 </div>
 
 <div class="tour-price">
-₹19,999
+₹41,990
 </div>
 
-<div class="tour-btns">
-<a href="couple-tour.html"
-class="view-btn"
-onclick="selectTour('Glorious Kashmir','sonmarg.jpg')">
-View Tour
+<a href="#"
+class="view-btn couple-btn"
+onclick="comingSoonAlert()">
+View Tour 💕
 </a>
-</div>
 
 <div class="tour-extra">
-<span>📲 WhatsApp</span>
+<span>💬 WhatsApp</span>
 <span>📧 Get Itinerary</span>
 </div>
 
@@ -103,6 +127,11 @@ View Tour
 function selectTour(name,image){
 localStorage.setItem("selectedTour", name)
 localStorage.setItem("selectedImage", image)
+}
+
+function comingSoonAlert(){
+    alert("Team Aaoza is working on this tour. You can explore other bookings for now.");
+    window.location.href = "tour-details.html";
 }
 </script>
 
