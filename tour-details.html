@@ -193,23 +193,23 @@ function generateCards(month){
 const data = {
 
 Jan:[
-{start:"Jan 10, 2026", end:"Jan 14, 2026", price:"₹27,990"},
-{start:"Jan 20, 2026", end:"Jan 24, 2026", price:"₹28,990"}
+{start:"Jan 10, 2026", end:"Jan 14, 2026", price:"27990"},
+{start:"Jan 20, 2026", end:"Jan 24, 2026", price:"28990"}
 ],
 
 Feb:[
-{start:"Feb 05, 2026", end:"Feb 09, 2026", price:"₹29,990"},
-{start:"Feb 18, 2026", end:"Feb 22, 2026", price:"₹30,990"}
+{start:"Feb 05, 2026", end:"Feb 09, 2026", price:"29990"},
+{start:"Feb 18, 2026", end:"Feb 22, 2026", price:"30990"}
 ],
 
 Apr:[
-{start:"Apr 14, 2026", end:"Apr 18, 2026", price:"₹31,990"},
-{start:"Apr 20, 2026", end:"Apr 24, 2026", price:"₹32,990"}
+{start:"Apr 14, 2026", end:"Apr 18, 2026", price:"31990"},
+{start:"Apr 20, 2026", end:"Apr 24, 2026", price:"32990"}
 ],
 
 May:[
-{start:"May 05, 2026", end:"May 09, 2026", price:"₹33,990"},
-{start:"May 15, 2026", end:"May 19, 2026", price:"₹34,990"}
+{start:"May 05, 2026", end:"May 09, 2026", price:"33990"},
+{start:"May 15, 2026", end:"May 19, 2026", price:"34990"}
 ]
 
 }
@@ -253,7 +253,10 @@ selectedDeparture = date
 selectedPrice = price
 document.getElementById("topPrice").innerText = price
 localStorage.setItem("selectedDeparture", date)
-localStorage.setItem("selectedPrice", price)
+localStorage.setItem(
+  "selectedPrice",
+  Number(price.replace(/[₹,]/g, ""))
+)
 
 document.querySelectorAll(".depart-card").forEach(c=>{
 c.classList.remove("selected")
@@ -352,7 +355,7 @@ parseInt(localStorage.getItem("travellerCount") || 1)
 document.querySelectorAll(".place:checked").forEach(el=>{
 
 let price = parseInt(el.dataset.price || 0)
-let finalPrice = price * travellers
+let finalPrice = price
 
 places.push({
 name: el.value,
