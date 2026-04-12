@@ -2,9 +2,32 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Booking</title>
+
+<title>Book Kashmir Tour - Aaoza Travel Kashmir</title>
+
+<meta name="description" content="Book your Kashmir tour with Aaoza Travel. Select travellers, rooms and customize your trip easily for Srinagar, Gulmarg and Sonmarg.">
+
+<meta name="keywords" content="Kashmir booking, tour booking Kashmir, Srinagar travel booking, Gulmarg packages, Kashmir trip planner">
+
+<meta name="author" content="Aaoza Travel Kashmir">
+
+<!-- ⚠️ Booking page private hai -->
+<meta name="robots" content="noindex, nofollow">
+
+<!-- Social Media -->
+<meta property="og:title" content="Book Kashmir Tour - Aaoza Travel Kashmir">
+<meta property="og:description" content="Customize and book your Kashmir trip online easily">
+<meta property="og:image" content="https://i.ibb.co/7tXWb6LN/file-000000003e4071fa90b830d235ec710c.png">
+<meta property="og:type" content="website">
+
+<link rel="canonical" href="https://aaozatravel.github.io/kashmir/bookings.html">
+
+<!-- CSS -->
 <link rel="stylesheet" href="style.css">
-</head><body><button class="back-btn" onclick="history.back()">← Back</button>
+
+</head>
+<body>
+  <button class="back-btn" onclick="history.back()">← Back</button>
 
 <div class="booking-header">
 <img src="logo.jpg" class="booking-logo">
@@ -227,10 +250,10 @@ activityTotal += (act.price || 0) * payingTravellers
 })
 
 // gondola multiply
-let gondolaPrice = gondolaTotal
+let gondolaPrice = gondolaTotal * payingTravellers
 
 // places multiply
-let placeTotal = placesTotal
+let placeTotal = placesTotal * payingTravellers
 
 // FINAL TOTAL
 let total =
@@ -254,7 +277,6 @@ gondola_price: gondolaTotal,
 single_room: singleRoom,
 double_room: doubleRoom,
 departure,
-departure_price: basePrice,  // ⭐ ye add karo
 total
 }
 
@@ -284,6 +306,18 @@ alert("❌ Booking not saved")
 }
 
 }
+function loadBooking(){
+
+const tour = JSON.parse(localStorage.getItem("selectedTour"))
+
+document.getElementById("bTourName").innerText = tour.title
+document.getElementById("bPrice").innerText = tour.price
+document.getElementById("bImage").src = tour.image
+
+}
+
+loadBooking()
+
 </script>
 
 </body>
