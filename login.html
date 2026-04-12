@@ -3,8 +3,30 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Login</title>
 
+<title>Login - Aaoza Travels Kashmir | Book Kashmir Tours</title>
+
+<!-- ✅ SEO META -->
+<meta name="description" content="Login or create account on Aaoza Travels Kashmir to book Kashmir tour packages, hotels, guides and track your bookings easily.">
+<meta name="keywords" content="Aaoza Travels login, Kashmir travel booking, Kashmir tours login, travel account Kashmir, Kashmir packages">
+<meta name="author" content="Aaoza Travels Kashmir">
+
+<!-- ✅ OPEN GRAPH (Social Sharing) -->
+<meta property="og:title" content="Login - Aaoza Travels Kashmir">
+<meta property="og:description" content="Access your Kashmir travel account and manage bookings easily.">
+<meta property="og:image" content="images/logo.jpg">
+<meta property="og:type" content="website">
+
+<!-- ✅ TWITTER SEO -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Login - Aaoza Travels Kashmir">
+<meta name="twitter:description" content="Login to your account and manage your Kashmir trips.">
+<meta name="twitter:image" content="images/logo.jpg">
+
+<!-- ✅ CANONICAL -->
+<link rel="canonical" href="https://yourdomain.com/login.html">
+
+<!-- CSS -->
 <link rel="stylesheet" href="style.css">
 
 <style>
@@ -71,7 +93,7 @@ cursor:pointer;
 
 <div class="login-box">
 
-<img src="logo.jpg">
+<img src="logo.jpg" alt="Aaoza Travels Kashmir Logo">
 <h2>Aaoza Travels Kashmir</h2>
 
 <h3 id="formTitle">Login</h3>
@@ -167,7 +189,7 @@ return
 
 alert("Login success")
 
-window.location.href="index.html"
+window.location.href="account.html"
 }
 
 async function forgotPassword(){
@@ -180,7 +202,7 @@ return
 }
 
 await supabaseClient.auth.resetPasswordForEmail(email,{
-redirectTo: "https://aaozatravel.github.io/kashmir/reset-password.html"
+redirectTo: window.location.origin + "/reset-password.html"
 })
 
 alert("Reset link sent to email")
