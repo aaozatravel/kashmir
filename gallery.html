@@ -3,46 +3,193 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Gallery - Aaoza Travel</title>
+
+<title>Kashmir Gallery - Aaoza Travel Kashmir</title>
+
+<!-- SEO -->
+<meta name="description" content="Explore beautiful Kashmir photos with Aaoza Travel Kashmir. View Sonmarg, Gulmarg, Srinagar and more destinations gallery.">
+<meta name="keywords" content="Kashmir gallery, Kashmir photos, Sonmarg images, Gulmarg images, Srinagar tourism photos">
+<meta name="author" content="Aaoza Travel Kashmir">
+<meta name="robots" content="index, follow">
+
+<!-- Open Graph -->
+<meta property="og:title" content="Kashmir Gallery - Aaoza Travel Kashmir">
+<meta property="og:description" content="Explore stunning Kashmir travel photos and destinations">
+<meta property="og:image" content="g1.jpg">
+<meta property="og:type" content="website">
+
+<link rel="canonical" href="https://aaozatravel.github.io/kashmir/gallery.html">
+
 <link rel="stylesheet" href="style.css">
+
+<style>
+
+body{
+margin:0;
+font-family:Arial;
+background:#f4f6fb;
+}
+
+.gallery-title{
+text-align:center;
+padding:15px;
+color:#1c3faa;
+}
+
+.gallery-container{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
+gap:10px;
+padding:10px;
+}
+
+.gallery-container img{
+width:100%;
+height:120px;
+object-fit:cover;
+border-radius:10px;
+cursor:pointer;
+transition:0.3s;
+}
+
+.gallery-container img:hover{
+transform:scale(1.05);
+}
+
+/* FULL SCREEN VIEW */
+.viewer{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.9);
+display:none;
+justify-content:center;
+align-items:center;
+z-index:999;
+flex-direction:column;
+}
+
+.viewer img{
+max-width:90%;
+max-height:70%;
+border-radius:10px;
+}
+
+/* CLOSE BUTTON */
+.close-btn{
+position:absolute;
+top:20px;
+right:20px;
+font-size:25px;
+color:white;
+cursor:pointer;
+}
+
+/* NAV BUTTONS */
+.nav-btn{
+position:absolute;
+top:50%;
+transform:translateY(-50%);
+font-size:30px;
+color:white;
+cursor:pointer;
+padding:10px;
+}
+
+.prev{
+left:10px;
+}
+
+.next{
+right:10px;
+}
+
+</style>
 </head>
 
 <body>
 
 <h2 class="gallery-title">Kashmir Gallery</h2>
 
-<div class="gallery-container">
+<div class="gallery-container" id="gallery">
 
-<img src="g1.jpg">
-<img src="g2.jpg">
-<img src="g3.jpg">
-<img src="g4.jpg">
-<img src="g5.jpg">
-<img src="g6.jpg">
-<img src="g7.jpg">
-<img src="g8.jpg">
-<img src="g9.jpg">
-<img src="g10.jpg">
-<img src="g11.jpg">
-<img src="g12.jpg">
-<img src="g13.jpg">
-<img src="gt.jpg">
+<img src="g1.jpg" alt="Kashmir mountain view">
+<img src="g2.jpg" alt="Sonmarg valley">
+<img src="g3.jpg" alt="Gulmarg snow view">
+<img src="g4.jpg" alt="Dal Lake Srinagar">
+<img src="g5.jpg" alt="Kashmir hills">
+<img src="g6.jpg" alt="Kashmir rivers">
+<img src="g7.jpg" alt="Tourist Kashmir view">
+<img src="g8.jpg" alt="Nature Kashmir">
+<img src="g9.jpg" alt="Valley Kashmir">
+<img src="g10.jpg" alt="Kashmir tourism">
+<img src="g11.jpg" alt="Snow Kashmir">
+<img src="g12.jpg" alt="Mountain Kashmir">
+<img src="g13.jpg" alt="Kashmir landscape">
+
+</div>
+
+<!-- FULL VIEW -->
+<div class="viewer" id="viewer">
+<span class="close-btn" onclick="closeViewer()">✖</span>
+
+<span class="nav-btn prev" onclick="prevImage()">❮</span>
+<img id="viewerImg">
+<span class="nav-btn next" onclick="nextImage()">❯</span>
 
 </div>
 
 <!-- Bottom Nav -->
-  
-  <div class="bottom-nav">  <a href="index.html" class="nav-item">  
-<img src="https://cdn-icons-png.flaticon.com/512/1946/1946488.png">  
-<span>Home</span>  
-</a>  <a href="tour.html" class="nav-item">  
-<img src="https://cdn-icons-png.flaticon.com/512/3126/3126647.png">  
-<span>Tours</span>  
-</a>  <a href="my-booking.html" class="nav-item">  
-<img src="https://cdn-icons-png.flaticon.com/512/1170/1170678.png">  
-<span>Your booking</span>  
-</a>  <a href="account.html" class="nav-item">  
-<img src="https://cdn-icons-png.flaticon.com/512/1946/1946429.png">  
-<span>Account</span>
+<div class="bottom-nav">
+<a href="index.html" class="nav-item">Home</a>
+<a href="packages.html" class="nav-item">Packages</a>
+<a href="gallery.html" class="nav-item">Gallery</a>
+<a href="account.html" class="nav-item">Account</a>
+</div>
+
+<script>
+
+let images = document.querySelectorAll("#gallery img")
+let viewer = document.getElementById("viewer")
+let viewerImg = document.getElementById("viewerImg")
+
+let currentIndex = 0
+
+images.forEach((img, index)=>{
+img.addEventListener("click", ()=>{
+currentIndex = index
+showImage()
+})
+})
+
+function showImage(){
+viewer.style.display = "flex"
+viewerImg.src = images[currentIndex].src
+}
+
+function closeViewer(){
+viewer.style.display = "none"
+}
+
+function nextImage(){
+currentIndex++
+if(currentIndex >= images.length){
+currentIndex = 0
+}
+showImage()
+}
+
+function prevImage(){
+currentIndex--
+if(currentIndex < 0){
+currentIndex = images.length - 1
+}
+showImage()
+}
+
+</script>
+
 </body>
 </html>
