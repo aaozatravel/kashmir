@@ -2,9 +2,14 @@
 <html>
 <head>
 <title>Guide Dashboard</title>
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<!-- ❌ PRIVATE PAGE (SEO OFF) -->
+<meta name="robots" content="noindex, nofollow">
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
 
 <style>
 
@@ -12,6 +17,7 @@ body{
 margin:0;
 font-family:Arial;
 background:#f4f6fb;
+overflow-x:hidden; /* ADD THIS */
 }
 
 /* HEADER */
@@ -306,6 +312,77 @@ margin-top:4px;
 font-size:13px;
 color:#d4af37;
 font-weight:600;
+}
+
+/* ================= MOBILE RESPONSIVE ================= */
+@media(max-width:768px){
+
+.container{
+flex-direction:column;
+padding:10px;
+}
+
+/* LEFT CARD FULL WIDTH */
+.id-card{
+width:100%;
+}
+
+/* RIGHT SECTION FULL WIDTH */
+.right-section{
+width:100%;
+}
+
+/* HEADER SMALL */
+.top-header{
+flex-direction:row;
+justify-content:center;
+text-align:center;
+}
+
+.top-header h3{
+font-size:16px;
+}
+
+/* BUTTONS FULL WIDTH */
+.download-btn,
+.logout-btn{
+width:95%;
+margin:10px auto;
+display:block;
+}
+
+/* BOX SPACING */
+.box{
+padding:12px;
+}
+
+/* TEXT SIZE FIX */
+.progress-item{
+font-size:14px;
+}
+
+/* MODAL FIX */
+.modal-box{
+width:95%;
+}
+
+/* IMAGE SIZE */
+.id-body img{
+width:90px;
+height:90px;
+}
+
+/* NAME FIX */
+#guideName{
+font-size:16px;
+}
+
+/* CALL BUTTON */
+.call-btn{
+font-size:14px;
+padding:10px;
+}
+
 }
 
 </style>
