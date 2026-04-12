@@ -3,8 +3,27 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tour Details</title>
+
+<title>Romantic Kashmir Couple Tour Package | Aaoza Travel Kashmir</title>
+
+<meta name="description" content="Book romantic Kashmir couple tour package with Aaoza Travel. Enjoy candle light dinner, photoshoot, Gondola ride and explore Srinagar, Sonmarg & Gulmarg.">
+
+<meta name="keywords" content="Kashmir couple tour, romantic Kashmir package, honeymoon Kashmir, Srinagar couple trip, Gulmarg honeymoon package">
+
+<meta name="author" content="Aaoza Travel Kashmir">
+<meta name="robots" content="index, follow">
+
+<!-- Social Media -->
+<meta property="og:title" content="Romantic Kashmir Couple Tour Package">
+<meta property="og:description" content="Perfect honeymoon & couple trip in Kashmir with romantic activities">
+<meta property="og:image" content="https://i.ibb.co/7tXWb6LN/file-000000003e4071fa90b830d235ec710c.png">
+<meta property="og:type" content="website">
+
+<link rel="canonical" href="https://aaozatravel.github.io/kashmir/couple-tour.html">
+
+<!-- CSS -->
 <link rel="stylesheet" href="couple.css">
+
 </head>
 
 <body>
@@ -15,13 +34,14 @@
 
 <div class="tour-hero">
 <img src="sonmarg.jpg" class="single-image">
+<div class="couple-badge">❤️ Couple Special</div>
 </div>
 
-<h1>Couple tour Beauty Package</h1>
+<h1>Romantic Kashmir Couple Tour</h1>
 
 <div class="tour-rating">
 <span class="badge">4 Nights / 5 Days</span>
-<span>⭐⭐⭐⭐⭐ Rated 5 Reviews</span>
+<span>⭐⭐⭐⭐⭐ Perfect for Couples</span>
 </div>
 
 <div class="price-box">
@@ -30,23 +50,28 @@
 <h2 id="topPrice">₹19,999</h2>
 </div>
 
-<a href="#" class="big-book-btn" onclick="validateBooking()">
-Book Now
-</a>
-</div>
-
-<div class="inclusion">
-📋 Tour Price Inclusions and Exclusions
+<button class="big-book-btn" onclick="validateBooking()">
+Book Romantic Trip
+</button>
 </div>
 
 <!-- Activities -->
 <div class="activity-section">
-<h3>Optional Activities</h3>
-<p class="activity-note">
-Note: All photoshoot, reels shoot and video shoot will be provided by Avoza Travels.
-</p>
+<h3>💑 Romantic Activities</h3>
 
 <div class="activity-grid">
+
+<label class="activity-card">
+<input type="checkbox" class="activity" data-price="2500" value="Couple Photoshoot">
+<div class="icon">📸</div>
+<p>Couple Photoshoot ₹2500</p>
+</label>
+
+<label class="activity-card">
+<input type="checkbox" class="activity" data-price="1500" value="Candle Light Dinner">
+<div class="icon">🕯️</div>
+<p>Candle Light Dinner ₹1500</p>
+</label>
 
 <label class="activity-card">
 <input type="checkbox" id="gondolaCheck" onchange="toggleGondola()">
@@ -54,94 +79,61 @@ Note: All photoshoot, reels shoot and video shoot will be provided by Avoza Trav
 <p>Gondola Ride</p>
 </label>
 
-
-<label class="activity-card">
-<input type="checkbox" class="activity" data-price="1000" value="Horse Ride">
-<div class="icon">🐎</div>
-<p>Horse Ride ₹1000</p>
-</label>
-
 </div>
 
-<div id="gondolaOptions" style="display:none;margin-top:15px;">
-
-<h4>Gulmarg Gondola Ticket Price Structure</h4>
+<div id="gondolaOptions" class="gondola-box">
 
 <label>
-<input type="checkbox" class="gondola-option" value="944"> 
-Phase 1 (Gulmarg to Kongdoori): ₹944
-</label><br>
+<input type="checkbox" class="gondola-option" value="944">
+Phase 1 ₹944
+</label>
 
 <label>
-<input type="checkbox" class="gondola-option" value="2054"> 
-Phase 2 (Kongdoori to Apharwat): ₹2054
-</label><br>
+<input type="checkbox" class="gondola-option" value="2054">
+Phase 2 ₹2054
+</label>
 
 <label>
-<input type="checkbox" class="gondola-option" value="300"> 
-Chairlift (Kongdoori to Mary's Shoulder): ₹300
+<input type="checkbox" class="gondola-option" value="300">
+Chairlift ₹300
 </label>
 
 </div>
 </div>
-<!-- Places Selection -->
+
+<!-- Places -->
 <div class="activity-section">
-<h3>Select Places (4N / 5D)</h3>
+<h3>📍 Select Romantic Places</h3>
 
 <div class="activity-grid">
 
 <label class="activity-card place-card">
 <input type="checkbox" class="place" data-price="10000" value="Sonmarg" onchange="limitPlaces(this)">
-<img src="sonmarg.jpg" class="place-img">
+<img src="sonmarg.jpg">
 <p>Sonmarg ₹10000</p>
 </label>
 
 <label class="activity-card place-card">
 <input type="checkbox" class="place" data-price="3000" value="Doodhpathri" onchange="limitPlaces(this)">
-<img src="doodhpathri.jpg" class="place-img">
+<img src="doodhpathri.jpg">
 <p>Doodhpathri ₹3000</p>
 </label>
 
 <label class="activity-card place-card">
 <input type="checkbox" class="place" data-price="5000" value="Srinagar" onchange="limitPlaces(this)">
-<img src="dallake.jpg" class="place-img">
-<p>Srinagar (Dal Lake + Nishat + Shalimar) ₹5000</p>
+<img src="dallake.jpg">
+<p>Srinagar ₹5000</p>
 </label>
 
 </div>
-
-<p style="font-size:12px;color:#777;">
-Select any 3 places only (4 Nights / 5 Days)
-</p>
-
 </div>
 
-
+<!-- Departure -->
 <div class="departure-box">
-<h2>Select a departure month</h2>
-
-<div class="months-grid">
-<button onclick="showMonth('Jan',this)">Jan</button>
-<button onclick="showMonth('Feb',this)">Feb</button>
-<button onclick="showMonth('Mar',this)">Mar</button>
-<button onclick="showMonth('Apr',this)" class="active">Apr</button>
-<button onclick="showMonth('May',this)">May</button>
-<button onclick="showMonth('Jun',this)">Jun</button>
-<button onclick="showMonth('Jul',this)">Jul</button>
-<button onclick="showMonth('Aug',this)">Aug</button>
-<button onclick="showMonth('Sep',this)">Sep</button>
-<button onclick="showMonth('Oct',this)">Oct</button>
-<button onclick="showMonth('Nov',this)">Nov</button>
-<button onclick="showMonth('Dec',this)">Dec</button>
-</div>
-
-<p class="note">
-Notes: For Joining/Leaving Book your own flights and meet at the tour’s first destination.
-</p>
-
+<h2>Select Departure</h2>
 <div id="monthContainer"></div>
-
 </div>
+
 </section>
 
 <script>
@@ -149,161 +141,93 @@ Notes: For Joining/Leaving Book your own flights and meet at the tour’s first 
 let selectedDeparture = null
 let selectedPrice = null
 
-function showMonth(month, el){
-document.querySelectorAll(".months-grid button").forEach(btn=>{
-btn.classList.remove("active")
-})
-el.classList.add("active")
-generateCards(month)
-}
+function generateCards(){
 
-function generateCards(month){
-
-const data = {
-
-Jan:[
-{start:"Jan 10, 2026", end:"Jan 14, 2026", price:"₹27,990"},
-{start:"Jan 20, 2026", end:"Jan 24, 2026", price:"₹28,990"}
-],
-
-Feb:[
-{start:"Feb 05, 2026", end:"Feb 09, 2026", price:"₹29,990"},
-{start:"Feb 18, 2026", end:"Feb 22, 2026", price:"₹30,990"}
-],
-
-Apr:[
-{start:"Apr 14, 2026", end:"Apr 18, 2026", price:"₹32,000"},
-{start:"Apr 20, 2026", end:"Apr 24, 2026", price:"₹35,000"}
-],
-
-May:[
-{start:"May 05, 2026", end:"May 09, 2026", price:"₹33,990"},
-{start:"May 15, 2026", end:"May 19, 2026", price:"₹34,990"}
+const data = [
+{start:"Apr 14, 2026", price:"₹32,000"},
+{start:"Apr 20, 2026", price:"₹35,000"},
+{start:"May 05, 2026", price:"₹33,990"}
 ]
 
-}
+let html=""
 
-let html = ""
-
-data[month]?.forEach(d=>{
-html += `
-<div class="depart-card" onclick="selectDeparture('${d.start}','${d.price}', this)">
-<div class="card-head">4 Nights / 5 Days</div>
-
-<div class="card-body">
-<p>📍 ${d.start}</p>
-<p>📍 ${d.end}</p>
-</div>
-
-<div class="card-price">Starts ${d.price}</div>
-
-<div class="card-actions">
-<button class="book-btn"
-onclick="event.stopPropagation();bookNow('${d.start}','${d.price}')">
-Book Now
-</button>
-
-<button class="view-btn"
-onclick="event.stopPropagation();viewDetails('${d.start}','${d.end}','${d.price}')">
-View Details
-</button>
-</div>
-
+data.forEach(d=>{
+html+=`
+<div class="depart-card" onclick="selectDeparture('${d.start}','${d.price}',this)">
+<h4>${d.start}</h4>
+<p>${d.price}</p>
 </div>
 `
 })
 
-document.getElementById("monthContainer").innerHTML =
-`<div class="departure-cards">${html}</div>`
+document.getElementById("monthContainer").innerHTML = html
 }
 
 function selectDeparture(date,price,el){
-selectedDeparture = date
-selectedPrice = price
-document.getElementById("topPrice").innerText = price
-localStorage.setItem("selectedDeparture", date)
-localStorage.setItem("selectedPrice", price)
+
+selectedDeparture=date
+selectedPrice=price
+
+document.getElementById("topPrice").innerText=price
+
+localStorage.setItem("selectedDeparture",date)
+localStorage.setItem("selectedPrice",price)
 
 document.querySelectorAll(".depart-card").forEach(c=>{
 c.classList.remove("selected")
 })
 
-if(el){
 el.classList.add("selected")
-}
-}
-
-function bookNow(date,price){
-selectDeparture(date,price)
-saveMonth()
-saveActivities()
-window.location.href="booking.html"
-}
-
-function viewDetails(start,end,price){
-alert(
-"Departure: "+start+
-"\nReturn: "+end+
-"\nPrice: "+price
-)
 }
 
 function validateBooking(){
+
 if(!selectedDeparture){
-alert("⚠️ Please select departure card first")
+alert("Please select departure")
 return
 }
-saveMonth()
+
 saveActivities()
 savePlaces()
-window.location.href="booking.html"
-}
 
-function saveMonth(){
-const activeMonth =
-document.querySelector(".months-grid button.active")?.innerText
-localStorage.setItem("selectedMonth", activeMonth)
+window.location.href="booking.html"
 }
 
 function saveActivities(){
 
 let selected=[]
+let gondola=[]
+let gondolaTotal=0
 
 document.querySelectorAll(".activity:checked").forEach(el=>{
 selected.push({
-name: el.value,
-price: parseInt(el.dataset.price || 0)
+name:el.value,
+price:parseInt(el.dataset.price)
 })
 })
-
-let gondola = []
-let total = 0
 
 document.querySelectorAll(".gondola-option:checked").forEach(el=>{
-gondola.push(el.parentElement.innerText.trim())
-total += parseInt(el.value)
+gondola.push(el.parentElement.innerText)
+gondolaTotal += parseInt(el.value)
 })
 
 localStorage.setItem("selectedActivities",JSON.stringify(selected))
 localStorage.setItem("selectedGondola",JSON.stringify(gondola))
-localStorage.setItem("gondolaTotal",total)
-
+localStorage.setItem("gondolaTotal",gondolaTotal)
 }
 
 function toggleGondola(){
-const check = document.getElementById("gondolaCheck").checked
 document.getElementById("gondolaOptions").style.display =
-check ? "block" : "none"
+document.getElementById("gondolaCheck").checked ? "block" : "none"
 }
 
 function limitPlaces(clicked){
 
-const checked =
-document.querySelectorAll(".place:checked")
+const checked=document.querySelectorAll(".place:checked")
 
-if(checked.length > 3){
-clicked.checked = false
-alert("Only 3 places allowed for 4 Nights / 5 Days")
+if(checked.length>3){
+clicked.checked=false
+alert("Only 3 places allowed")
 return
 }
 
@@ -315,53 +239,23 @@ function savePlaces(){
 let places=[]
 let total=0
 
-let travellers =
-parseInt(localStorage.getItem("travellerCount") || 1)
-
 document.querySelectorAll(".place:checked").forEach(el=>{
 
-let price = parseInt(el.dataset.price || 0)
-let finalPrice = price * travellers
+let price=parseInt(el.dataset.price)
 
 places.push({
-name: el.value,
-price: price,
-travellers: travellers,
-total: finalPrice
+name:el.value,
+price:price
 })
 
-total += finalPrice
+total+=price
 })
 
-localStorage.setItem("selectedPlaces", JSON.stringify(places))
-localStorage.setItem("placesTotal", total)
-
+localStorage.setItem("selectedPlaces",JSON.stringify(places))
+localStorage.setItem("placesTotal",total)
 }
 
-generateCards("Apr")
-
-async function loadTourDetails(){
-
-const id = localStorage.getItem("tourId")
-
-const {data} = await supabaseClient
-.from("tours")
-.select("*")
-.eq("id",id)
-.single()
-
-document.getElementById("tourImage").src = data.image
-document.getElementById("tourTitle").innerText = data.title
-document.getElementById("tourPrice").innerText = data.price
-
-localStorage.setItem("selectedTour", JSON.stringify(data))
-}
-
-function bookNow(){
-window.location.href="booking.html"
-}
-
-loadTourDetails()
+generateCards()
 
 </script>
 
