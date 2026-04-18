@@ -1,322 +1,290 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Book Kashmir Tour - Aaoza Travel Kashmir</title>
+<title>Booking</title>
 
-<meta name="description" content="Book your Kashmir tour with Aaoza Travel. Select travellers, rooms and customize your trip easily for Srinagar, Gulmarg and Sonmarg.">
-
-<meta name="keywords" content="Kashmir booking, tour booking Kashmir, Srinagar travel booking, Gulmarg packages, Kashmir trip planner">
-
-<meta name="author" content="Aaoza Travel Kashmir">
-
-<!-- ⚠️ Booking page private hai -->
-<meta name="robots" content="noindex, nofollow">
-
-<!-- Social Media -->
-<meta property="og:title" content="Book Kashmir Tour - Aaoza Travel Kashmir">
-<meta property="og:description" content="Customize and book your Kashmir trip online easily">
-<meta property="og:image" content="https://i.ibb.co/7tXWb6LN/file-000000003e4071fa90b830d235ec710c.png">
-<meta property="og:type" content="website">
-
-<link rel="canonical" href="https://aaozatravel.github.io/kashmir/bookings.html">
-
-<!-- CSS -->
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="booking.css">
 
 </head>
-<body>
-  <button class="back-btn" onclick="history.back()">← Back</button>
 
-<div class="booking-header">
-<img src="logo.jpg" class="booking-logo">
-<div class="booking-title">Aaoza Travels Kashmir</div>
-</div><section class="booking-page"><div class="step-title">2 Add traveller details</div><div class="traveller-box"><div class="traveller-row">
-<span>Adult (Above 12 yrs)</span>
-<div class="counter">
-<button>-</button>
-<span id="adultCount">0</span>
-<button>+</button>
+<body>
+
+<button onclick="history.back()">← Back</button>
+
+<h1>Complete Your Booking</h1>
+
+<!-- 🧑 TRAVELLERS -->
+<h2>Travellers</h2>
+
+<div class="row">
+<span>Adults (12+)</span>
+<div>
+<button onclick="changeCount('adult',-1)">-</button>
+<span id="adultCount">1</span>
+<button onclick="changeCount('adult',1)">+</button>
 </div>
-</div><div class="traveller-row">
-<span>Child (5-11 yrs)</span>
-<div class="counter">
-<button>-</button>
+</div>
+
+<div class="row">
+<span>Children (5-11)</span>
+<div>
+<button onclick="changeCount('child',-1)">-</button>
 <span id="childCount">0</span>
-<button>+</button>
+<button onclick="changeCount('child',1)">+</button>
 </div>
-</div><div class="traveller-row">
-<span>Infant (0-1 yrs)</span>
-<div class="counter">
-<button>-</button>
+</div>
+
+<div class="row">
+<span>Infants (Free)</span>
+<div>
+<button onclick="changeCount('infant',-1)">-</button>
 <span id="infantCount">0</span>
-<button>+</button>
+<button onclick="changeCount('infant',1)">+</button>
 </div>
-</div></div><div class="step-title">3 Select Accommodation</div><div class="room-table"><div class="room-row header">
-<span>Room Type</span>
-<span>Price</span>
-<span>Qty</span>
-</div><div class="room-row">
-<span>Single Bedroom</span>
-<span>₹6999</span>
-<div class="counter">
+</div>
+
+<!-- 👤 DETAILS -->
+<h2>Traveller Details</h2>
+
+<div id="travellerRows"></div>
+
+<!-- 🏨 ROOMS -->
+<h2>Rooms</h2>
+
+<div class="row">
+<span>Single Room ₹6999</span>
+<div>
 <button onclick="changeRoom('single',-1)">-</button>
 <span id="singleRoom">0</span>
 <button onclick="changeRoom('single',1)">+</button>
 </div>
-</div><div class="room-row">
-<span>Double Bedroom</span>
-<span>₹8999</span>
-<div class="counter">
+</div>
+
+<div class="row">
+<span>Double Room ₹8999</span>
+<div>
 <button onclick="changeRoom('double',-1)">-</button>
 <span id="doubleRoom">0</span>
 <button onclick="changeRoom('double',1)">+</button>
 </div>
-</div></div><div class="traveller-note">
-Note: Phone number is required only for members above 10 years. 
-For children aged 10 or below, "Not required" will appear automatically.
-</div><div class="step-title">4 Traveller Details</div><div class="member-table"><div class="member-row header">
-<span>Name</span>
-<span>Gender</span>
-<span>Age</span>
-<span>Phone</span>
-</div><div id="travellerRows"></div></div>
-  <button class="confirm-btn" onclick="saveBooking()">Continue Booking</button>
+</div>
 
-</section><script>
+<!-- 💰 TOTAL -->
+<h2 id="totalBox">Total ₹0</h2>
 
-function changeRoom(type, value){
-let id = type === "single" ? "singleRoom" : "doubleRoom"
+<button onclick="saveBooking()">Confirm Booking</button>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase.js"></script>
+
+<script>
+
+// 🔢 COUNTER
+function changeCount(type,val){
+let id = type+"Count"
 let el = document.getElementById(id)
 
-let num = parseInt(el.innerText) || 0
-num = num + value
-
+let num = parseInt(el.innerText)
+num += val
 if(num < 0) num = 0
+
+// minimum 1 adult
+if(type==="adult" && num < 1) num = 1
+
 el.innerText = num
+
+updateTravellers()
+calculateTotal()
 }
 
+// 👤 TRAVELLER INPUTS
 function updateTravellers(){
 
-let adult = parseInt(document.getElementById("adultCount").innerText);
-let child = parseInt(document.getElementById("childCount").innerText);
-let infant = parseInt(document.getElementById("infantCount").innerText);
+let adult = +adultCount.innerText
+let child = +childCount.innerText
+let infant = +infantCount.innerText
 
-let total = adult + child + infant;
-let container = document.getElementById("travellerRows");
+let total = adult + child + infant
 
-let oldData = [];
-document.querySelectorAll("#travellerRows .member-row").forEach(row=>{
-oldData.push({
-name: row.querySelector(".name")?.value || "",
-gender: row.querySelector(".gender")?.value || "Male",
-age: row.querySelector(".age")?.value || "",
-phone: row.querySelector(".phone")?.value || ""
-});
-});
-
-container.innerHTML = "";
+let html = ""
 
 for(let i=0;i<total;i++){
 
-let data = oldData[i] || {};
+let isInfant = i >= (adult + child)
 
-// infant detect
-let isInfant = i >= (adult + child);
-
-container.innerHTML += `
-<div class="member-row">
-<input type="text" class="name" placeholder="Name" value="${data.name}">
-<select class="gender">
-<option ${data.gender=="Male"?"selected":""}>Male</option>
-<option ${data.gender=="Female"?"selected":""}>Female</option>
+html += `
+<div class="traveller">
+<input placeholder="Name">
+<select>
+<option>Male</option>
+<option>Female</option>
 </select>
-
-<input type="number" class="age" placeholder="Age"
-value="${isInfant ? 1 : data.age}"
-${isInfant ? "readonly" : ""}>
-
-<input type="number" class="phone"
-placeholder="${isInfant ? 'Not required' : 'Phone'}"
-${isInfant ? "disabled" : ""}
-value="${isInfant ? '' : data.phone}">
+<input type="number" placeholder="Age" value="${isInfant?1:''}" ${isInfant?"readonly":""}>
+<input placeholder="${isInfant?'Not required':'Phone'}" ${isInfant?"disabled":""}>
 </div>
-`;
+`
 }
 
-document.querySelectorAll(".age").forEach(age=>{
-age.addEventListener("input", function(){
-
-let row = this.closest(".member-row");
-let phone = row.querySelector(".phone");
-
-if(this.value <= 10){
-phone.value="";
-phone.disabled=true;
-phone.placeholder="Not required";
-}else{
-phone.disabled=false;
-phone.placeholder="Phone";
+document.getElementById("travellerRows").innerHTML = html
 }
 
-});
-});
+// 🏨 ROOMS
+function changeRoom(type,val){
+let id = type+"Room"
+let el = document.getElementById(id)
 
+let num = +el.innerText
+num += val
+if(num < 0) num = 0
+
+el.innerText = num
+
+calculateTotal()
 }
 
-document.querySelectorAll(".traveller-box .counter").forEach(counter => {
+// 💰 TOTAL
+function calculateTotal(){
 
-let minus = counter.children[0];
-let number = counter.children[1];
-let plus = counter.children[2];
+let price = parseInt(localStorage.getItem("selectedPrice") || 0)
 
-plus.addEventListener("click", ()=>{
-number.innerText = parseInt(number.innerText) + 1;
-updateTravellers();
-});
+let adults = +adultCount.innerText
+let child = +childCount.innerText
 
-minus.addEventListener("click", ()=>{
-let value = parseInt(number.innerText);
-if(value > 0){
-number.innerText = value - 1;
-updateTravellers();
+let paying = adults + child
+
+let packageTotal = price * paying
+
+let single = 6999 * (+singleRoom.innerText)
+let double = 8999 * (+doubleRoom.innerText)
+
+let total = packageTotal + single + double
+
+document.getElementById("totalBox").innerText = "Total ₹" + total
 }
-});
 
-});
-
-</script><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="supabase.js"></script>
-  <script>
-
+// 💾 SAVE
 async function saveBooking(){
 
-try{
-
-const { data: { user } } = await supabaseClient.auth.getUser()
+const { data:{user} } = await supabaseClient.auth.getUser()
 
 if(!user){
-alert("Please login first")
-window.location.href="login.html"
+alert("Login first")
 return
 }
 
-const tour = localStorage.getItem("selectedTour") || ""
-const month = localStorage.getItem("selectedMonth") || ""
-const image = localStorage.getItem("selectedImage") || ""
-const departure = localStorage.getItem("selectedDeparture") || ""
-
-const activities = JSON.parse(localStorage.getItem("selectedActivities") || "[]")
-const gondola = JSON.parse(localStorage.getItem("selectedGondola") || "[]")
-const gondolaTotal = parseInt(localStorage.getItem("gondolaTotal") || 0)
-
-const places = JSON.parse(localStorage.getItem("selectedPlaces") || "[]")
-const placesTotal = parseInt(localStorage.getItem("placesTotal") || 0)
-
-const adults = parseInt(document.getElementById("adultCount").innerText) || 0
-const child = parseInt(document.getElementById("childCount").innerText) || 0
-const infant = parseInt(document.getElementById("infantCount").innerText) || 0
-
-const singleRoom = parseInt(document.getElementById("singleRoom").innerText) || 0
-const doubleRoom = parseInt(document.getElementById("doubleRoom").innerText) || 0
-
 let travellers = []
 
-document.querySelectorAll("#travellerRows .member-row").forEach(row=>{
+document.querySelectorAll(".traveller").forEach(row=>{
+let inputs = row.querySelectorAll("input,select")
+
 travellers.push({
-name: row.querySelector(".name")?.value || "",
-gender: row.querySelector(".gender")?.value || "",
-age: row.querySelector(".age")?.value || "",
-phone: row.querySelector(".phone")?.value || ""
+name: inputs[0].value,
+gender: inputs[1].value,
+age: inputs[2].value,
+phone: inputs[3].value
 })
 })
 
-let basePrice = parseInt(localStorage.getItem("selectedPrice")?.replace(/[^0-9]/g,'')) || 0
+let adults = +adultCount.innerText
+let child = +childCount.innerText
+let infant = +infantCount.innerText
 
-// adult + child only (infant ignore)
-let payingTravellers = adults + child
+let packageName = localStorage.getItem("selectedPackage")
+let packagePrice = parseInt(localStorage.getItem("selectedPrice"))
 
-// departure multiply
-let departureTotal = basePrice * payingTravellers
+// 📦 PACKAGE DETAILS ADD (IMPORTANT)
 
-// rooms fixed
-let singlePrice = 6999 * singleRoom
-let doublePrice = 8999 * doubleRoom
+let packageDetails = {}
 
-// activities multiply
-let activityTotal = 0
-activities.forEach(act=>{
-activityTotal += (act.price || 0) * payingTravellers
-})
+if(packageName === "Local"){
+  packageDetails = {
+    places: ["Gulmarg","Sonmarg","Srinagar","Dal Lake","Nishat","Shalimar","Doodhpathri"],
+    activities: ["Gondola Phase 1","Horse Ride 1hr"],
+    services: ["Cab","Driver","Guide"],
+    media: ["Photography","Reels (10)"]
+  }
+}
 
-// gondola multiply
-let gondolaPrice = gondolaTotal * payingTravellers
+if(packageName === "Pro"){
+  packageDetails = {
+    places: ["Gulmarg","Sonmarg","Doodhpathri","Srinagar","Dal Lake","Gardens","Drang Waterfall"],
+    activities: ["Gondola Phase 1 & 2","Horse Ride 2hr"],
+    services: ["Cab","Driver","Guide"],
+    media: ["Photoshoot","Video","Reels (15)"]
+  }
+}
 
-// places multiply
-let placeTotal = placesTotal * payingTravellers
+if(packageName === "Premium"){
+  packageDetails = {
+    places: ["All Places","Waterfalls","Hidden Spots"],
+    activities: ["Gondola 1,2,3","Skiing","Cycling","Full Day Horse Ride"],
+    services: ["Cab","Driver","Guide"],
+    media: ["Unlimited Photos","Unlimited Reels"]
+  }
+}
 
-// FINAL TOTAL
-let total =
-departureTotal
-+ activityTotal
-+ placeTotal
-+ gondolaPrice
-+ singlePrice
-+ doublePrice
+let paying = adults + child
 
-const bookingData = {  
-travellers,
-adults,
-child,
-infant,
-activities,
-gondola,
-places,
-places_total: placeTotal,
-gondola_price: gondolaTotal,
-single_room: singleRoom,
-double_room: doubleRoom,
-departure,
-total
+let packageTotal = packagePrice * paying
+
+let singleRoomCount = +singleRoom.innerText
+let doubleRoomCount = +doubleRoom.innerText
+
+let singleTotal = 6999 * singleRoomCount
+let doubleTotal = 8999 * doubleRoomCount
+
+let total = packageTotal + singleTotal + doubleTotal
+
+const bookingData = {
+  travellers,
+
+  package_name: packageName,
+  package_price: packagePrice,
+
+  // 🔥 ADD THIS
+  package_details: packageDetails,
+
+  adults,
+  children: child,
+  infants: infant,
+
+  single_room: singleRoomCount,
+  double_room: doubleRoomCount,
+
+  total
 }
 
 const { error } = await supabaseClient
 .from("bookings")
 .insert([{
-user_email: user.email,
-tour_name: tour,
-travel_month: month,
-package_image: image,
-traveller_details: JSON.stringify(bookingData),
-status: "pending"
+user_email:user.email,
+package_name:packageName,
+package_price:packagePrice,
+traveller_details:JSON.stringify(bookingData),
+adults,
+children:child,
+infants:infant,
+single_room:singleRoomCount,
+double_room:doubleRoomCount,
+total_price:total,
+status:"pending"
 }])
 
 if(error){
-console.log("Supabase error:", error)
-alert("❌ Booking not saved")
+alert("Error saving booking")
 return
 }
 
-alert("✅ Booking Request Sent")
-window.location.href = "account.html"
-
-}catch(e){
-console.log("JS error:", e)
-alert("❌ Booking not saved")
+alert("Booking Successful ✅")
+window.location.href="my-booking.html"
 }
 
-}
-function loadBooking(){
-
-const tour = JSON.parse(localStorage.getItem("selectedTour"))
-
-document.getElementById("bTourName").innerText = tour.title
-document.getElementById("bPrice").innerText = tour.price
-document.getElementById("bImage").src = tour.image
-
-}
-
-loadBooking()
+// INIT
+updateTravellers()
+calculateTotal()
 
 </script>
 
