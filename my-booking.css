@@ -1,180 +1,222 @@
-/* HEADER */
-.booking-header{
-padding:15px;
-text-align:center;
-background:linear-gradient(90deg,#1e88e5,#42a5f5);
-color:white;
-font-size:18px;
-font-weight:600;
-}
-
-.booking-wrapper{
-padding:15px;
-}
-
-/* GRID */
-.booking-grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
-gap:18px;
-}
-
-/* CARD */
-.booking-card{
-background:linear-gradient(145deg,#ffffff,#f7f9ff);
-border-radius:16px;
-overflow:hidden;
-box-shadow:0 10px 25px rgba(0,0,0,0.08);
-transition:0.3s;
-border:1px solid #e8ecff;
-padding-bottom:15px;
-}
-
-.booking-card:hover{
-transform:translateY(-4px);
-box-shadow:0 15px 35px rgba(0,0,0,0.12);
-}
-
-/* IMAGE */
-.booking-img{
-width:100%;
-height:190px;
-object-fit:cover;
+/* 🌍 BODY */
+body{
+  margin:0;
+  font-family:Arial;
+  background:#ffffff;
+  color:#111;
+  padding:15px;
 }
 
 /* TITLE */
-.booking-card h2{
-padding:12px 15px 0;
-color:#1a237e;
-font-size:18px;
+h1{
+  text-align:center;
+  color:#dc2626;
+}
+
+/* 📦 CARD */
+.card{
+  background:#fff1f2;
+  border:1px solid #fecaca;
+  border-radius:12px;
+  padding:15px;
+  margin:15px 0;
+}
+
+/* PACKAGE NAME */
+.card h2{
+  margin:0;
+  color:#dc2626;
+}
+
+/* STATUS */
+.status{
+  font-size:14px;
+  margin:5px 0 10px;
+  color:#16a34a;
 }
 
 /* SECTION TITLE */
-.booking-card h3{
-margin-top:15px;
-margin-bottom:6px;
-padding:0 15px;
-color:#303f9f;
+.section-title{
+  margin-top:10px;
+  font-weight:bold;
+  color:#dc2626;
 }
 
-/* TABLE */
-.trip-table,
-.traveller-table{
-width:100%;
-border-collapse:collapse;
-margin-top:8px;
-background:white;
+/* 👤 TRAVELLER */
+.traveller{
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr 1fr 1fr;
+  gap:5px;
+  background:#ffe4e6;
+  padding:8px;
+  margin-top:5px;
+  border-radius:8px;
+  font-size:13px;
 }
 
-.trip-table th,
-.traveller-table th{
-background:#eef1ff;
-padding:9px;
-font-size:13px;
-text-align:left;
+/* 💰 TOTAL */
+.total{
+  margin-top:10px;
+  font-size:18px;
+  font-weight:bold;
+  color:#dc2626;
 }
 
-.trip-table td,
-.traveller-table td{
-padding:9px;
-border-bottom:1px solid #f0f0f0;
-font-size:13px;
+/* ❌ EMPTY */
+.empty{
+  text-align:center;
+  margin-top:80px;
 }
 
-/* accommodation */
-.booking-card > div{
-margin:0 15px;
+.empty img{
+  width:80px;
+  opacity:0.7;
 }
 
-.booking-card > div:not(.price-box){
-background:#ffffff;
+.empty h2{
+  color:#dc2626;
+}
+
+.empty a{
+  display:inline-block;
+  margin-top:10px;
+  padding:10px 20px;
+  background:#dc2626;
+  color:white;
+  text-decoration:none;
+  border-radius:10px;
+}
+
+/* 📱 MOBILE */
+@media(max-width:500px){
+  .traveller{
+    grid-template-columns:1fr 1fr;
+  }
+}
+
+.box{
+  background:#fff;
+  padding:10px;
+  border-radius:10px;
+  margin-top:10px;
+  border:1px solid #f87171;
+}
+
+.hotel{
+  background:#fff5f5;
+  padding:10px;
+  border-radius:10px;
+  margin-top:8px;
+  border:1px solid #fca5a5;
+}
+
+.img{
+  width:100%;
+  height:120px;
+  object-fit:cover;
+  border-radius:8px;
+  margin-top:5px;
+}
+
+/* PROFILE IMAGE (Guide + Driver) */
+.profile{
+  width:80px;
+  height:100px;
+  object-fit:cover;
+  border-radius:8px;
+  margin-bottom:5px;
+  border:2px solid #ef4444;
+}
+
+/* CAB IMAGE FULL */
+.wide-img{
+  width:100%;
+  height:120px;
+  object-fit:cover;
+  border-radius:10px;
+  margin-bottom:5px;
+}
+
+/* BOX */
+.box{
+  background:#fff;
+  padding:10px;
+  border-radius:10px;
+  margin-top:10px;
+  border:1px solid #f87171;
+}
+
+/* HOTEL */
+.hotel{
+  background:#fff5f5;
+  padding:10px;
+  border-radius:10px;
+  margin-top:8px;
+  border:1px solid #fca5a5;
+}
+
+/* 🔵 SVG BADGE */
+.badge-svg{
+  display:inline-flex;
+  align-items:center;
+}
+
+.badge-svg svg{
+  width:16px;
+  height:16px;
+}
+
+/* 👨 GUIDE NAME */
+.guide-name{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  font-weight:bold;
+  margin-top:5px;
+}
+
+/* 📞 PHONE */
+.guide-phone{
+  font-size:14px;
+  color:#555;
+}
+
+/* 📷 PROFILE (PASSPORT SIZE LOOK) */
+.profile{
+  width:80px;
+  height:100px;
+  object-fit:cover;
+  border-radius:8px;
+  border:2px solid #ef4444;
+  margin-bottom:5px;
+}
+
+/* 🏨 HOTEL CARD */
+.hotel{
+  background:#ffe4e6;
+  color:#111;
+  padding:10px;
+  border-radius:10px;
+  margin-bottom:10px;
+}
+
+/* 🖼️ HOTEL IMAGE */
+.hotel-img{
+  width:100%;
+  height:150px;
+  object-fit:cover;
+  border-radius:8px;
+  margin-bottom:8px;
+}
+.day-box{
+background:#1e293b;
 padding:10px;
 border-radius:10px;
-border:1px solid #eee;
-}
-
-/* guide box */
-.booking-card img{
-max-width:100%;
-border-radius:8px;
-}
-
-/* cab images spacing */
-.booking-card img + img{
-margin-top:8px;
-}
-
-/* day wise hotel */
-.day-hotel-box{
-background:#ffffff;
-padding:10px;
-margin-top:8px;
-border-radius:10px;
-border:1px solid #eee;
-}
-
-/* PRICE BOX */
-.price-box{
-margin:15px;
-font-size:22px;
-font-weight:bold;
+margin-bottom:10px;
 color:white;
-text-align:center;
-background:linear-gradient(90deg,#4f6cff,#6a82fb);
-padding:12px;
-border-radius:10px;
 }
 
-/* BUTTON */
-.booking-card button{
-width:calc(100% - 30px);
-margin:0 15px;
-margin-top:10px;
-padding:11px;
-border:none;
-background:#1a237e;
-color:white;
-border-radius:8px;
-font-weight:600;
-cursor:pointer;
-transition:0.2s;
-}
-
-.booking-card button:hover{
-background:#0d154f;
-}
-
-/* travellers table highlight */
-.traveller-table tr:hover{
-background:#f8faff;
-}
-
-/* trip table highlight */
-.trip-table tr:hover{
-background:#f8faff;
-}
-
-/* MOBILE */
-@media(max-width:600px){
-
-.booking-grid{
-grid-template-columns:1fr;
-}
-
-.booking-img{
-height:160px;
-}
-
-.trip-table th,
-.trip-table td,
-.traveller-table th,
-.traveller-table td{
-font-size:12px;
-padding:7px;
-}
-
-.price-box{
-font-size:18px;
-}
-
+.day-box.done{
+background:#2b0000;
+border:1px solid red;
 }
