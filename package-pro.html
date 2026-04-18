@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pro Tour</title>
+
+<link rel="stylesheet" href="package-style.css">
+</head>
+
+<body>
+
+<div class="package-page pro">
+
+<div class="slider">
+<img src="gulmarg.jpg" class="slide active">
+<img src="sonmarg.jpg" class="slide">
+<img src="waterfall.jpg" class="slide">
+<img src="dallake.jpg" class="slide">
+<img src="garden.jpg" class="slide">
+</div>
+
+<h1>Pro Tour</h1>
+<p class="desc">Extended Kashmir experience with more locations & fun.</p>
+
+<div class="tag pro-tag">PRO TOUR</div>
+
+<div class="features">
+
+<div class="box">
+<h3>📍 Places</h3>
+<p>Gulmarg, Sonmarg, Doodhpathri</p>
+<p>Srinagar + Dal Lake + Gardens</p>
+<p>Drang Waterfall</p>
+</div>
+
+<div class="box">
+<h3>🎯 Activities</h3>
+<p>Gondola Phase 1 & 2</p>
+<p>Horse Ride (4hr)</p>
+</div>
+
+<div class="box">
+<h3>🚗 Services</h3>
+<p>Cab + Driver</p>
+<p>Guide Included</p>
+</div>
+
+<div class="box">
+<h3>📸 Media</h3>
+<p>Photoshoot + Video</p>
+<p>Reels (20)</p>
+</div>
+
+</div>
+
+<h2 class="price">₹39,999</h2>
+
+<button class="book-btn" onclick="bookNow('Pro',39999)">Book Now</button>
+
+</div>
+
+<script>
+function bookNow(name,price){
+localStorage.setItem("selectedPackage", name)
+localStorage.setItem("selectedPrice", price)
+window.location.href="booking.html"
+}
+</script>
+<script>
+const slides = document.querySelectorAll(".slide")
+let i = 0
+
+setInterval(()=>{
+  slides[i].classList.remove("active")
+  i = (i + 1) % slides.length
+  slides[i].classList.add("active")
+},3000)
+</script>
+
+
+</body>
+</html>

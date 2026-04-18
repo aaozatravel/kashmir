@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Premium Tour</title>
+
+<link rel="stylesheet" href="package-style.css">
+</head>
+
+<body>
+
+<div class="package-page premium">
+
+<div class="slider">
+<img src="gulmarg.jpg" class="slide active">
+<img src="sonmarg.jpg" class="slide">
+<img src="camping.jpg" class="slide">
+<img src="snow.jpg" class="slide">
+<img src="lake.jpg" class="slide">
+</div>
+
+<h1>Premium Pro+</h1>
+<p class="desc">Luxury + adventure full Kashmir experience.</p>
+
+<div class="tag premium-tag">PREMIUM</div>
+
+<div class="features">
+
+<div class="box">
+<h3>📍 Places</h3>
+<p>All Kashmir + Hidden Spots</p>
+<p>Waterfalls + Valleys</p>
+</div>
+
+<div class="box">
+<h3>🎯 Activities</h3>
+<p>Gondola Phase 1,2,</p>
+<p>Chair lift </p>
+<p>Skiing, Cycling</p>
+<p>Horse Ride Full Day</p>
+</div>
+
+<div class="box">
+<h3>🏕️ Adventure</h3>
+<p>Camping (DAYS)</p>
+<p>Tracking</p>
+</div>
+
+<div class="box">
+<h3>📸 Media</h3>
+<p>Unlimited Photos</p>
+<p>Unlimited Reels</p>
+</div>
+
+</div>
+
+<h2 class="price">₹59,999</h2>
+
+<button class="book-btn" onclick="bookNow('Premium',59999)">Book Now</button>
+
+</div>
+
+<script>
+function bookNow(name,price){
+localStorage.setItem("selectedPackage", name)
+localStorage.setItem("selectedPrice", price)
+window.location.href="booking.html"
+}
+</script>
+<script>
+const slides = document.querySelectorAll(".slide")
+let i = 0
+
+setInterval(()=>{
+  slides[i].classList.remove("active")
+  i = (i + 1) % slides.length
+  slides[i].classList.add("active")
+},3000)
+</script>
+
+</body>
+</html>
