@@ -3,136 +3,126 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kashmir Tours</title>
 
-<title>Kashmir Tour Packages | Gulmarg, Sonmarg & Couple Tours | Aaoza Travels</title>
-
-<meta name="description" content="Explore best Kashmir tour packages by Aaoza Travels. Book Gulmarg, Sonmarg, Doodhpathri and couple tour packages at best prices.">
-<meta name="keywords" content="Kashmir tours, Gulmarg package, Sonmarg tour, Kashmir honeymoon package, couple tour Kashmir, Aaoza Travels, Kashmir trip packages">
-<meta name="author" content="Aaoza Travels Kashmir">
-
-<meta name="robots" content="index, follow">
-<link rel="canonical" href="https://yourdomain.com/index.html">
-
-<!-- Open Graph -->
-<meta property="og:title" content="Kashmir Tour Packages | Aaoza Travels">
-<meta property="og:description" content="Book Kashmir tours including Gulmarg, Sonmarg & couple packages at best price.">
-<meta property="og:image" content="https://yourdomain.com/gulmarg.jpg">
-<meta property="og:url" content="https://yourdomain.com/index.html">
-<meta property="og:type" content="website">
-
-<!-- Twitter Card -->
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Kashmir Tours | Aaoza Travels">
-<meta name="twitter:description" content="Best Kashmir tour packages for families & couples.">
-<meta name="twitter:image" content="https://yourdomain.com/gulmarg.jpg">
-
-<!-- Performance -->
-<link rel="preconnect" href="https://www.youtube.com">
-<link rel="preconnect" href="https://i.ytimg.com">
-
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="tour.css">
 </head>
 
 <body>
 
-<section class="tour-section">
-<h2>Popular Kashmir Tours</h2>
+<h1 class="title">Explore Kashmir Packages</h1>
 
-<div class="tour-grid">
+<div class="tour-container">
 
-<!-- CARD 1 -->
-<div class="tour-card">
-<div class="tour-img-box">
-<img src="gulmarg.jpg">
-<span class="tour-days">4N/5D</span>
-</div>
+<!-- 🔹 LOCAL -->
+<div class="tour-card local">
+  
+  <div class="img-box">
+    <img src="gulmarg.jpg">
+    <span class="badge">Local</span>
+  </div>
 
-<div class="tour-body">
-<h3>Magical Kashmir Economy</h3>
+  <div class="content">
+    <h2>Local Tour</h2>
+    <p>Perfect for budget travellers</p>
 
-<div class="tour-meta">
-<span>1 State</span>
-<span>4 Cities</span>
-<span>23 Dates</span>
-</div>
+    <div class="price">₹29,999</div>
 
-<div class="tour-includes">
-🚗 🍽️ 📸 🏨
-</div>
+    <div class="actions">
+      <span onclick="like(this)">🤍</span>
+      <span onclick="share()">🔗</span>
+    </div>
 
-<div class="tour-price">
-₹15,599
-</div>
-
-<div class="tour-btns">
-<a href="tour-details.html"
-class="view-btn"
-onclick="selectTour('Magical Kashmir Economy','gulmarg.jpg')">
-View Tour
-</a>
-</div>
-
-<div class="tour-extra">
-<span>📲 WhatsApp</span>
-<span>📧 Get Itinerary</span>
-</div>
+    <button onclick="goPackage('local')">View Details</button>
+  </div>
 
 </div>
+
+<!-- 🔹 PRO -->
+<div class="tour-card pro">
+
+  <div class="img-box">
+    <img src="sonmarg.jpg">
+    <span class="badge">Pro</span>
+  </div>
+
+  <div class="content">
+    <h2>Pro Tour</h2>
+    <p>More places + activities</p>
+
+    <div class="price">₹39,999</div>
+
+    <div class="actions">
+      <span onclick="like(this)">🤍</span>
+      <span onclick="share()">🔗</span>
+    </div>
+
+    <button onclick="goPackage('pro')">View Details</button>
+  </div>
+
 </div>
 
+<!-- 🔹 PREMIUM -->
+<div class="tour-card premium">
 
-<!-- CARD 2 -->
-<div class="tour-card couple-card">
-<div class="tour-img-box">
-<img src="sonmarg.jpg">
-<span class="tour-days">5N/6D</span>
-</div>
+  <div class="img-box">
+    <img src="snow.jpg">
+    <span class="badge">Premium+</span>
+  </div>
 
-<div class="tour-body">
-<h3>💑 Couple Tour</h3>
+  <div class="content">
+    <h2>Premium Pro+</h2>
+    <p>Luxury + adventure experience</p>
 
-<div class="tour-meta">
-<span>1 State</span>
-<span>5 Cities</span>
-<span>41 Dates</span>
-</div>
+    <div class="price">₹59,999</div>
 
-<div class="tour-includes">
-🚗 🍽️ 📸 🏨 💖
-</div>
+    <div class="actions">
+      <span onclick="like(this)">🤍</span>
+      <span onclick="share()">🔗</span>
+    </div>
 
-<div class="tour-price">
-₹41,990
-</div>
+    <button onclick="goPackage('premium')">View Details</button>
+  </div>
 
-<a href="#"
-class="view-btn couple-btn"
-onclick="comingSoonAlert()">
-View Tour 💕
-</a>
-
-<div class="tour-extra">
-<span>💬 WhatsApp</span>
-<span>📧 Get Itinerary</span>
 </div>
 
 </div>
-</div>
-
-</div>
-</section>
-
 
 <script>
-function selectTour(name,image){
-localStorage.setItem("selectedTour", name)
-localStorage.setItem("selectedImage", image)
+
+// ❤️ LIKE TOGGLE
+function like(el){
+  if(el.innerText === "🤍"){
+    el.innerText = "❤️"
+  }else{
+    el.innerText = "🤍"
+  }
 }
 
-function comingSoonAlert(){
-    alert("Team Aaoza is working on this tour. You can explore other bookings for now.");
-    window.location.href = "tour-details.html";
+// 🔗 SHARE
+function share(){
+  navigator.share?.({
+    title:"Kashmir Tour Packages",
+    text:"Check out these amazing Kashmir tours!",
+    url:window.location.href
+  })
 }
+
+// 🔥 ROUTING
+function goPackage(type){
+
+  if(type === "local"){
+    window.location.href = "package-localtour.html"
+  }
+  else if(type === "pro"){
+    window.location.href = "package-pro.html"
+  }
+  else if(type === "premium"){
+    window.location.href = "package-premium.html"
+  }
+
+}
+
 </script>
 
 </body>
