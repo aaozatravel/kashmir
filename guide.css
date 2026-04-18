@@ -1,0 +1,270 @@
+/* ===============================
+🌙 GLOBAL
+=============================== */
+body{
+margin:0;
+font-family: 'Segoe UI', sans-serif;
+background: linear-gradient(135deg,#000000,#0b0b0b,#111111);
+color:#ffffff;
+padding:10px;
+}
+
+/* ===============================
+HEADER
+=============================== */
+h2{
+text-align:center;
+margin:10px 0 15px;
+font-size:22px;
+font-weight:600;
+color:#facc15;
+}
+
+/* ===============================
+BOX
+=============================== */
+.box{
+background: rgba(255,255,255,0.05);
+backdrop-filter: blur(12px);
+border-radius:16px;
+padding:15px;
+margin-bottom:15px;
+box-shadow:0 10px 30px rgba(0,0,0,0.4);
+border:1px solid rgba(255,255,255,0.08);
+}
+
+/* ===============================
+GUIDE CARD
+=============================== */
+.card{
+background: linear-gradient(145deg,#000,#0a0a0a,#111);
+border-radius:20px;
+padding:20px;
+text-align:center;
+box-shadow:0 15px 40px rgba(0,0,0,0.7);
+border:1px solid rgba(212,175,55,0.3);
+margin-bottom:15px;
+position:relative;
+overflow:hidden;
+}
+
+/* GOLD SHINE */
+.card::before{
+content:"";
+position:absolute;
+top:-50%;
+left:-50%;
+width:200%;
+height:200%;
+background:linear-gradient(
+120deg,
+transparent,
+rgba(212,175,55,0.15),
+transparent
+);
+transform:rotate(25deg);
+animation:shine 6s linear infinite;
+}
+
+@keyframes shine{
+0%{transform:translateX(-100%) rotate(25deg);}
+100%{transform:translateX(100%) rotate(25deg);}
+}
+
+/* ===============================
+AVATAR
+=============================== */
+.avatar{
+width:90px;
+height:90px;
+border-radius:50%;
+object-fit:cover;
+border:3px solid #d4af37;
+margin:auto;
+}
+
+/* ===============================
+TEXT
+=============================== */
+.name{
+font-size:18px;
+font-weight:700;
+margin-top:10px;
+color:#facc15;
+display:flex;
+align-items:center;
+justify-content:center;
+gap:6px;
+}
+
+.role{
+font-size:13px;
+color:#facc15;
+margin-top:3px;
+}
+
+.exp{
+font-size:13px;
+color:#ccc;
+margin-top:4px;
+}
+
+.rating-number{
+color:#facc15;
+font-size:14px;
+margin-top:6px;
+}
+
+/* ===============================
+BADGE
+=============================== */
+.badge{
+background: linear-gradient(145deg,#facc15,#d4af37);
+color:#000;
+padding:5px 12px;
+border-radius:20px;
+font-size:12px;
+font-weight:600;
+margin-top:10px;
+display:inline-block;
+}
+
+/* ===============================
+TRAVELLERS
+=============================== */
+.traveller{
+background:#111;
+padding:8px;
+border-radius:8px;
+margin-top:6px;
+font-size:13px;
+border:1px solid #222;
+}
+
+/* ===============================
+TIMETABLE
+=============================== */
+.day-box{
+background: linear-gradient(145deg,#111,#1a1a1a);
+padding:12px;
+border-radius:12px;
+margin-top:12px;
+border:1px solid #222;
+transition:0.3s;
+}
+
+/* COMPLETED */
+.day-box.done{
+background:#052e1f;
+border:1px solid #10b981;
+opacity:0.85;
+}
+
+/* DAY TITLE */
+.day-box h4{
+margin:0;
+font-size:15px;
+color:#facc15;
+}
+
+/* TIME */
+.day-box div{
+font-size:13px;
+margin-top:3px;
+color:#ccc;
+}
+
+/* TASK LIST */
+.day-box div::before{
+margin-right:4px;
+}
+
+/* ===============================
+CHECKBOX
+=============================== */
+input[type="checkbox"]{
+transform:scale(1.2);
+margin-right:6px;
+accent-color:#10b981;
+}
+
+/* ===============================
+TEXTAREA
+=============================== */
+textarea{
+width:100%;
+background:#000;
+color:#fff;
+border:1px solid #333;
+border-radius:8px;
+padding:8px;
+margin-top:6px;
+font-size:13px;
+}
+
+/* ===============================
+DONE TEXT
+=============================== */
+.done-text{
+color:#ef4444;
+font-weight:bold;
+margin-top:6px;
+font-size:13px;
+}
+
+/* ===============================
+BUTTON
+=============================== */
+button{
+width:100%;
+padding:12px;
+border:none;
+border-radius:10px;
+background: linear-gradient(145deg,#facc15,#d4af37);
+color:#000;
+font-weight:600;
+font-size:14px;
+margin-top:10px;
+}
+
+/* ===============================
+STATUS TEXT
+=============================== */
+p{
+margin:5px 0;
+font-size:13px;
+color:#ccc;
+}
+
+/* ===============================
+SCROLL FIX MOBILE
+=============================== */
+html,body{
+overflow-x:hidden;
+}
+
+/* ===============================
+SMALL SCREEN OPTIMIZATION
+=============================== */
+@media(max-width:480px){
+
+.card{
+padding:15px;
+}
+
+.avatar{
+width:75px;
+height:75px;
+}
+
+.name{
+font-size:16px;
+}
+
+}
+.tick{
+display:inline-flex;
+align-items:center;
+justify-content:center;
+margin-left:5px;
+}
