@@ -3,51 +3,21 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Bookings</title>
 
-<title>Your Bookings - Aaoza Travels Kashmir</title>
-
-<!-- ✅ SEO META -->
-<meta name="description" content="View and manage your Kashmir tour bookings with Aaoza Travels. Track trip status, hotels, guides and travel details easily.">
-<meta name="keywords" content="Kashmir bookings, my trips Kashmir, travel booking dashboard, Aaoza Travels bookings, Kashmir tour history">
-<meta name="author" content="Aaoza Travels Kashmir">
-
-<!-- ✅ OPEN GRAPH -->
-<meta property="og:title" content="Your Bookings - Aaoza Travels Kashmir">
-<meta property="og:description" content="Track and manage your Kashmir travel bookings easily.">
-<meta property="og:image" content="logo.jpg">
-<meta property="og:type" content="website">
-
-<!-- ✅ TWITTER -->
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Your Bookings - Aaoza Travels Kashmir">
-<meta name="twitter:description" content="Access your booking history and travel details.">
-<meta name="twitter:image" content="logo.jpg">
-
-<!-- ✅ CANONICAL -->
-<link rel="canonical" href="https://aaozatravel.github.io/kashmir/my-bookings.html">
-
-<!-- CSS -->
-<link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="my-booking.css">
+
 </head>
 
-<body onload="loadUserBookings()">
+<body>
 
-<header class="booking-header">
-<h2>Your Bookings</h2>
-</header>
+<h1>Your Bookings</h1>
 
-<div class="booking-wrapper">
-
-<div class="booking-grid" id="userBookingContainer">
-<!-- bookings will load here -->
-</div>
-
-</div>
+<div id="bookingContainer"></div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="supabase.js"></script>
-<script src="user-booking.js"></script>
+<script src="my-booking.js"></script>
 
 </body>
 </html>
