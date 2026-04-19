@@ -228,6 +228,11 @@ alert("No booking found")
 return
 }
 
+// 🔥 GET INPUTS
+let note = document.getElementById("note").value
+let status = document.getElementById("status").value
+
+// 🔥 GET OLD DATA
 const { data } = await supabaseClient
 .from("bookings")
 .select("guide_updates")
@@ -240,9 +245,13 @@ try{
 updates = JSON.parse(data?.guide_updates || "{}")
 }catch(e){}
 
+// 🔥 SAVE EVERYTHING
 updates.progress = tempProgress
+updates.note = note
+updates.status = status
 updates.time = new Date().toLocaleString()
 
+// 🔥 SAVE TO DB
 await supabaseClient
 .from("bookings")
 .update({
@@ -250,6 +259,7 @@ guide_updates: JSON.stringify(updates)
 })
 .eq("id", bookingId)
 
+// UI
 document.getElementById("msg").innerText = "Updated ✅"
 
 setTimeout(()=>{
