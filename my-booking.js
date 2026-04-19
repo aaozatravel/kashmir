@@ -213,7 +213,7 @@ ${done ? `<div style="color:red;font-weight:bold;margin-top:5px">✔ Day Complet
 
 
 // ===============================
-// 📢 GUIDE UPDATES (NEW 🔥)
+// 📢 GUIDE UPDATE (FINAL FIX)
 // ===============================
 let updateHtml = ""
 
@@ -227,13 +227,20 @@ upd = typeof b.guide_updates === "string"
 : b.guide_updates
 }catch(e){}
 
-if(upd.note){
+// ✅ SHOW STATUS + NOTE
+if(upd.note || upd.status){
+
 updateHtml = `
 <div class="box">
+
 <h4>📢 Guide Update</h4>
-<div><b>Status:</b> ${upd.status || "-"}</div>
-<div>${upd.note}</div>
-<small>${upd.time || ""}</small>
+
+${upd.status ? `<div><b>Status:</b> ${upd.status}</div>` : ""}
+
+${upd.note ? `<div style="margin-top:5px">${upd.note}</div>` : ""}
+
+${upd.time ? `<small>${upd.time}</small>` : ""}
+
 </div>
 `
 }
