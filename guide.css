@@ -268,3 +268,13 @@ align-items:center;
 justify-content:center;
 margin-left:5px;
 }
+
+
+.guide-logout-btn{
+background:#d40000;
+color:#fff;
+border:none;
+padding:2px 6px;
+font-size:11px;
+border-radius:3px;
+}
