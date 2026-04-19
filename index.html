@@ -164,10 +164,11 @@
 <span>Tours</span>  
 </a>  
 <a href="my-booking.html" class="nav-item booking-nav">
-<img src="https://cdn-icons-png.flaticon.com/512/1170/1170678.png">
 
-<!-- 🔴 NOTIFICATION BADGE -->
-<span id="bookingBadge" class="badge-count">0</span>
+<div style="position:relative;">
+  <img src="https://cdn-icons-png.flaticon.com/512/1170/1170678.png">
+  <span id="bookingBadge" class="badge-count">0</span>
+</div>
 
 <span>Your booking</span>
 </a>
@@ -264,25 +265,30 @@ document.querySelector(".hero").style.backgroundImage =
 `url('${heroImages[heroIndex]}')`
 },4000)
     </script>
+
     
-    <script>
-async function loadBookingNotification(){
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase.js"></script>
+<script src="main.js"></script>
+
+
+<script>
+  async function loadBookingNotification(){
 
 const { data:{user} } = await supabaseClient.auth.getUser()
-
 if(!user) return
 
 const { data } = await supabaseClient
 .from("bookings")
-.select("guide_updates, extra_details")
+.select("guide_updates")
 .eq("user_email", user.email)
 
 let count = 0
 
 data.forEach(b=>{
 
-// 🔥 GUIDE UPDATE CHECK
-if(b.guide_updates){
+if(!b.guide_updates) return
+
 let upd = {}
 
 try{
@@ -291,21 +297,9 @@ upd = typeof b.guide_updates === "string"
 : b.guide_updates
 }catch(e){}
 
-// agar status ya note hai → count++
-if(upd.status || upd.note){
-count++
-}
-}
-
-// 🔥 ADMIN UPDATE CHECK (hotel/timetable)
-let extra = {}
-
-try{
-extra = JSON.parse(b.extra_details || "{}")
-}catch(e){}
-
-if(extra.hotels || extra.timetable){
-count++
+// 🔥 USE NOTIFY VALUE
+if(upd.notify){
+count += upd.notify
 }
 
 })
@@ -318,19 +312,15 @@ badge.innerText = count
 }else{
 badge.style.display = "none"
 }
-}
 
-// CALL
-loadBookingNotification()
+}
+  
+  
 </script>
 
-    
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="supabase.js"></script>
-<script src="main.js"></script>
 <script>
 document.addEventListener("DOMContentLoaded", () => {
-  loadHeroGuides()
+  loadBookingNotification()
 })
 </script>
 
