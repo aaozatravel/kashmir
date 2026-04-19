@@ -5,42 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>User Account - Aaoza Travel Kashmir</title>
 
-<meta name="description" content="Manage your bookings, track your Kashmir trip progress, and access your account on Aaoza Travel Kashmir.">
-
-<meta name="keywords" content="Aaoza Travel account, Kashmir booking dashboard, user account travel, trip progress Kashmir">
-
-<meta name="author" content="Aaoza Travel Kashmir">
-<meta name="robots" content="noindex, nofollow">
-
-<!-- Social Preview -->
-<meta property="og:title" content="Your Account - Aaoza Travel Kashmir">
-<meta property="og:description" content="Track your bookings and trip progress easily">
-<meta property="og:image" content="https://i.ibb.co/7tXWb6LN/file-000000003e4071fa90b830d235ec710c.png">
-<meta property="og:type" content="website">
-
-<link rel="canonical" href="https://aaozatravel.github.io/kashmir/account.html">
-
 <link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="account.css">
-
-<style>
-.progress-box{
-margin-top:20px;
-background:#fff;
-padding:15px;
-border-radius:8px;
-}
-
-.progress-item{
-display:flex;
-justify-content:space-between;
-padding:6px 0;
-border-bottom:1px dashed #ddd;
-}
-
-.tick{color:green;font-weight:bold;}
-.cross{color:red;font-weight:bold;}
-</style>
 
 </head>
 
@@ -53,6 +19,7 @@ border-bottom:1px dashed #ddd;
 
 <div class="account-container">
 
+<!-- PROFILE -->
 <div class="profile-card">
 <img src="user.png" class="profile-avatar">
 <h3 id="userName">Guest User</h3>
@@ -62,14 +29,10 @@ border-bottom:1px dashed #ddd;
 <button onclick="logoutUser()" class="logout-btn">Logout</button>
 </div>
 
-<div class="progress-box">
-<h3>Trip Target Map</h3>
-<div id="progressContainer">No trip data</div>
-</div>
-
+<!-- GUIDE LOGIN -->
 <div class="guide-access">
 
-<button class="guide-open-btn" onclick="toggleGuideLogin()">
+<button class="guide-open-btn" onclick="handleGuideClick()">
 <img src="guide.png">
 <span>Guide Login</span>
 </button>
@@ -89,16 +52,9 @@ border-bottom:1px dashed #ddd;
 
 <script>
 
-function toggleGuideLogin(){
-const box = document.getElementById("guideLoginBox")
-
-if(box.style.display === "none"){
-box.style.display = "flex"
-}else{
-box.style.display = "none"
-}
-}
-
+// ===============================
+// INIT
+// ===============================
 async function initPage(){
 
 const { data:{ user } } = await supabaseClient.auth.getUser()
@@ -109,32 +65,63 @@ return
 }
 
 loadUserProfile()
-loadProgress()
-
-setInterval(loadProgress,5000)
 }
 
+// ===============================
+// GUIDE CLICK (AUTO LOGIN)
+// ===============================
+function handleGuideClick(){
+
+const guide = localStorage.getItem("guide")
+
+if(guide){
+window.location.href = "guide-dashboard.html"
+return
+}
+
+// otherwise open login
+toggleGuideLogin()
+}
+
+// ===============================
+// TOGGLE LOGIN BOX
+// ===============================
+function toggleGuideLogin(){
+const box = document.getElementById("guideLoginBox")
+
+box.style.display = (box.style.display === "none") ? "flex" : "none"
+}
+
+// ===============================
+// LOGIN GUIDE
+// ===============================
 async function loginGuide(){
 
-const guideEmail = document.getElementById("guideEmail");
-const guidePassword = document.getElementById("guidePassword");
+const email = document.getElementById("guideEmail").value
+const password = document.getElementById("guidePassword").value
 
 const { data, error } = await supabaseClient
 .from("guides")
 .select("*")
-.eq("email", guideEmail.value)
-.eq("password", guidePassword.value)
+.eq("email", email)
+.eq("password", password)
 .single()
 
 if(error || !data){
-alert("Invalid guide login")
+alert("Invalid guide login ❌")
 return
 }
 
+// 🔥 SAVE LOGIN
 localStorage.setItem("guide", JSON.stringify(data))
+
+// 🔥 DIRECT REDIRECT
 window.location.href="guide-dashboard.html"
 }
 
+// ===============================
+// USER PROFILE
+// ===============================
 async function loadUserProfile(){
 
 const { data:{ user } } = await supabaseClient.auth.getUser()
@@ -153,124 +140,9 @@ userPhone.innerText = "Phone: " + data.phone
 userEmail.innerText = "Email: " + data.email
 }
 
-async function loadProgress(){
-
-const { data:{ user } } = await supabaseClient.auth.getUser()
-if(!user) return
-
-const { data } = await supabaseClient
-.from("bookings")
-.select("*")
-.eq("user_email", user.email)
-.order("created_at",{ascending:false})
-.limit(1)
-
-if(!data || data.length === 0) return
-
-const booking = data[0]
-
-let parsed = {}
-try{
-parsed = JSON.parse(booking.traveller_details || "{}")
-}catch(e){}
-
-let admin = booking.admin_details || {}
-
-let places = parsed.places || []
-let activities = parsed.activities || []
-let gondola = parsed.gondola || []
-
-let progress = booking.progress || {}
-
-if(typeof progress === "string"){
-try{
-progress = JSON.parse(progress)
-}catch(e){
-progress = {}
-}
-}
-
-if(!progress) progress = {}
-
-const progressContainer = document.getElementById("progressContainer")
-progressContainer.innerHTML = ""
-
-let html = ""
-
-/* CAB */
-if(admin.cab_name){
-
-let key="cab"
-
-html += `<div class="progress-item">
-<span>🚕 ${admin.cab_name} - ${admin.driver_name}</span>
-<span class="${progress[key]?'tick':'cross'}">
-${progress[key]?'✔':'✖'}
-</span>
-</div>`
-}
-
-/* GUIDE */
-if(admin.guide){
-
-let key="guide"
-
-html += `<div class="progress-item">
-<span>🧑‍💼 Guide - ${admin.guide}</span>
-<span class="${progress[key]?'tick':'cross'}">
-${progress[key]?'✔':'✖'}
-</span>
-</div>`
-}
-
-/* HOTEL DAYS */
-for(let i=1;i<=5;i++){
-
-if(admin["hotel"+i]){
-
-let key="hotelDay_"+i
-
-html += `<div class="progress-item">
-<span>🏨 Day ${i} - ${admin["hotel"+i]}</span>
-<span class="${progress[key]?'tick':'cross'}">
-${progress[key]?'✔':'✖'}
-</span>
-</div>`
-
-}
-
-}
-
-/* PLACES */
-places.forEach((p,i)=>{
-let key="place_"+i
-html += `<div class="progress-item">
-<span>${p.name}</span>
-<span class="${progress[key]?'tick':'cross'}">${progress[key]?'✔':'✖'}</span>
-</div>`
-})
-
-/* ACTIVITIES */
-activities.forEach((a,i)=>{
-let key="activity_"+i
-html += `<div class="progress-item">
-<span>${a.name}</span>
-<span class="${progress[key]?'tick':'cross'}">${progress[key]?'✔':'✖'}</span>
-</div>`
-})
-
-/* GONDOLA */
-gondola.forEach((g,i)=>{
-let key="gondola_"+i
-html += `<div class="progress-item">
-<span>${g}</span>
-<span class="${progress[key]?'tick':'cross'}">${progress[key]?'✔':'✖'}</span>
-</div>`
-})
-
-progressContainer.innerHTML = html || "No trip assigned"
-}
-
+// ===============================
+// LOGOUT USER
+// ===============================
 async function logoutUser(){
 await supabaseClient.auth.signOut()
 window.location.href="login.html"
