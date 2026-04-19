@@ -270,3 +270,12 @@ location.reload()
 }
 
 loadGuideBooking()
+
+function logoutGuide(){
+
+// 🔥 remove saved login
+localStorage.removeItem("guide")
+
+// redirect
+window.location.href = "account.html"
+}
