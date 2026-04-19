@@ -170,18 +170,17 @@ ${tasks.map(t=>`<div>• ${t}</div>`).join("")}
 
 <label>
 <input type="checkbox"
-${completed ? "checked disabled" : ""}
-onchange="tempProgress['${key}']=this.checked">
+data-key="${key}"
+${completed ? "checked disabled" : ""}>
  Mark Complete
 </label>
 
 <br>
 
 <textarea
+data-note="${noteKey}"
 placeholder="Write note..."
-${completed ? "disabled" : ""}
-oninput="tempProgress['${noteKey}']=this.value"
->${tempProgress[noteKey] || ""}</textarea>
+${completed ? "disabled" : ""}>${tempProgress[noteKey] || ""}</textarea>
 
 ${completed ? `<div style="color:red;font-weight:bold">Day ${d.day} Completed</div>` : ""}
 
@@ -216,6 +215,25 @@ ${t.name} | ${t.gender} | ${t.age} yrs
 ${timetableHtml ? `<div class="box"><h3>📅 Timetable</h3>${timetableHtml}</div>` : ""}
 
 `
+// ✅ CHECKBOX LISTENER
+document.querySelectorAll(".day-box input[type='checkbox']").forEach(cb => {
+  cb.addEventListener("change", function () {
+    let key = this.dataset.key
+    tempProgress[key] = this.checked
+  })
+})
+
+// ✅ TEXTAREA LISTENER
+document.querySelectorAll(".day-box textarea").forEach(t => {
+  t.addEventListener("input", function () {
+    let key = this.dataset.note
+    tempProgress[key] = this.value
+
+    // ❗ optional autosave (thoda heavy hota hai)
+    // saveUpdate()
+  })
+})
+
 }
 
 // ===============================
