@@ -250,6 +250,8 @@ updates.progress = tempProgress
 updates.note = note
 updates.status = status
 updates.time = new Date().toLocaleString()
+// 🔔 NOTIFICATION COUNT
+updates.notify = (updates.notify || 0) + 1
 
 // 🔥 SAVE TO DB
 await supabaseClient
