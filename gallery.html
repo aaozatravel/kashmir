@@ -6,151 +6,63 @@
 
 <title>Kashmir Gallery - Aaoza Travel Kashmir</title>
 
-<!-- SEO -->
-<meta name="description" content="Explore beautiful Kashmir photos with Aaoza Travel Kashmir. View Sonmarg, Gulmarg, Srinagar and more destinations gallery.">
-<meta name="keywords" content="Kashmir gallery, Kashmir photos, Sonmarg images, Gulmarg images, Srinagar tourism photos">
-<meta name="author" content="Aaoza Travel Kashmir">
-<meta name="robots" content="index, follow">
-
-<!-- Open Graph -->
-<meta property="og:title" content="Kashmir Gallery - Aaoza Travel Kashmir">
-<meta property="og:description" content="Explore stunning Kashmir travel photos and destinations">
-<meta property="og:image" content="g1.jpg">
-<meta property="og:type" content="website">
-
-<link rel="canonical" href="https://aaozatravel.github.io/kashmir/gallery.html">
-
-<link rel="stylesheet" href="style.css">
-
-<style>
-
-body{
-margin:0;
-font-family:Arial;
-background:#f4f6fb;
-}
-
-.gallery-title{
-text-align:center;
-padding:15px;
-color:#1c3faa;
-}
-
-.gallery-container{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
-gap:10px;
-padding:10px;
-}
-
-.gallery-container img{
-width:100%;
-height:120px;
-object-fit:cover;
-border-radius:10px;
-cursor:pointer;
-transition:0.3s;
-}
-
-.gallery-container img:hover{
-transform:scale(1.05);
-}
-
-/* FULL SCREEN VIEW */
-.viewer{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:rgba(0,0,0,0.9);
-display:none;
-justify-content:center;
-align-items:center;
-z-index:999;
-flex-direction:column;
-}
-
-.viewer img{
-max-width:90%;
-max-height:70%;
-border-radius:10px;
-}
-
-/* CLOSE BUTTON */
-.close-btn{
-position:absolute;
-top:20px;
-right:20px;
-font-size:25px;
-color:white;
-cursor:pointer;
-}
-
-/* NAV BUTTONS */
-.nav-btn{
-position:absolute;
-top:50%;
-transform:translateY(-50%);
-font-size:30px;
-color:white;
-cursor:pointer;
-padding:10px;
-}
-
-.prev{
-left:10px;
-}
-
-.next{
-right:10px;
-}
-
-</style>
+<link rel="stylesheet" href="gallery.css">
 </head>
 
 <body>
 
+<!-- 🔝 HEADER -->
+<header class="top-bar">
+  <img src="logo.jpg" class="logo">
+  <h2>Aaoza Travel</h2>
+</header>
+
 <h2 class="gallery-title">Kashmir Gallery</h2>
 
+<!-- 🔘 FILTER -->
+<div class="filters">
+  <button onclick="filterGallery('all')">All</button>
+  <button onclick="filterGallery('gulmarg')">Gulmarg</button>
+  <button onclick="filterGallery('sonmarg')">Sonmarg</button>
+  <button onclick="filterGallery('srinagar')">Srinagar</button>
+</div>
+
+<!-- 📸 GALLERY -->
 <div class="gallery-container" id="gallery">
 
-<img src="g1.jpg" alt="Kashmir mountain view">
-<img src="g2.jpg" alt="Sonmarg valley">
-<img src="g3.jpg" alt="Gulmarg snow view">
-<img src="g4.jpg" alt="Dal Lake Srinagar">
-<img src="g5.jpg" alt="Kashmir hills">
-<img src="g6.jpg" alt="Kashmir rivers">
-<img src="g7.jpg" alt="Tourist Kashmir view">
-<img src="g8.jpg" alt="Nature Kashmir">
-<img src="g9.jpg" alt="Valley Kashmir">
-<img src="g10.jpg" alt="Kashmir tourism">
-<img src="g11.jpg" alt="Snow Kashmir">
-<img src="g12.jpg" alt="Mountain Kashmir">
-<img src="g13.jpg" alt="Kashmir landscape">
+<img src="g1.jpg" data-cat="gulmarg">
+<img src="g2.jpg" data-cat="sonmarg">
+<img src="g3.jpg" data-cat="gulmarg">
+<img src="g4.jpg" data-cat="srinagar">
+<img src="g5.jpg" data-cat="srinagar">
+<img src="g6.jpg" data-cat="sonmarg">
+<img src="g7.jpg" data-cat="gulmarg">
+<img src="g8.jpg" data-cat="srinagar">
+<img src="g9.jpg" data-cat="sonmarg">
+<img src="g10.jpg" data-cat="gulmarg">
 
 </div>
 
-<!-- FULL VIEW -->
+<!-- 🔍 VIEWER -->
 <div class="viewer" id="viewer">
 <span class="close-btn" onclick="closeViewer()">✖</span>
 
 <span class="nav-btn prev" onclick="prevImage()">❮</span>
 <img id="viewerImg">
 <span class="nav-btn next" onclick="nextImage()">❯</span>
-
 </div>
 
-<!-- Bottom Nav -->
+<!-- 📱 BOTTOM NAV -->
 <div class="bottom-nav">
-<a href="index.html" class="nav-item">Home</a>
-<a href="packages.html" class="nav-item">Packages</a>
-<a href="gallery.html" class="nav-item">Gallery</a>
-<a href="account.html" class="nav-item">Account</a>
+<a href="index.html">Home</a>
+<a href="tour.html">Tours</a>
+<a href="gallery.html">Gallery</a>
+<a href="account.html">Account</a>
 </div>
 
 <script>
 
+// 📸 IMAGES
 let images = document.querySelectorAll("#gallery img")
 let viewer = document.getElementById("viewer")
 let viewerImg = document.getElementById("viewerImg")
@@ -164,15 +76,18 @@ showImage()
 })
 })
 
+// 🔍 SHOW
 function showImage(){
 viewer.style.display = "flex"
 viewerImg.src = images[currentIndex].src
 }
 
+// ❌ CLOSE
 function closeViewer(){
 viewer.style.display = "none"
 }
 
+// ➡️ NEXT
 function nextImage(){
 currentIndex++
 if(currentIndex >= images.length){
@@ -181,6 +96,7 @@ currentIndex = 0
 showImage()
 }
 
+// ⬅️ PREV
 function prevImage(){
 currentIndex--
 if(currentIndex < 0){
@@ -189,8 +105,22 @@ currentIndex = images.length - 1
 showImage()
 }
 
+// 🔥 FILTER
+function filterGallery(cat){
+let imgs = document.querySelectorAll("#gallery img")
+
+imgs.forEach((img)=>{
+if(cat === "all"){
+img.style.display = "block"
+}else{
+img.style.display = img.dataset.cat === cat ? "block" : "none"
+}
+})
+}
+
 </script>
-  <script src="back.js"></script>
+
+<script src="back.js"></script>
 
 </body>
 </html>
