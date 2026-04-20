@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Wedding Plan 💍</title>
+
+<style>
+
+body{
+  margin:0;
+  font-family:Arial;
+  background:#fff0f5;
+}
+
+/* SLIDER */
+.slider{
+  width:100%;
+  height:250px;
+  overflow:hidden;
+  position:relative;
+}
+
+.slider img{
+  width:100%;
+  height:250px;
+  object-fit:cover;
+  position:absolute;
+  opacity:0;
+  transition:0.5s;
+}
+
+.slider img.active{
+  opacity:1;
+}
+
+/* CONTAINER */
+.container{
+  padding:15px;
+  max-width:900px;
+  margin:auto;
+}
+
+.card{
+  background:white;
+  padding:20px;
+  border-radius:15px;
+  box-shadow:0 10px 25px rgba(0,0,0,0.1);
+}
+
+.price{
+  font-size:28px;
+  color:#e11d48;
+  font-weight:bold;
+}
+
+.note{
+  background:#fff7ed;
+  padding:10px;
+  border-radius:10px;
+  margin-top:10px;
+  font-size:14px;
+}
+
+/* FORM */
+input{
+  width:100%;
+  padding:10px;
+  margin:6px 0;
+  border-radius:8px;
+  border:1px solid #ccc;
+}
+
+button{
+  width:100%;
+  padding:15px;
+  border:none;
+  background:#e11d48;
+  color:white;
+  font-size:18px;
+  border-radius:10px;
+  cursor:pointer;
+}
+
+button:hover{
+  background:#be123c;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- 📸 SLIDER -->
+<div class="slider">
+  <img src="https://images.unsplash.com/photo-1519741497674-611481863552" class="active">
+  <img src="https://images.unsplash.com/photo-1520854221256-17451cc331bf">
+  <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc">
+  <img src="https://images.unsplash.com/photo-1502635385003-ee1e6a1a742d">
+  <img src="https://images.unsplash.com/photo-1519222970733-f546218fa6d7">
+</div>
+
+<div class="container">
+
+<h2>💍 Wedding Package</h2>
+
+<div class="card">
+
+<div class="price">₹25,000</div>
+
+<ul>
+<li>✔ 2 Days Full Wedding Coverage (With Nights)</li>
+<li>✔ Full Photography + Video</li>
+<li>✔ Drone Shoot</li>
+<li>✔ Bride & Groom Shoot</li>
+<li>✔ Full Editing</li>
+</ul>
+
+<div class="note">
+📌 Note: Wedding will be fully covered for 2 days, and the 3rd day will include a half-day.
+</div>
+
+<button onclick="showForm()">Book Now</button>
+
+<!-- FORM -->
+<div id="form" style="display:none">
+
+<h3>👤 Groom Details</h3>
+<input id="groomName" placeholder="Name">
+<input id="groomPhone" type="tel" maxlength="10" placeholder="Phone">
+<input id="groomAge" type="number" placeholder="Age">
+
+<h3>👰 Bride Details</h3>
+<input id="brideName" placeholder="Name">
+<input id="bridePhone" type="tel" maxlength="10" placeholder="Phone">
+<input id="brideAge" type="number" placeholder="Age">
+
+<h3>📅 Dates</h3>
+<input id="startDate" type="date" onchange="setEndDate()">
+<input id="endDate" type="date" readonly>
+
+<h3>📍 Address</h3>
+<input id="address" placeholder="Main Address">
+<input id="district" placeholder="District">
+<input id="pincode" type="number" placeholder="Pincode">
+
+<br>
+
+<button onclick="sendWhatsApp()">Confirm Booking</button>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+// 📸 SLIDER
+let slides = document.querySelectorAll(".slider img")
+let i = 0
+
+setInterval(()=>{
+  slides[i].classList.remove("active")
+  i = (i + 1) % slides.length
+  slides[i].classList.add("active")
+},3000)
+
+// SHOW FORM
+function showForm(){
+  document.getElementById("form").style.display = "block"
+}
+
+// 📅 AUTO END DATE (+2 DAYS)
+function setEndDate(){
+  let start = document.getElementById("startDate").value
+
+  if(!start) return
+
+  let date = new Date(start)
+  date.setDate(date.getDate() + 2)
+
+  let end = date.toISOString().split("T")[0]
+
+  document.getElementById("endDate").value = end
+}
+
+// 📲 VALIDATION + WHATSAPP
+function sendWhatsApp(){
+
+let groomName = document.getElementById("groomName").value.trim()
+let groomPhone = document.getElementById("groomPhone").value.trim()
+let groomAge = document.getElementById("groomAge").value.trim()
+
+let brideName = document.getElementById("brideName").value.trim()
+let bridePhone = document.getElementById("bridePhone").value.trim()
+let brideAge = document.getElementById("brideAge").value.trim()
+
+let startDate = document.getElementById("startDate").value
+let endDate = document.getElementById("endDate").value
+
+let address = document.getElementById("address").value.trim()
+let district = document.getElementById("district").value.trim()
+let pincode = document.getElementById("pincode").value.trim()
+
+// REQUIRED
+if(!groomName) return alert("Enter Groom Name")
+if(!groomPhone) return alert("Enter Groom Phone")
+if(!groomAge) return alert("Enter Groom Age")
+
+if(!brideName) return alert("Enter Bride Name")
+if(!bridePhone) return alert("Enter Bride Phone")
+if(!brideAge) return alert("Enter Bride Age")
+
+if(!startDate) return alert("Select Start Date")
+
+if(!address) return alert("Enter Address")
+if(!district) return alert("Enter District")
+if(!pincode) return alert("Enter Pincode")
+
+// PHONE CHECK
+let phoneRegex = /^[6-9]\d{9}$/
+
+if(!phoneRegex.test(groomPhone)){
+  return alert("Invalid Groom Phone")
+}
+
+if(!phoneRegex.test(bridePhone)){
+  return alert("Invalid Bride Phone")
+}
+
+// PINCODE
+if(pincode.length !== 6){
+  return alert("Invalid Pincode")
+}
+
+// MESSAGE
+let msg = `
+💍 *NEW WEDDING BOOKING*
+
+👤 Groom:
+${groomName}
++91 ${groomPhone}
+Age: ${groomAge}
+
+👰 Bride:
+${brideName}
++91 ${bridePhone}
+Age: ${brideAge}
+
+📅 Dates:
+${startDate} to ${endDate}
+
+📍 Address:
+${address}
+${district} - ${pincode}
+
+💰 Package: Wedding Plan
+Price: ₹25,000
+`
+
+let whatsappNumber = "917051932522"
+
+let url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(msg)}`
+window.open(url, "_blank")
+
+}
+
+</script>
+
+</body>
+</html>
