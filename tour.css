@@ -107,3 +107,23 @@ button{
   background:gold;
   color:black;
 }
+
+.back-btn{
+  position:fixed;
+  top:12px;
+  left:10px;
+  width:36px;
+  height:36px;
+  border-radius:50%;
+  border:none;
+  background:black;
+  color:#white;
+  font-size:18px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:9999;
+  backdrop-filter: blur(6px);
+  box-shadow:0 2px 6px rgba(0,0,0,0.2);
+  cursor:pointer;
+}
