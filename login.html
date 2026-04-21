@@ -3,38 +3,30 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Login - Aaoza Travels Kashmir | Book Kashmir Tours</title>
-
 <!-- ✅ SEO META -->
 <meta name="description" content="Login or create account on Aaoza Travels Kashmir to book Kashmir tour packages, hotels, guides and track your bookings easily.">
 <meta name="keywords" content="Aaoza Travels login, Kashmir travel booking, Kashmir tours login, travel account Kashmir, Kashmir packages">
 <meta name="author" content="Aaoza Travels Kashmir">
-
 <!-- ✅ OPEN GRAPH (Social Sharing) -->
 <meta property="og:title" content="Login - Aaoza Travels Kashmir">
 <meta property="og:description" content="Access your Kashmir travel account and manage bookings easily.">
 <meta property="og:image" content="images/logo.jpg">
 <meta property="og:type" content="website">
-
 <!-- ✅ TWITTER SEO -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Login - Aaoza Travels Kashmir">
 <meta name="twitter:description" content="Login to your account and manage your Kashmir trips.">
 <meta name="twitter:image" content="images/logo.jpg">
-
 <!-- ✅ CANONICAL -->
 <link rel="canonical" href="https://yourdomain.com/login.html">
-
 <!-- CSS -->
 <link rel="stylesheet" href="style.css">
-
 <style>
 body{
 background:#f5f5f5;
 font-family:sans-serif;
 }
-
 .login-box{
 max-width:360px;
 margin:40px auto;
@@ -44,16 +36,13 @@ border-radius:12px;
 box-shadow:0 0 10px rgba(0,0,0,0.1);
 text-align:center;
 }
-
 .login-box img{
 height:60px;
 margin-bottom:10px;
 }
-
 .login-box h2{
 margin-bottom:15px;
 }
-
 .login-box input{
 width:100%;
 padding:10px;
@@ -61,7 +50,6 @@ margin:6px 0;
 border:1px solid #ddd;
 border-radius:6px;
 }
-
 .login-box button{
 width:100%;
 padding:10px;
@@ -72,13 +60,11 @@ color:#fff;
 border-radius:6px;
 font-weight:bold;
 }
-
 .switch{
 margin-top:10px;
 color:#007bff;
 cursor:pointer;
 }
-
 .forgot{
 text-align:right;
 font-size:12px;
@@ -86,145 +72,89 @@ color:red;
 cursor:pointer;
 }
 </style>
-
 </head>
-
 <body>
-
 <div class="login-box">
-
 <img src="logo.jpg" alt="Aaoza Travels Kashmir Logo">
 <h2>Aaoza Travels Kashmir</h2>
-
 <h3 id="formTitle">Login</h3>
-
 <input type="text" id="name" placeholder="Full Name" style="display:none">
 <input type="text" id="phone" placeholder="Phone Number" style="display:none">
-
 <input type="email" id="email" placeholder="Email">
 <input type="password" id="password" placeholder="Password">
-
 <p class="forgot" onclick="forgotPassword()">Forgot Password?</p>
-
 <button onclick="loginUser()">Login</button>
 <button onclick="signupUser()">Signup</button>
-
 <p class="switch" onclick="toggleMode()">Create account</p>
-
 </div>
-
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="supabase.js"></script>
-
-<script type="module">
-import { initNotifications } from "./firebase.js";
-
-document.addEventListener("DOMContentLoaded", () => {
-  initNotifications().catch(err => console.log("Notification error:", err));
-});
-</script>
-
 <script>
-
 let signupMode=false
-
 function toggleMode(){
 signupMode=!signupMode
-
 document.getElementById("name").style.display = signupMode ? "block":"none"
 document.getElementById("phone").style.display = signupMode ? "block":"none"
-
 document.getElementById("formTitle").innerText = signupMode ? "Signup":"Login"
 }
-
 async function signupUser(){
-
 if(!signupMode){
 alert("Switch to signup mode")
 return
 }
-
 const name=document.getElementById("name").value
 const phone=document.getElementById("phone").value
 const email=document.getElementById("email").value
 const password=document.getElementById("password").value
-
 if(!name || !phone || !email || !password){
 alert("Fill all fields")
 return
 }
-
 const { error } = await supabaseClient.auth.signUp({
 email: email,
 password: password
 })
-
 if(error){
 alert(error.message)
 return
 }
-
 await supabaseClient.from("users").insert({
 name:name,
 phone:phone,
 email:email
 })
-
 await supabaseClient.auth.signInWithPassword({
 email: email,
 password: password
 })
-
 alert("Signup success")
-
 window.location.href="account.html"
 }
-
 async function loginUser(){
-
 const email=document.getElementById("email").value
 const password=document.getElementById("password").value
-
-const { data, error } = await supabaseClient.auth.signInWithPassword({
+const { error } = await supabaseClient.auth.signInWithPassword({
 email: email,
 password: password
 })
-
 if(error){
 alert(error.message)
 return
 }
-
-// 🔔 🔥 WELCOME NOTIFICATION
-if(Notification.permission === "granted"){
-  new Notification("Welcome 🎉", {
-    body: "Welcome to Aaoza Travel Kashmir ✈️",
-    icon: "logo.jpg"
-  });
-}
-
 alert("Login success")
-
 window.location.href="account.html"
 }
-
 async function forgotPassword(){
-
 const email=document.getElementById("email").value
-
 if(!email){
 alert("Enter email first")
 return
 }
-
 await supabaseClient.auth.resetPasswordForEmail(email,{
 redirectTo: window.location.origin + "/reset-password.html"
 })
-
 alert("Reset link sent to email")
 }
-
 </script>
-
 </body>
 </html>
