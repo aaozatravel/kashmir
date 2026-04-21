@@ -116,6 +116,14 @@ cursor:pointer;
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="supabase.js"></script>
 
+<script type="module">
+import { initNotifications } from "./firebase.js";
+
+document.addEventListener("DOMContentLoaded", () => {
+  initNotifications().catch(err => console.log("Notification error:", err));
+});
+</script>
+
 <script>
 
 let signupMode=false
@@ -177,7 +185,7 @@ async function loginUser(){
 const email=document.getElementById("email").value
 const password=document.getElementById("password").value
 
-const { error } = await supabaseClient.auth.signInWithPassword({
+const { data, error } = await supabaseClient.auth.signInWithPassword({
 email: email,
 password: password
 })
@@ -185,6 +193,14 @@ password: password
 if(error){
 alert(error.message)
 return
+}
+
+// 🔔 🔥 WELCOME NOTIFICATION
+if(Notification.permission === "granted"){
+  new Notification("Welcome 🎉", {
+    body: "Welcome to Aaoza Travel Kashmir ✈️",
+    icon: "logo.jpg"
+  });
 }
 
 alert("Login success")
