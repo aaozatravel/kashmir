@@ -5,62 +5,30 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Login - Aaoza Travels Kashmir</title>
 
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="login.css">
 
 <style>
-body{
-background:#f5f5f5;
-font-family:sans-serif;
-}
+body{background:#f5f5f5;font-family:sans-serif;}
 .login-box{
-max-width:360px;
-margin:40px auto;
-background:#fff;
-padding:20px;
-border-radius:12px;
-box-shadow:0 0 10px rgba(0,0,0,0.1);
-text-align:center;
+max-width:360px;margin:40px auto;background:#fff;padding:20px;
+border-radius:12px;box-shadow:0 0 10px rgba(0,0,0,0.1);text-align:center;
 }
-.login-box img{
-height:60px;
-margin-bottom:10px;
-}
+.login-box img{height:60px;margin-bottom:10px;}
 .login-box input{
-width:100%;
-padding:10px;
-margin:6px 0;
-border:1px solid #ddd;
-border-radius:6px;
+width:100%;padding:10px;margin:6px 0;border:1px solid #ddd;border-radius:6px;
 }
 .login-box button{
-width:100%;
-padding:10px;
-margin-top:10px;
-border:none;
-background:#d40000;
-color:#fff;
-border-radius:6px;
-font-weight:bold;
-cursor:pointer;
+width:100%;padding:10px;margin-top:10px;border:none;
+background:#d40000;color:#fff;border-radius:6px;font-weight:bold;cursor:pointer;
 }
-.switch{
-margin-top:10px;
-color:#007bff;
-cursor:pointer;
-}
-.forgot{
-text-align:right;
-font-size:12px;
-color:red;
-cursor:pointer;
-}
+.switch{margin-top:10px;color:#007bff;cursor:pointer;}
+.forgot{text-align:right;font-size:12px;color:red;cursor:pointer;}
 </style>
 </head>
 
 <body>
 
 <div class="login-box">
-
 <img src="logo.jpg">
 <h2>Aaoza Travels Kashmir</h2>
 
@@ -78,35 +46,28 @@ cursor:pointer;
 <button onclick="signupUser()">Signup</button>
 
 <p class="switch" onclick="toggleMode()">Create account</p>
-
 </div>
 
-<!-- SUPABASE -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="supabase.js"></script>
 
-<!-- 🔥 FIREBASE MODULE (FIXED) -->
+<!-- FIREBASE -->
 <script type="module">
 import { initNotifications } from "./firebase.js";
-
-// 👉 GLOBAL bana diya
 window.initNotifications = initNotifications;
 </script>
 
 <script>
-
 let signupMode = false;
 
-// SWITCH
 function toggleMode(){
 signupMode = !signupMode;
-
 document.getElementById("name").style.display = signupMode ? "block":"none";
 document.getElementById("phone").style.display = signupMode ? "block":"none";
 document.getElementById("formTitle").innerText = signupMode ? "Signup":"Login";
 }
 
-// SIGNUP
+// ✅ SIGNUP
 async function signupUser(){
 
 if(!signupMode){
@@ -114,10 +75,10 @@ alert("Switch to signup mode first");
 return;
 }
 
-const name = document.getElementById("name").value;
-const phone = document.getElementById("phone").value;
-const email = document.getElementById("email").value;
-const password = document.getElementById("password").value;
+const name = nameInput();
+const phone = phoneInput();
+const email = emailInput();
+const password = passwordInput();
 
 if(!name || !phone || !email || !password){
 alert("Fill all fields");
@@ -134,63 +95,56 @@ return;
 await supabaseClient.from("users").insert({ name, phone, email });
 
 alert("Signup success ✅");
-
 }
 
-// 🔐 LOGIN (FULL FIXED)
+// ✅ LOGIN (FIXED)
 async function loginUser(){
 
-const email = document.getElementById("email").value.trim();
-const password = document.getElementById("password").value.trim();
+const email = emailInput();
+const password = passwordInput();
 
 if(!email || !password){
-  alert("Enter email & password");
-  return;
+alert("Enter email & password");
+return;
 }
 
-try{
-
 const { data, error } = await supabaseClient.auth.signInWithPassword({
-  email,
-  password
+email,
+password
 });
 
 if(error){
-  alert(error.message);
-  return;
+alert(error.message);
+return;
 }
 
-console.log("LOGIN OK:", data);
-
-// 🔔 permission only AFTER login
+// 🔔 notification AFTER login
 if(window.initNotifications){
-  await window.initNotifications();
+await window.initNotifications();
 }
 
-// 🔔 local notification
+// 🔔 welcome notification
 if(Notification.permission === "granted"){
-  new Notification("Welcome 🎉", {
-    body: "Login successful - Aaoza Travel Kashmir ✈️",
-    icon: "logo.jpg"
-  });
+new Notification("Welcome 🎉",{
+body:"Login successful - Aaoza Travel Kashmir ✈️",
+icon:"logo.jpg"
+});
 }
 
-// ⏳ small delay (important)
-setTimeout(()=>{
-  window.location.href = "account.html";
-}, 800);
-
-}catch(e){
-console.log(e);
-alert("Login error");
+// ✅ redirect (no delay needed now)
+window.location.href = "account.html";
 }
 
-}
+// helpers
+function emailInput(){ return document.getElementById("email").value.trim(); }
+function passwordInput(){ return document.getElementById("password").value.trim(); }
+function nameInput(){ return document.getElementById("name").value.trim(); }
+function phoneInput(){ return document.getElementById("phone").value.trim(); }
 
-// FORGOT
+// forgot
 async function forgotPassword(){
 
-const email = document.getElementById("email").value;
+const email = emailInput();
 
 if(!email){
 alert("Enter email first");
@@ -202,9 +156,7 @@ redirectTo: window.location.origin + "/reset-password.html"
 });
 
 alert("Reset link sent 📩");
-
 }
-
 </script>
 
 </body>
