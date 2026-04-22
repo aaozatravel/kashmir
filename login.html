@@ -155,37 +155,41 @@ alert("Signup success ✅");
 // 🔐 LOGIN
 async function loginUser(){
 
-const email = document.getElementById("email").value;
-const password = document.getElementById("password").value;
+const email = document.getElementById("email").value
+const password = document.getElementById("password").value
 
 if(!email || !password){
-alert("Enter email & password");
-return;
+  alert("Enter email & password")
+  return
 }
 
 const { data, error } = await supabaseClient.auth.signInWithPassword({
-email,
-password
-});
+  email: email,
+  password: password
+})
 
 if(error){
-alert("❌ " + error.message);
-return;
+  alert(error.message)
+  return
 }
 
-// 🔔 LOGIN SUCCESS NOTIFICATION
+// ✅ LOGIN SUCCESS
+alert("Login success")
+
+// 🔔 NOTIFICATION (ONLY AFTER LOGIN)
+if(window.initNotifications){
+  await window.initNotifications()
+}
+
+// 🔔 SIMPLE WELCOME NOTIFICATION
 if(Notification.permission === "granted"){
-new Notification("Welcome 🎉", {
-body: "Welcome to Aaoza Travel Kashmir ✈️",
-icon: "logo.jpg"
-});
+  new Notification("Welcome 🎉", {
+    body: "Login successful - Aaoza Travel Kashmir ✈️",
+    icon: "logo.jpg"
+  });
 }
 
-alert("Login success ✅");
-
-// 👉 REDIRECT
-window.location.href = "account.html";
-
+window.location.href = "account.html"
 }
 
 // 🔁 FORGOT PASSWORD
@@ -209,4 +213,4 @@ alert("Reset link sent 📩");
 </script>
 
 </body>
-</html>
+</html>y
