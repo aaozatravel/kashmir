@@ -7,28 +7,12 @@
 
 <link rel="stylesheet" href="login.css">
 
-<style>
-body{background:#f5f5f5;font-family:sans-serif;}
-.login-box{
-max-width:360px;margin:40px auto;background:#fff;padding:20px;
-border-radius:12px;box-shadow:0 0 10px rgba(0,0,0,0.1);text-align:center;
-}
-.login-box img{height:60px;margin-bottom:10px;}
-.login-box input{
-width:100%;padding:10px;margin:6px 0;border:1px solid #ddd;border-radius:6px;
-}
-.login-box button{
-width:100%;padding:10px;margin-top:10px;border:none;
-background:#d40000;color:#fff;border-radius:6px;font-weight:bold;cursor:pointer;
-}
-.switch{margin-top:10px;color:#007bff;cursor:pointer;}
-.forgot{text-align:right;font-size:12px;color:red;cursor:pointer;}
-</style>
 </head>
 
 <body>
 
 <div class="login-box">
+
 <img src="logo.jpg">
 <h2>Aaoza Travels Kashmir</h2>
 
@@ -46,8 +30,10 @@ background:#d40000;color:#fff;border-radius:6px;font-weight:bold;cursor:pointer;
 <button onclick="signupUser()">Signup</button>
 
 <p class="switch" onclick="toggleMode()">Create account</p>
+
 </div>
 
+<!-- SUPABASE -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="supabase.js"></script>
 
@@ -58,16 +44,19 @@ window.initNotifications = initNotifications;
 </script>
 
 <script>
+
 let signupMode = false;
 
+// 🔁 SWITCH LOGIN / SIGNUP
 function toggleMode(){
 signupMode = !signupMode;
+
 document.getElementById("name").style.display = signupMode ? "block":"none";
 document.getElementById("phone").style.display = signupMode ? "block":"none";
 document.getElementById("formTitle").innerText = signupMode ? "Signup":"Login";
 }
 
-// ✅ SIGNUP
+// 📝 SIGNUP
 async function signupUser(){
 
 if(!signupMode){
@@ -92,12 +81,17 @@ alert(error.message);
 return;
 }
 
-await supabaseClient.from("users").insert({ name, phone, email });
+// save profile
+await supabaseClient.from("users").insert({
+name,
+phone,
+email
+});
 
-alert("Signup success ✅");
+alert("Signup successful ✅");
 }
 
-// ✅ LOGIN (FIXED)
+// 🔐 LOGIN (FINAL FIX)
 async function loginUser(){
 
 const email = emailInput();
@@ -118,30 +112,43 @@ alert(error.message);
 return;
 }
 
-// 🔔 notification AFTER login
-if(window.initNotifications){
-await window.initNotifications();
-}
-
-// 🔔 welcome notification
-if(Notification.permission === "granted"){
-new Notification("Welcome 🎉",{
-body:"Login successful - Aaoza Travel Kashmir ✈️",
-icon:"logo.jpg"
+// 🔔 ASK PERMISSION + SHOW NOTIFICATION
+Notification.requestPermission().then(permission => {
+  if(permission === "granted"){
+    new Notification("Welcome 🎉", {
+      body: "Login successful - Aaoza Travel Kashmir ✈️",
+      icon: "logo.jpg"
+    });
+  }
 });
+
+// 🔥 FIREBASE INIT (background push)
+if(window.initNotifications){
+  window.initNotifications(); // NO await
 }
 
-// ✅ redirect (no delay needed now)
+// ✅ INSTANT REDIRECT
 window.location.href = "account.html";
 }
 
-// helpers
-function emailInput(){ return document.getElementById("email").value.trim(); }
-function passwordInput(){ return document.getElementById("password").value.trim(); }
-function nameInput(){ return document.getElementById("name").value.trim(); }
-function phoneInput(){ return document.getElementById("phone").value.trim(); }
+// 🔧 HELPERS
+function emailInput(){
+return document.getElementById("email").value.trim();
+}
 
-// forgot
+function passwordInput(){
+return document.getElementById("password").value.trim();
+}
+
+function nameInput(){
+return document.getElementById("name").value.trim();
+}
+
+function phoneInput(){
+return document.getElementById("phone").value.trim();
+}
+
+// 🔁 FORGOT PASSWORD
 async function forgotPassword(){
 
 const email = emailInput();
@@ -151,12 +158,18 @@ alert("Enter email first");
 return;
 }
 
-await supabaseClient.auth.resetPasswordForEmail(email,{
+const { error } = await supabaseClient.auth.resetPasswordForEmail(email,{
 redirectTo: window.location.origin + "/reset-password.html"
 });
 
+if(error){
+alert(error.message);
+return;
+}
+
 alert("Reset link sent 📩");
 }
+
 </script>
 
 </body>
