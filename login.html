@@ -12,7 +12,6 @@ body{
 background:#f5f5f5;
 font-family:sans-serif;
 }
-
 .login-box{
 max-width:360px;
 margin:40px auto;
@@ -22,12 +21,10 @@ border-radius:12px;
 box-shadow:0 0 10px rgba(0,0,0,0.1);
 text-align:center;
 }
-
 .login-box img{
 height:60px;
 margin-bottom:10px;
 }
-
 .login-box input{
 width:100%;
 padding:10px;
@@ -35,7 +32,6 @@ margin:6px 0;
 border:1px solid #ddd;
 border-radius:6px;
 }
-
 .login-box button{
 width:100%;
 padding:10px;
@@ -47,13 +43,11 @@ border-radius:6px;
 font-weight:bold;
 cursor:pointer;
 }
-
 .switch{
 margin-top:10px;
 color:#007bff;
 cursor:pointer;
 }
-
 .forgot{
 text-align:right;
 font-size:12px;
@@ -91,21 +85,19 @@ cursor:pointer;
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="supabase.js"></script>
 
-<!-- FIREBASE NOTIFICATION -->
+<!-- 🔥 FIREBASE MODULE (FIXED) -->
 <script type="module">
 import { initNotifications } from "./firebase.js";
 
-// 🔔 FIRST TIME PERMISSION
-document.addEventListener("DOMContentLoaded", () => {
-  initNotifications().catch(err => console.log(err));
-});
+// 👉 GLOBAL bana diya
+window.initNotifications = initNotifications;
 </script>
 
 <script>
 
 let signupMode = false;
 
-// 🔁 SWITCH LOGIN/SIGNUP
+// SWITCH
 function toggleMode(){
 signupMode = !signupMode;
 
@@ -114,7 +106,7 @@ document.getElementById("phone").style.display = signupMode ? "block":"none";
 document.getElementById("formTitle").innerText = signupMode ? "Signup":"Login";
 }
 
-// 📝 SIGNUP
+// SIGNUP
 async function signupUser(){
 
 if(!signupMode){
@@ -132,56 +124,50 @@ alert("Fill all fields");
 return;
 }
 
-const { error } = await supabaseClient.auth.signUp({
-email,
-password
-});
+const { error } = await supabaseClient.auth.signUp({ email, password });
 
 if(error){
 alert(error.message);
 return;
 }
 
-await supabaseClient.from("users").insert({
-name,
-phone,
-email
-});
+await supabaseClient.from("users").insert({ name, phone, email });
 
 alert("Signup success ✅");
 
 }
 
-// 🔐 LOGIN
+// 🔐 LOGIN (FULL FIXED)
 async function loginUser(){
 
-const email = document.getElementById("email").value
-const password = document.getElementById("password").value
+const email = document.getElementById("email").value.trim();
+const password = document.getElementById("password").value.trim();
 
 if(!email || !password){
-  alert("Enter email & password")
-  return
+  alert("Enter email & password");
+  return;
 }
+
+try{
 
 const { data, error } = await supabaseClient.auth.signInWithPassword({
-  email: email,
-  password: password
-})
+  email,
+  password
+});
 
 if(error){
-  alert(error.message)
-  return
+  alert(error.message);
+  return;
 }
 
-// ✅ LOGIN SUCCESS
-alert("Login success")
+console.log("LOGIN OK:", data);
 
-// 🔔 NOTIFICATION (ONLY AFTER LOGIN)
+// 🔔 permission only AFTER login
 if(window.initNotifications){
-  await window.initNotifications()
+  await window.initNotifications();
 }
 
-// 🔔 SIMPLE WELCOME NOTIFICATION
+// 🔔 local notification
 if(Notification.permission === "granted"){
   new Notification("Welcome 🎉", {
     body: "Login successful - Aaoza Travel Kashmir ✈️",
@@ -189,10 +175,19 @@ if(Notification.permission === "granted"){
   });
 }
 
-window.location.href = "account.html"
+// ⏳ small delay (important)
+setTimeout(()=>{
+  window.location.href = "account.html";
+}, 800);
+
+}catch(e){
+console.log(e);
+alert("Login error");
 }
 
-// 🔁 FORGOT PASSWORD
+}
+
+// FORGOT
 async function forgotPassword(){
 
 const email = document.getElementById("email").value;
@@ -213,4 +208,4 @@ alert("Reset link sent 📩");
 </script>
 
 </body>
-</html>y
+</html>
