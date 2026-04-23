@@ -1287,25 +1287,26 @@ font-weight:600;
 
 /*========= HOME PAGE REELS ==========*/
 .reels-section{
-  padding:15px;
+  padding:18px 14px;
+  background:#ffffff;
 }
 
 .reels-section h2{
-  margin-bottom:10px;
-  color:#1c3faa;
+  margin-bottom:12px;
+  color:#111;
   font-size:20px;
   font-weight:700;
 }
 
-/* OUTER BOX */
+/* OUTER BOX (WHITE GLASS STYLE) */
 .reels-container{
   display:flex;
-  gap:12px;
+  gap:14px;
   overflow-x:auto;
-  padding:15px;
-  background:linear-gradient(145deg,#0f0f0f,#111);
-  border-radius:16px;
-  box-shadow:0 10px 30px rgba(0,0,0,0.4);
+  padding:14px;
+  background:#f8fafc;
+  border-radius:18px;
+  box-shadow:0 6px 20px rgba(0,0,0,0.08);
   scroll-snap-type:x mandatory;
   -webkit-overflow-scrolling:touch;
 }
@@ -1315,40 +1316,53 @@ font-weight:600;
   display:none;
 }
 
-/* REEL CARD (Shorts / TikTok size) */
+/* REEL CARD (MODERN WHITE CARD) */
 .reel-card{
   flex:0 0 auto;
   width:180px;
   height:320px;
-  border-radius:14px;
+  border-radius:16px;
   overflow:hidden;
-  background:#000;
-  box-shadow:0 8px 20px rgba(0,0,0,0.5);
+  background:#fff;
+  box-shadow:0 10px 25px rgba(0,0,0,0.12);
   scroll-snap-align:start;
   position:relative;
-  transition:transform 0.2s ease;
+  transition:all 0.3s ease;
 }
 
-/* hover effect (desktop) */
+/* hover / tap effect */
 .reel-card:hover{
-  transform:scale(1.03);
+  transform:translateY(-5px) scale(1.02);
+  box-shadow:0 15px 35px rgba(0,0,0,0.18);
 }
 
-/* VIDEO FIT */
+/* VIDEO */
 .reel-card video{
   width:100%;
   height:100%;
   object-fit:cover;
-  border-radius:14px;
+  border-radius:16px;
 }
 
-/* optional play icon overlay feel */
+/* SOFT OVERLAY */
 .reel-card::after{
   content:"";
   position:absolute;
   inset:0;
-  background:linear-gradient(to top, rgba(0,0,0,0.2), transparent);
+  background:linear-gradient(to top, rgba(0,0,0,0.15), transparent);
   pointer-events:none;
+  border-radius:16px;
+}
+
+/* ▶ PLAY ICON */
+/* REMOVE THIS COMPLETELY */
+.reel-card::before{
+  display:none;
+}
+
+/* show icon on hover */
+.reel-card:hover::before{
+  opacity:1;
 }
 
 /*==========Gallery home page=========*/
