@@ -147,3 +147,45 @@ button:first-child{
     grid-template-columns:1fr;
   }
 }
+
+/* TOP ALERT */
+.top-alert{
+position:fixed;
+top:-100px;
+left:50%;
+transform:translateX(-50%);
+background:#2ecc71;
+color:#fff;
+padding:12px 18px;
+border-radius:8px;
+font-weight:600;
+display:flex;
+align-items:center;
+gap:8px;
+box-shadow:0 5px 15px rgba(0,0,0,0.2);
+z-index:9999;
+transition:0.4s;
+}
+
+.top-alert.error{
+background:#ff3b30;
+}
+
+.top-alert.show{
+top:20px;
+}
+
+/* success */
+.top-alert.success{
+  background:#22c55e;
+}
+
+/* error */
+.top-alert.error{
+  background:#ef4444;
+}
+
+/* icon */
+.top-alert i{
+  font-size:18px;
+}
