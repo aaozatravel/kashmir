@@ -13,85 +13,132 @@ overflow-x:hidden;
 
 /* ================= HEADER ================= */
 header{
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:12px 15px;
-background:#ffffff;
-box-shadow:0 2px 10px rgba(0,0,0,0.08);
-position:sticky;
-top:0;
-z-index:999;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:12px 15px;
+  background:#fff;
+  box-shadow:0 2px 10px rgba(0,0,0,0.08);
+  position:sticky;
+  top:0;
+  z-index:999;
 }
 
 /* logo */
 .logo{
-display:flex;
-align-items:center;
-gap:8px;
-font-weight:bold;
-font-size:15px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-weight:bold;
+  font-size:15px;
 }
 
 .logo img{
-height:32px;
-width:32px;
-border-radius:6px;
+  height:32px;
+  width:32px;
+  border-radius:6px;
+}
+
+/* RIGHT SIDE */
+.header-right{
+  display:flex;
+  align-items:center;
+  gap:15px;
+}
+
+/* 🔔 NOTIFICATION */
+.noti-btn{
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-decoration:none;
+}
+
+/* bell icon FIX */
+.bell-icon{
+  width:20px;
+  height:20px;
+  object-fit:contain;
+  display:block;
+}
+
+/* 🔴 BADGE (Facebook style) */
+.badge{
+  position:absolute;
+  top:-6px;
+  right:-6px;
+
+  background:#ff3b30;
+  color:#fff;
+
+  font-size:10px;
+  min-width:16px;
+  height:16px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  border-radius:50%;
+  font-weight:bold;
+
+  box-shadow:0 0 0 2px #fff;
+}
+
+/* hide if empty */
+.badge:empty{
+  display:none;
 }
 
 /* nav */
 nav{
-display:flex;
-gap:15px;
+  display:flex;
+  gap:15px;
 }
 
 nav a{
-text-decoration:none;
-color:#333;
-font-size:14px;
-font-weight:500;
+  text-decoration:none;
+  color:#333;
+  font-size:14px;
+  font-weight:500;
 }
 
 /* menu icon */
 .menu-toggle{
-display:none;
-font-size:22px;
-cursor:pointer;
+  display:none;
+  font-size:22px;
+  cursor:pointer;
 }
-
 
 /* ================= MOBILE ================= */
 @media(max-width:768px){
 
-/* show menu button */
-.menu-toggle{
-display:block;
-}
+  .menu-toggle{
+    display:block;
+  }
 
-/* hide menu */
-nav{
-position:absolute;
-top:60px;
-left:0;
-width:100%;
-background:#fff;
-flex-direction:column;
-display:none;
-padding:10px 0;
-box-shadow:0 5px 15px rgba(0,0,0,0.1);
-}
+  nav{
+    position:absolute;
+    top:60px;
+    left:0;
+    width:100%;
+    background:#fff;
+    flex-direction:column;
+    display:none;
+    padding:10px 0;
+    box-shadow:0 5px 15px rgba(0,0,0,0.1);
+  }
 
-/* show when active */
-nav.active{
-display:flex;
-}
+  nav.active{
+    display:flex;
+  }
 
-/* nav links */
-nav a{
-padding:12px;
-border-bottom:1px solid #eee;
-text-align:center;
-}
+  nav a{
+    padding:12px;
+    border-bottom:1px solid #eee;
+    text-align:center;
+  }
 }
 
 /* ================= HERO ================= */
@@ -1408,3 +1455,4 @@ font-weight:600;
   justify-content:center;
   align-items:center;
   color:white;
+  
