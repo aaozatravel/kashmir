@@ -36,13 +36,28 @@
 <body>
 
 <header>
+
+  <!-- LEFT (logo) -->
   <div class="logo">
     <img src="logo.jpg">
     <span>Aaoza Travel Kashmir</span>
   </div>
 
-  <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+  <!-- RIGHT SIDE -->
+  <div class="header-right">
 
+    <!-- 🔔 Notification -->
+    <a href="notifications.html" class="noti-btn">
+      <img src="https://cdn-icons-png.flaticon.com/512/1827/1827392.png" class="bell-icon">
+      <span id="notiBadge" class="badge">4</span>
+    </a>
+
+    <!-- ☰ Menu -->
+    <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+
+  </div>
+
+  <!-- NAV -->
   <nav id="navMenu">
     <a href="index.html">Home</a>
     <a href="about.html">About</a>
@@ -50,6 +65,7 @@
     <a href="gallery.html">Gallery</a>
     <a href="contact.html">Contact</a>
   </nav>
+
 </header>
 <section class="hero">  
 <h1>Explore Kashmir With Aaoza Travel</h1>  
@@ -348,6 +364,65 @@ document.addEventListener("DOMContentLoaded", () => {
   loadHeroGuides()
 })
 </script>
+
+<script>
+
+// 🔔 LOAD COUNT FUNCTION
+async function loadNotificationCount(){
+
+  const badge = document.getElementById("notiBadge");
+
+  try{
+    const { data:{user} } = await supabaseClient.auth.getUser();
+
+    if(!user){
+      badge.style.display = "none";
+      return;
+    }
+
+    const { data } = await supabaseClient
+      .from("notifications")
+      .select("id,is_global,user_email");
+
+    let filtered = data.filter(n => 
+      n.is_global === true || 
+      n.user_email === user.email
+    );
+
+    let count = filtered.length;
+
+    if(count > 0){
+      badge.style.display = "flex";
+      badge.innerText = count > 99 ? "99+" : count;
+    }else{
+      badge.style.display = "none";
+    }
+
+  }catch(err){
+    console.log(err);
+  }
+}
+
+// 🚀 PAGE LOAD
+document.addEventListener("DOMContentLoaded", () => {
+  loadNotificationCount();
+});
+
+
+// 🔴 REAL-TIME UPDATE (👉 YAHI LAGANA HAI)
+supabaseClient
+  .channel('notifications-channel')
+  .on(
+    'postgres_changes',
+    { event: 'INSERT', schema: 'public', table: 'notifications' },
+    () => {
+      loadNotificationCount(); // auto refresh
+    }
+  )
+  .subscribe();
+
+</script>
+
 
 </body>
 </html> 
