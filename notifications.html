@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Notifications - Aaoza Travel</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body{
+  font-family:Arial, sans-serif;
+  background:#eef3f9;
+  margin:0;
+}
+
+/* HEADER */
+.header{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:14px;
+  background:linear-gradient(45deg,#0a84ff,#00c6ff);
+  color:#fff;
+  font-weight:bold;
+  font-size:16px;
+}
+
+.header img{
+  width:38px;
+  height:38px;
+  border-radius:50%;
+  border:2px solid #fff;
+}
+
+/* LIST */
+#list{
+  padding:10px;
+}
+
+/* CARD */
+.card{
+  display:flex;
+  gap:12px;
+  background:#fff;
+  padding:10px;
+  margin-bottom:12px;
+  border-radius:14px;
+  box-shadow:0 6px 18px rgba(0,0,0,0.08);
+  animation:fade 0.4s ease;
+  border-left:5px solid #0a84ff;
+}
+
+/* IMAGE LEFT */
+.card img{
+  width:70px;
+  height:70px;
+  border-radius:10px;
+  object-fit:cover;
+}
+
+/* CONTENT */
+.card-content{
+  flex:1;
+}
+
+/* TITLE */
+.card h3{
+  margin:0;
+  font-size:15px;
+  color:#222;
+}
+
+/* MESSAGE */
+.card p{
+  margin:4px 0;
+  font-size:13px;
+  color:#555;
+}
+
+/* TIME */
+.card small{
+  font-size:11px;
+  color:#888;
+}
+
+/* COLORS VARIANTS */
+.card.green{
+  border-left-color:#28a745;
+}
+.card.red{
+  border-left-color:#ff3b30;
+}
+.card.blue{
+  border-left-color:#0a84ff;
+}
+
+/* EMPTY */
+.empty{
+  text-align:center;
+  margin-top:40px;
+  color:#777;
+  font-size:14px;
+}
+
+/* ANIMATION */
+@keyframes fade{
+  from{opacity:0; transform:translateY(10px)}
+  to{opacity:1; transform:translateY(0)}
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+  <img src="logo.jpg">
+  Aaoza Travel Kashmir
+</div>
+
+<div id="list">
+  <div class="empty">Loading...</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase.js"></script>
+
+<script>
+
+async function loadNoti(){
+
+  try{
+
+    const { data:{user} } = await supabaseClient.auth.getUser();
+
+    if(!user){
+      document.getElementById("list").innerHTML =
+      "<div class='empty'>Login required 🔒</div>";
+      return;
+    }
+
+    const { data, error } = await supabaseClient
+    .from("notifications")
+    .select("*")
+    .order("created_at",{ascending:false});
+
+    if(error){
+      document.getElementById("list").innerHTML =
+      "<div class='empty'>Error loading ❌</div>";
+      return;
+    }
+
+    if(!data || data.length === 0){
+      document.getElementById("list").innerHTML =
+      "<div class='empty'>No notifications 📭</div>";
+      return;
+    }
+
+    let filtered = data.filter(n =>
+      n.is_global === true || n.user_email === user.email
+    );
+
+    let html="";
+
+    filtered.forEach(n => {
+
+      // 🎨 random color style
+      let style = "blue";
+      if(n.type === "success") style = "green";
+      if(n.type === "alert") style = "red";
+
+      html += `
+      <div class="card ${style}">
+        
+        <img src="${n.image || 'logo.jpg'}">
+
+        <div class="card-content">
+          <h3>${n.title || "Notification"}</h3>
+          <p>${n.message || ""}</p>
+          <small>${new Date(n.created_at).toLocaleString()}</small>
+        </div>
+
+      </div>
+      `;
+    });
+
+    document.getElementById("list").innerHTML = html;
+
+  }catch(err){
+    console.log(err);
+    document.getElementById("list").innerHTML =
+    "<div class='empty'>Something went wrong ❌</div>";
+  }
+
+}
+
+loadNoti();
+
+</script>
+
+</body>
+</html>
