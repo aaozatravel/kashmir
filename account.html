@@ -130,18 +130,22 @@ async function saveSettings(){
   const newPhone = document.getElementById("newPhone").value
   const file = document.getElementById("newImage").files[0]
 
+  const name = document.getElementById("userName").innerText
+  const phone = document.getElementById("userPhone").innerText.replace("Phone: ","")
+  const email = document.getElementById("userEmail").innerText.replace("Email: ","")
+
   let imageUrl = null
 
-  // upload image
+  // ================= IMAGE UPLOAD =================
   if(file){
     const fileName = Date.now() + "_" + file.name
 
-    const { error: uploadError } = await supabaseClient
+    const { error } = await supabaseClient
       .storage
       .from("profile-images")
       .upload(fileName, file)
 
-    if(!uploadError){
+    if(!error){
       const { data } = supabaseClient
         .storage
         .from("profile-images")
@@ -151,39 +155,44 @@ async function saveSettings(){
     }
   }
 
-  // update users table (IMPORTANT FIX)
+  // ================= UPDATE PROFILE (NAME + IMAGE) =================
   const updates = {}
 
   if(newName) updates.name = newName
   if(imageUrl) updates.image = imageUrl
 
   if(Object.keys(updates).length > 0){
-
     await supabaseClient
       .from("users")
       .update(updates)
       .eq("email", currentUserEmail)
   }
 
-  // request system
+  // ================= WHATSAPP REQUEST (OPTIONAL) =================
   if(newEmail || newPhone){
 
-    await supabaseClient
-      .from("profile_requests")
-      .insert([{
-        user_email: currentUserEmail,
-        new_email: newEmail,
-        new_phone: newPhone,
-        status: "pending"
-      }])
+    let message = `
+📩 *Profile Update Request*
+
+👤 Name: ${name}
+📧 Current Email: ${email}
+📞 Current Phone: ${phone}
+
+➡️ New Email: ${newEmail || "No change"}
+➡️ New Phone: ${newPhone || "No change"}
+
+⚠️ Please update my details.
+    `
+
+    let url = `https://wa.me/917051932522?text=${encodeURIComponent(message)}`
+    window.open(url, "_blank")
   }
 
-  alert("Profile updated ✅")
+  alert("Profile updated successfully ✅")
 
-  // 🔥 FORCE REFRESH
-  setTimeout(() => {
-  loadUserProfile()
-}, 500)
+  setTimeout(()=>{
+    loadUserProfile()
+  },500)
 
   document.getElementById("settingsBox").style.display = "none"
 }
