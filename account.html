@@ -81,15 +81,16 @@ let currentUserEmail = null;
 // ================= INIT =================
 async function initPage(){
 
-const { data:{ user } } = await supabaseClient.auth.getUser()
+  const { data: { session } } = await supabaseClient.auth.getSession()
 
-if(!user){
-window.location.href="login.html"
-return
-}
+  // 🚫 agar login nahi hai to redirect
+  if(!session){
+    window.location.href = "login.html"
+    return
+  }
 
-currentUserEmail = user.email
-loadUserProfile()
+  currentUserEmail = session.user.email
+  loadUserProfile()
 }
 
 // ================= LOAD PROFILE =================
@@ -203,8 +204,8 @@ function handleGuideClick(){
 const guide = localStorage.getItem("guide")
 
 if(guide){
-window.location.href="guide-dashboard.html"
-return
+  alert("Guide already logged in")
+  return
 }
 
 document.getElementById("guideLoginBox").style.display = "block"
@@ -234,8 +235,11 @@ window.location.href="guide-dashboard.html"
 
 // ================= LOGOUT =================
 async function logoutUser(){
+
 await supabaseClient.auth.signOut()
-window.location.href="login.html"
+localStorage.clear()
+
+window.location.href = "login.html"
 }
 
 </script>
