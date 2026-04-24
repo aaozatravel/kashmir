@@ -3,52 +3,37 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Login - Aaoza Travels Kashmir</title>
-
 <link rel="stylesheet" href="login.css">
 </head>
-
 <body>
-
 <!-- 🔔 TOAST -->
 <div id="toast"></div>
-
 <div class="login-box">
-
 <img src="logo.jpg">
 <h2>Aaoza Travels Kashmir</h2>
-
 <h3 id="formTitle">Login</h3>
-
 <input type="text" id="name" placeholder="Full Name" class="hide">
 <input type="text" id="phone" placeholder="Phone Number" class="hide">
-
 <input type="email" id="email" placeholder="Email">
 <input type="password" id="password" placeholder="Password">
-
 <p class="forgot" onclick="forgotPasswordHandler()">Forgot Password?</p>
-
 <button onclick="handleLogin()">Login</button>
 <button onclick="handleSignup()">Signup</button>
-
 <p class="switch" onclick="toggleMode()">Create account</p>
-
 </div>
-
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="supabase.js"></script>
-
 <script>
-
+  window.onload = async () => {
+  await supabaseClient.auth.signOut()
+}
+  
 // 🔔 TOAST
 function showToast(type, message){
-
 const toast = document.getElementById("toast");
-
 toast.className = "";
 toast.classList.add("toast", type === "success" ? "toast-success" : "toast-error");
-
 toast.innerHTML = `
 <div class="toast-icon">
 ${type === "success" ? "✔" : "✖"}
@@ -58,109 +43,77 @@ ${type === "success" ? "✔" : "✖"}
 <div class="toast-msg">${message}</div>
 </div>
 `;
-
 setTimeout(()=> toast.classList.add("show"), 50);
 setTimeout(()=> toast.classList.remove("show"), 3500);
-
 }
-
 // 🔁 SWITCH
 let signupMode = false;
-
 function toggleMode(){
 signupMode = !signupMode;
-
 document.getElementById("name").classList.toggle("hide");
 document.getElementById("phone").classList.toggle("hide");
-
 document.getElementById("formTitle").innerText = signupMode ? "Signup" : "Login";
 }
-
 // ✅ LOGIN
 async function handleLogin(){
-
 const email = document.getElementById("email").value.trim();
 const password = document.getElementById("password").value.trim();
-
 if(!email || !password){
 showToast("error","Enter email & password");
 return;
 }
-
 const { error } = await supabaseClient.auth.signInWithPassword({ email, password });
-
 if(error){
 showToast("error", error.message);
 return;
 }
-
 showToast("success","Login successful 🎉");
-
 setTimeout(()=>{
 window.location.href="index.html";
 },1500);
-
 }
-
 // ✅ SIGNUP
 async function handleSignup(){
-
 if(!signupMode){
 showToast("error","Switch to signup mode");
 return;
 }
-
 const name = document.getElementById("name").value;
 const phone = document.getElementById("phone").value;
 const email = document.getElementById("email").value;
 const password = document.getElementById("password").value;
-
 if(!name || !phone || !email || !password){
 showToast("error","Fill all fields");
 return;
 }
-
 const { data, error } = await supabaseClient.auth.signUp({ email, password });
-
 if(error){
 showToast("error", error.message);
 return;
 }
-
 await supabaseClient.from("users").insert({
 id: data.user.id,
 name,
 phone,
 email
 });
-
 showToast("success","Signup successful ✅");
-
 setTimeout(()=>{
 window.location.href="index.html";
 },1500);
-
 }
-
 // 🔁 FORGOT
 async function forgotPasswordHandler(){
-
 const email = document.getElementById("email").value;
-
 if(!email){
 showToast("error","Enter email first");
 return;
 }
-
 await supabaseClient.auth.resetPasswordForEmail(email,{
 redirectTo: window.location.origin + "/reset-password.html"
 });
-
 showToast("success","Reset link sent 📩");
-
 }
-
 </script>
-
 </body>
 </html>
