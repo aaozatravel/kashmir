@@ -11,6 +11,8 @@
 </head>
 
 <body>
+  <!-- 🔔 TOP ALERT -->
+<div id="topAlert" class="top-alert"></div>
 
 <button onclick="history.back()">← Back</button>
 
@@ -82,6 +84,24 @@
 
 <script>
 
+// 🔔 ALERT FUNCTION (TOP SLIDE)
+function showAlert(msg,type="success"){
+
+const alertBox = document.getElementById("topAlert")
+
+alertBox.className = "top-alert show " + type
+
+alertBox.innerHTML = `
+<span>${type==="success" ? "✔️" : "❌"}</span>
+<span>${msg}</span>
+`
+
+setTimeout(()=>{
+alertBox.classList.remove("show")
+},2500)
+
+}
+
 // 🔢 COUNTER
 function changeCount(type,val){
 let id = type+"Count"
@@ -91,7 +111,6 @@ let num = parseInt(el.innerText)
 num += val
 if(num < 0) num = 0
 
-// minimum 1 adult
 if(type==="adult" && num < 1) num = 1
 
 el.innerText = num
@@ -100,7 +119,7 @@ updateTravellers()
 calculateTotal()
 }
 
-// 👤 TRAVELLER INPUTS
+// 👤 TRAVELLERS
 function updateTravellers(){
 
 let adult = +adultCount.innerText
@@ -123,8 +142,13 @@ html += `
 <option>Female</option>
 </select>
 <input type="number" placeholder="Age" value="${isInfant?1:''}" ${isInfant?"readonly":""}>
-<input placeholder="${isInfant?'Not required':'Phone'}" ${isInfant?"disabled":""}>
-</div>
+<input 
+  type="tel" 
+  inputmode="numeric" 
+  pattern="[0-9]{10}" 
+  placeholder="${isInfant?'Not required':'Phone'}" 
+  ${isInfant?"disabled":""}
+>
 `
 }
 
@@ -165,13 +189,13 @@ let total = packageTotal + single + double
 document.getElementById("totalBox").innerText = "Total ₹" + total
 }
 
-// 💾 SAVE
+// 💾 SAVE BOOKING
 async function saveBooking(){
 
 const { data:{user} } = await supabaseClient.auth.getUser()
 
 if(!user){
-alert("Login first")
+showAlert("Login required 🔒","error")
 return
 }
 
@@ -195,67 +219,49 @@ let infant = +infantCount.innerText
 let packageName = localStorage.getItem("selectedPackage")
 let packagePrice = parseInt(localStorage.getItem("selectedPrice"))
 
-// 📦 PACKAGE DETAILS ADD (IMPORTANT)
-
-let packageDetails = {}
-
-if(packageName === "Local"){
-  packageDetails = {
-    places: ["Gulmarg","Sonmarg","Srinagar","Dal Lake","Nishat","Shalimar","Doodhpathri"],
-    activities: ["Gondola Phase 1","Horse Ride 1hr"],
-    services: ["Cab","Driver","Guide"],
-    media: ["Photography","Reels (10)"]
-  }
-}
-
-if(packageName === "Pro"){
-  packageDetails = {
-    places: ["Gulmarg","Sonmarg","Doodhpathri","Srinagar","Dal Lake","Gardens","Drang Waterfall"],
-    activities: ["Gondola Phase 1 & 2","Horse Ride 2hr"],
-    services: ["Cab","Driver","Guide"],
-    media: ["Photoshoot","Video","Reels (15)"]
-  }
-}
-
-if(packageName === "Premium"){
-  packageDetails = {
-    places: ["All Places","Waterfalls","Hidden Spots"],
-    activities: ["Gondola 1,2,3","Skiing","Cycling","Full Day Horse Ride"],
-    services: ["Cab","Driver","Guide"],
-    media: ["Unlimited Photos","Unlimited Reels"]
-  }
-}
-
 let paying = adults + child
-
 let packageTotal = packagePrice * paying
 
 let singleRoomCount = +singleRoom.innerText
 let doubleRoomCount = +doubleRoom.innerText
 
-let singleTotal = 6999 * singleRoomCount
-let doubleTotal = 8999 * doubleRoomCount
+let total = packageTotal + (6999 * singleRoomCount) + (8999 * doubleRoomCount)
 
-let total = packageTotal + singleTotal + doubleTotal
+// ❌ VALIDATION START
 
-const bookingData = {
-  travellers,
-
-  package_name: packageName,
-  package_price: packagePrice,
-
-  // 🔥 ADD THIS
-  package_details: packageDetails,
-
-  adults,
-  children: child,
-  infants: infant,
-
-  single_room: singleRoomCount,
-  double_room: doubleRoomCount,
-
-  total
+// room check
+if(+singleRoom.innerText === 0 && +doubleRoom.innerText === 0){
+  showAlert("Please select at least 1 room 🏨","error")
+  return
 }
+
+// traveller check
+for(let t of travellers){
+
+  if(!t.name || t.name.trim() === ""){
+    showAlert("Enter traveller name ❗","error")
+    return
+  }
+
+  if(!t.gender){
+    showAlert("Select gender ❗","error")
+    return
+  }
+
+  if(!t.age || t.age <= 0){
+    showAlert("Enter valid age ❗","error")
+    return
+  }
+
+  if(t.age > 2 && (!t.phone || t.phone.trim() === "")){
+    showAlert("Phone number required 📱","error")
+    return
+  }
+
+}
+
+// ❌ VALIDATION END
+
 
 const { error } = await supabaseClient
 .from("bookings")
@@ -263,7 +269,7 @@ const { error } = await supabaseClient
 user_email:user.email,
 package_name:packageName,
 package_price:packagePrice,
-traveller_details:JSON.stringify(bookingData),
+traveller_details:JSON.stringify(travellers),
 adults,
 children:child,
 infants:infant,
@@ -274,12 +280,16 @@ status:"pending"
 }])
 
 if(error){
-alert("Error saving booking")
+showAlert("Booking failed ❌","error")
 return
 }
 
-alert("Booking Successful ✅")
+showAlert("Booking Sent Successfully 🎉","success")
+
+setTimeout(()=>{
 window.location.href="my-booking.html"
+},2000)
+
 }
 
 // INIT
