@@ -3,11 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>User Account - Aaoza Travel Kashmir</title>
+<title>User Account - Aaoza Travels Kashmir</title>
 
 <link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="account.css">
-
 </head>
 
 <body class="account-body" onload="initPage()">
@@ -21,15 +20,40 @@
 
 <!-- PROFILE -->
 <div class="profile-card">
-<img src="user.png" class="profile-avatar">
+
+<img id="profileImg" src="user.png" class="profile-avatar">
+
 <h3 id="userName">Guest User</h3>
 <p id="userPhone">Phone: Not Available</p>
 <p id="userEmail">Email: Not Available</p>
 
-<button onclick="logoutUser()" class="logout-btn">Logout</button>
+<div onclick="toggleSettings()" class="edit-online">
+● Edit Profile (Online)
+</div>
+<button onclick="logoutUser()" class="logout-mini">Logout</button>
+
 </div>
 
-<!-- GUIDE LOGIN -->
+<!-- SETTINGS -->
+<div id="settingsBox" style="display:none; margin-top:15px;">
+
+<h3>Edit Profile</h3>
+
+<input id="newName" placeholder="New Name">
+
+<!-- IMAGE UPLOAD (FIXED) -->
+<input type="file" id="newImage" accept="image/*">
+
+<h3>Change Email / Phone (Request Only)</h3>
+
+<input id="newEmail" placeholder="New Email">
+<input id="newPhone" placeholder="New Phone">
+
+<button onclick="saveSettings()">Send Update Request</button>
+
+</div>
+
+<!-- GUIDE LOGIN (OLD SYSTEM KEPT) -->
 <div class="guide-access">
 
 <button class="guide-open-btn" onclick="handleGuideClick()">
@@ -52,9 +76,9 @@
 
 <script>
 
-// ===============================
-// INIT
-// ===============================
+let currentUserEmail = null;
+
+// ================= INIT =================
 async function initPage(){
 
 const { data:{ user } } = await supabaseClient.auth.getUser()
@@ -64,37 +88,119 @@ window.location.href="login.html"
 return
 }
 
+currentUserEmail = user.email
 loadUserProfile()
 }
 
-// ===============================
-// GUIDE CLICK (AUTO LOGIN)
-// ===============================
+// ================= LOAD PROFILE =================
+async function loadUserProfile(){
+
+  const { data: userData, error } = await supabaseClient
+    .from("users")
+    .select("*")
+    .eq("email", currentUserEmail)
+    .single()
+
+  if(error){
+    console.log("Load error:", error)
+    return
+  }
+
+  // 🔥 FORCE DOM UPDATE (IMPORTANT)
+  document.getElementById("userName").innerText = userData.name || "Guest User"
+  document.getElementById("userPhone").innerText = "Phone: " + (userData.phone || "Not Available")
+  document.getElementById("userEmail").innerText = "Email: " + (userData.email || "Not Available")
+
+  document.getElementById("profileImg").src = userData.image || "user.png"
+}
+
+// ================= TOGGLE SETTINGS =================
+function toggleSettings(){
+document.getElementById("settingsBox").style.display =
+document.getElementById("settingsBox").style.display === "none"
+? "block"
+: "none"
+}
+
+// ================= SAVE SETTINGS =================
+async function saveSettings(){
+
+  const newName = document.getElementById("newName").value
+  const newEmail = document.getElementById("newEmail").value
+  const newPhone = document.getElementById("newPhone").value
+  const file = document.getElementById("newImage").files[0]
+
+  let imageUrl = null
+
+  // upload image
+  if(file){
+    const fileName = Date.now() + "_" + file.name
+
+    const { error: uploadError } = await supabaseClient
+      .storage
+      .from("profile-images")
+      .upload(fileName, file)
+
+    if(!uploadError){
+      const { data } = supabaseClient
+        .storage
+        .from("profile-images")
+        .getPublicUrl(fileName)
+
+      imageUrl = data.publicUrl
+    }
+  }
+
+  // update users table (IMPORTANT FIX)
+  const updates = {}
+
+  if(newName) updates.name = newName
+  if(imageUrl) updates.image = imageUrl
+
+  if(Object.keys(updates).length > 0){
+
+    await supabaseClient
+      .from("users")
+      .update(updates)
+      .eq("email", currentUserEmail)
+  }
+
+  // request system
+  if(newEmail || newPhone){
+
+    await supabaseClient
+      .from("profile_requests")
+      .insert([{
+        user_email: currentUserEmail,
+        new_email: newEmail,
+        new_phone: newPhone,
+        status: "pending"
+      }])
+  }
+
+  alert("Profile updated ✅")
+
+  // 🔥 FORCE REFRESH
+  setTimeout(() => {
+  loadUserProfile()
+}, 500)
+
+  document.getElementById("settingsBox").style.display = "none"
+}
+
+// ================= GUIDE LOGIN =================
 function handleGuideClick(){
 
 const guide = localStorage.getItem("guide")
 
 if(guide){
-window.location.href = "guide-dashboard.html"
+window.location.href="guide-dashboard.html"
 return
 }
 
-// otherwise open login
-toggleGuideLogin()
+document.getElementById("guideLoginBox").style.display = "block"
 }
 
-// ===============================
-// TOGGLE LOGIN BOX
-// ===============================
-function toggleGuideLogin(){
-const box = document.getElementById("guideLoginBox")
-
-box.style.display = (box.style.display === "none") ? "flex" : "none"
-}
-
-// ===============================
-// LOGIN GUIDE
-// ===============================
 async function loginGuide(){
 
 const email = document.getElementById("guideEmail").value
@@ -112,44 +218,18 @@ alert("Invalid guide login ❌")
 return
 }
 
-// 🔥 SAVE LOGIN
 localStorage.setItem("guide", JSON.stringify(data))
 
-// 🔥 DIRECT REDIRECT
 window.location.href="guide-dashboard.html"
 }
 
-// ===============================
-// USER PROFILE
-// ===============================
-async function loadUserProfile(){
-
-const { data:{ user } } = await supabaseClient.auth.getUser()
-if(!user) return
-
-const { data } = await supabaseClient
-.from("users")
-.select("*")
-.eq("email", user.email)
-.single()
-
-if(!data) return
-
-userName.innerText = data.name
-userPhone.innerText = "Phone: " + data.phone
-userEmail.innerText = "Email: " + data.email
-}
-
-// ===============================
-// LOGOUT USER
-// ===============================
+// ================= LOGOUT =================
 async function logoutUser(){
 await supabaseClient.auth.signOut()
 window.location.href="login.html"
 }
 
 </script>
-  <script src="back.js"></script>
 
 </body>
 </html>
