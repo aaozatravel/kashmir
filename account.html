@@ -201,14 +201,12 @@ async function saveSettings(){
 // ================= GUIDE LOGIN =================
 function handleGuideClick(){
 
-const guide = localStorage.getItem("guide")
+  // 🔥 ALWAYS SHOW LOGIN BOX
+  document.getElementById("guideLoginBox").style.display = "block"
 
-if(guide){
-  alert("Guide already logged in")
-  return
-}
-
-document.getElementById("guideLoginBox").style.display = "block"
+  // optional: clear old inputs every time
+  document.getElementById("guideEmail").value = ""
+  document.getElementById("guidePassword").value = ""
 }
 
 async function loginGuide(){
