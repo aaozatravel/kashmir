@@ -137,11 +137,15 @@ let isInfant = i >= (adult + child)
 html += `
 <div class="traveller">
 <input placeholder="Name">
+
 <select>
+<option value="">Select Gender</option>
 <option>Male</option>
 <option>Female</option>
 </select>
+
 <input type="number" placeholder="Age" value="${isInfant?1:''}" ${isInfant?"readonly":""}>
+
 <input 
   type="tel" 
   inputmode="numeric" 
@@ -149,6 +153,8 @@ html += `
   placeholder="${isInfant?'Not required':'Phone'}" 
   ${isInfant?"disabled":""}
 >
+
+</div>
 `
 }
 
@@ -217,7 +223,37 @@ let child = +childCount.innerText
 let infant = +infantCount.innerText
 
 let packageName = localStorage.getItem("selectedPackage")
-let packagePrice = parseInt(localStorage.getItem("selectedPrice"))
+let packagePrice = parseInt(localStorage.getItem("selectedPrice")) || 0
+
+let packageDetails = {}
+
+if(packageName === "Local"){
+  packageDetails = {
+    places: ["Gulmarg","Sonmarg","Srinagar","Dal Lake","Nishat","Shalimar","Doodhpathri"],
+    activities: ["Gondola Phase 1","Horse Ride 1hr"],
+    services: ["Cab","Driver","Guide"],
+    media: ["Photography","Reels (10)"]
+  }
+}
+
+if(packageName === "Pro"){
+  packageDetails = {
+    places: ["Gulmarg","Sonmarg","Doodhpathri","Srinagar","Dal Lake","Gardens","Drang Waterfall"],
+    activities: ["Gondola Phase 1 & 2","Horse Ride 2hr"],
+    services: ["Cab","Driver","Guide"],
+    media: ["Photoshoot","Video","Reels (15)"]
+  }
+}
+
+if(packageName === "Premium"){
+  packageDetails = {
+    places: ["All Places","Waterfalls","Hidden Spots"],
+    activities: ["Gondola 1,2,3","Skiing","Cycling","Full Day Horse Ride"],
+    services: ["Cab","Driver","Guide"],
+    media: ["Unlimited Photos","Unlimited Reels"]
+  }
+}
+
 
 let paying = adults + child
 let packageTotal = packagePrice * paying
@@ -269,7 +305,15 @@ const { error } = await supabaseClient
 user_email:user.email,
 package_name:packageName,
 package_price:packagePrice,
-traveller_details:JSON.stringify(travellers),
+
+// ✅ FIXED STRUCTURE
+traveller_details: JSON.stringify({
+  travellers: travellers,
+  package_details: packageDetails, // 🔥 YE LINE IMPORTANT HAI
+  single_room: singleRoomCount,
+  double_room: doubleRoomCount
+}),
+
 adults,
 children:child,
 infants:infant,
@@ -280,8 +324,9 @@ status:"pending"
 }])
 
 if(error){
-showAlert("Booking failed ❌","error")
-return
+  console.log("❌ SUPABASE ERROR:", error) // 👈 IMPORTANT
+  showAlert("Booking failed ❌","error")
+  return
 }
 
 showAlert("Booking Sent Successfully 🎉","success")
