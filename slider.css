@@ -120,3 +120,91 @@
     height:110px;
   }
 }
+
+
+/* ===== SPLASH ===== */
+#splash{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100vh;
+background:linear-gradient(135deg,#0f2f8a,#1e88e5);
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+z-index:9999;
+overflow:hidden;
+}
+
+/* LOGO */
+.splash-logo{
+width:90px;
+height:90px;
+border-radius:20px;
+margin-bottom:15px;
+animation:logoPop 0.8s ease;
+}
+
+/* APP NAME */
+.app-name{
+color:white;
+font-size:18px;
+margin-top:10px;
+opacity:0;
+animation:fadeIn 1s ease forwards;
+animation-delay:2s;
+}
+
+/* ===== SVG TEXT (PENCIL EFFECT) ===== */
+.welcome-svg text{
+font-size:42px;
+font-weight:700;
+fill:none;
+stroke:#ff0000; /* 🔴 RED */
+stroke-width:2;
+stroke-dasharray:400;
+stroke-dashoffset:400;
+animation:write 2s linear forwards;
+}
+
+/* ===== ANIMATIONS ===== */
+
+/* Pencil writing */
+@keyframes write{
+to{
+stroke-dashoffset:0;
+}
+}
+
+/* logo pop */
+@keyframes logoPop{
+from{
+transform:scale(0.6);
+opacity:0;
+}
+to{
+transform:scale(1);
+opacity:1;
+}
+}
+
+/* fade text */
+@keyframes fadeIn{
+to{
+opacity:1;
+}
+}
+
+/* SPLASH HIDE */
+.splash-hide{
+animation:fadeOut 1s ease forwards;
+}
+
+@keyframes fadeOut{
+to{
+opacity:0;
+visibility:hidden;
+}
+}
