@@ -35,6 +35,13 @@
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 </head>
 <body>
+
+<script>
+if(!sessionStorage.getItem("splashShown")){
+  document.write("<style>#splash{display:flex !important;}</style>");
+}
+</script>
+
 <div id="splash">
   <img src="logo.jpg" class="splash-logo">
 
@@ -499,9 +506,27 @@ window.location.href = "booking.html"
 </script>
 <script>
 window.addEventListener("load", () => {
+
+  const splash = document.getElementById("splash");
+
+  // agar already show ho chuka
+  if(sessionStorage.getItem("splashShown")){
+    splash.style.display = "none";
+    return;
+  }
+
+  // first time
+  sessionStorage.setItem("splashShown", "true");
+
   setTimeout(() => {
-    document.getElementById("splash").classList.add("splash-hide");
-  }, 3500); // 3.5 sec
+    splash.classList.add("splash-hide");
+
+    setTimeout(()=>{
+      splash.style.display = "none";
+    },500);
+
+  }, 4000);
+
 });
 </script>
 
