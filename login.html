@@ -110,7 +110,7 @@ showToast("error","Enter email first");
 return;
 }
 await supabaseClient.auth.resetPasswordForEmail(email,{
-redirectTo: window.location.origin + "/reset-password.html"
+redirectTo: window.location.origin + "/kashmir/reset-password.html"
 });
 showToast("success","Reset link sent 📩");
 }
