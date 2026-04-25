@@ -30,6 +30,7 @@
 <meta name="theme-color" content="#d40000">
 
 <link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="slider.css">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 </head>
@@ -119,7 +120,39 @@
 <img src="weading.png">  
 <h3>weading shoot booking</h3>  
 </div>  </a>  </div>  
-</section>  <section class="ad-banner">  
+</section> 
+
+<!-- 🔥 PACKAGE SLIDER -->
+<section class="package-slider">
+
+<h2>Popular Packages</h2>
+
+<div class="slider">
+
+  <a href="package-localtour.html?type=local" class="slide-card">
+    <img src="local.jpg">
+    <h3>Local Tour</h3>
+    <p>₹2999</p>
+  </a>
+
+  <a href="package-pro.html?type=pro" class="slide-card">
+    <img src="pro.jpg">
+    <h3>Pro Tour</h3>
+    <p>₹5999</p>
+  </a>
+
+  <a href="package-premium.html?type=premium" class="slide-card">
+    <img src="premium.jpg">
+    <h3>Premium Pro+</h3>
+    <p>₹9999</p>
+  </a>
+
+</div>
+
+</section>
+
+
+<section class="ad-banner">  
 <img src="https://i.ibb.co/DgH7zymX/jammu-kashmir-banner.webp">  
 <div class="ad-text">  
 <h2>Special Kashmir Offer</h2>  
@@ -422,6 +455,36 @@ supabaseClient
   .subscribe();
 
 </script>
+
+<script>
+
+function slideLeft(){
+document.getElementById("packageSlider").scrollBy({
+left: -250,
+behavior: "smooth"
+})
+}
+
+function slideRight(){
+document.getElementById("packageSlider").scrollBy({
+left: 250,
+behavior: "smooth"
+})
+}
+
+// 🔥 PACKAGE CLICK → SAVE + REDIRECT
+function openPackage(name,price){
+
+localStorage.setItem("selectedPackage", name)
+localStorage.setItem("selectedPrice", price)
+
+// 👉 redirect
+window.location.href = "booking.html"
+
+}
+
+</script>
+
 
 
 </body>
