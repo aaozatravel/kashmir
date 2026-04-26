@@ -189,3 +189,24 @@ top:20px;
 .top-alert i{
   font-size:18px;
 }
+
+.coupon-box{
+display:flex;
+gap:10px;
+margin:15px;
+}
+
+.coupon-box input{
+flex:1;
+padding:10px;
+border-radius:10px;
+border:1px solid #ccc;
+}
+
+.coupon-box button{
+padding:10px 15px;
+border:none;
+background:#22c55e;
+color:white;
+border-radius:10px;
+}
