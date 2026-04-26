@@ -89,8 +89,9 @@ if(!sessionStorage.getItem("splashShown")){
 
 </header>
 <section class="hero">  
-<h1>Explore Kashmir With Aaoza Travel</h1>  
-<p>Discover Paradise on Earth</p>  
+<h1 id="heroTitle">Explore Kashmir With Aaoza Travel</h1>  
+<p id="heroDesc">Discover Paradise on Earth</p>
+
 <div class="install-center" id="installBanner">
 <img src="logo.jpg">
 <span>Aaoza Travels</span>
@@ -129,7 +130,7 @@ if(!sessionStorage.getItem("splashShown")){
 </a> 
 <a href="coupon.html">  
 <div class="service-card">  
-    <img src="coupon.png">  
+    <img src="gallery.png">  
     <h3>Gallery</h3>  
 </div>  
 </a> 
@@ -341,20 +342,60 @@ else {
 if(localStorage.getItem("appInstalled") === "yes"){
 installBanner.style.display = "none";
 }
-const heroImages = [
-"founder.jpg",
-"gulmarg.jpg",
-"doodhpathri.jpg",
-"dallake.jpg"
+const heroData = [
+
+{
+img: "gulmarg.jpg",
+title: "Experience Gulmarg Snow",
+desc: "Best Snow Adventures & Gondola Ride"
+},
+
+{
+img: "doodhpathri.jpg",
+title: "Visit Doodhpathri",
+desc: "Green Meadows & Peaceful Nature"
+},
+
+{
+img: "founder.jpg",
+title: "",
+desc: ""
+},
+
+{
+img: "dallake.jpg",
+title: "Dal Lake Beauty",
+desc: "Shikara Ride & Stunning Views"
+}
+
 ]
 let heroIndex = 0
+
+function updateHero(){
+
+document.querySelector(".hero").style.backgroundImage =
+`url('${heroData[heroIndex].img}')`
+
+document.getElementById("heroTitle").innerText =
+heroData[heroIndex].title
+
+document.getElementById("heroDesc").innerText =
+heroData[heroIndex].desc
+
+}
+
+updateHero()
+
 setInterval(()=>{
+
 heroIndex++
-if(heroIndex >= heroImages.length){
+
+if(heroIndex >= heroData.length){
 heroIndex = 0
 }
-document.querySelector(".hero").style.backgroundImage =
-`url('${heroImages[heroIndex]}')`
+
+updateHero()
+
 },4000)
     </script>
 
