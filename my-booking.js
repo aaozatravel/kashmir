@@ -292,7 +292,23 @@ ${timetableHtml ? `<div class="section-title">📅 Timetable</div>${timetableHtm
 
 ${updateHtml}
 
-<div class="total">Grand Total ₹${b.total_price}</div>
+<div class="total">
+
+${b.coupon_code ? `
+<div style="text-decoration:line-through;color:#999">
+₹${b.original_price}
+</div>
+
+<div style="color:green">
+Coupon (${b.coupon_code}) - ₹${b.coupon_discount}
+</div>
+` : ""}
+
+<div style="font-weight:bold">
+Grand Total ₹${b.total_price}
+</div>
+
+</div>
 
 </div>
 `
