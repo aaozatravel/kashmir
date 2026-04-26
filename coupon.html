@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Coupons - Aaoza Travel</title>
+
+<link rel="stylesheet" href="coupon.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+<!-- ALERT -->
+<div id="unlockAlert" class="unlock-alert">
+  <span class="tick">
+<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+  <path d="M22.25 12c0-1.43-.88-2.67-2.19-3.34.46-1.39.2-2.9-.81-3.91s-2.52-1.27-3.91-.81c-.67-1.31-1.91-2.19-3.34-2.19s-2.67.88-3.33 2.19c-1.4-.46-2.91-.2-3.92.81s-1.26 2.52-.8 3.91c-1.31.67-2.2 1.91-2.2 3.34s.89 2.67 2.2 3.34c-.46 1.39-.21 2.9.8 3.91s2.52 1.26 3.91.81c.67 1.31 1.91 2.19 3.34 2.19s2.68-.88 3.34-2.19c1.39.45 2.9.2 3.91-.81s1.27-2.52.81-3.91c1.31-.67 2.19-1.91 2.19-3.34z" fill="#22c55e"/>
+  <path d="M9.5 14.58l-2.79-2.79-1.21 1.21 4 4 8-8-1.21-1.21z" fill="#ffffff"/>
+</svg>
+</span> Coupon Unlocked
+</div>
+
+<!-- CELEBRATION -->
+<div id="celebration" class="celebration">
+  <div class="popup">🎉 Congratulations 🎉</div>
+</div>
+
+<!-- TOP -->
+<div class="top-banner">🔥 Use Coupon & Save Big 🔥</div>
+
+<!-- SLIDER -->
+<div class="ad-slider">
+  <div class="ad-track">
+    <div class="ad-card"><img src="sonmarg.jpg"></div>
+    <div class="ad-card"><img src="gulmarg.jpg"></div>
+    <div class="ad-card"><img src="ad3.jpg"></div>
+    <div class="ad-card"><img src="ad4.jpg"></div>
+
+    <div class="ad-card"><img src="sonmarg.jpg"></div>
+    <div class="ad-card"><img src="gulmarg.jpg"></div>
+  </div>
+</div>
+
+<h2 class="heading">🎁 Scratch & Win</h2>
+
+<div class="coupon-container" id="couponContainer"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+const supabaseClient = supabase.createClient(
+  "https://yejnsszmvlnmkfqhyfdc.supabase.co",
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inllam5zc3ptdmxubWtmcWh5ZmRjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQzMzI2MTYsImV4cCI6MjA4OTkwODYxNn0.0hOShgfmb6NIITSzulKvIePerRa-ofLZ55TU-v3k6s8"
+)
+
+// LOAD
+async function loadCoupons(){
+
+let container = document.getElementById("couponContainer")
+
+try{
+const { data } = await supabaseClient.from("coupons").select("*")
+
+data.forEach((c,i)=>{
+
+let card = document.createElement("div")
+card.className="coupon-card"
+
+card.innerHTML=`
+<div class="badge ${c.status}">${c.status}</div>
+
+<img src="logo.jpg" class="logo">
+
+<div class="title">${c.title || "Offer"}</div>
+<div class="discount">${c.discount || "30% OFF"}</div>
+
+<div class="code-box">
+<span id="code-${i}">${c.code}</span>
+<canvas id="canvas-${i}"></canvas>
+<div class="scratch-text">Scratch</div>
+</div>
+
+<button class="btn" id="copy-${i}">Copy Code</button>
+`
+
+container.appendChild(card)
+
+setupScratch(`canvas-${i}`,i)
+
+setTimeout(()=>{
+document.getElementById(`copy-${i}`).onclick=()=>copyCode(c.code)
+},100)
+
+})
+
+}catch(err){
+console.log(err)
+container.innerHTML="<p>Error loading coupons</p>"
+}
+
+}
+
+loadCoupons()
+
+// SCRATCH
+function setupScratch(id,index){
+
+const canvas=document.getElementById(id)
+const ctx=canvas.getContext("2d")
+
+canvas.width=canvas.offsetWidth
+canvas.height=canvas.offsetHeight
+
+ctx.fillStyle="#cbd5e1"
+ctx.fillRect(0,0,canvas.width,canvas.height)
+
+ctx.globalCompositeOperation="destination-out"
+
+let drawing=false
+
+function getXY(e){
+let rect=canvas.getBoundingClientRect()
+let x=(e.touches?e.touches[0].clientX:e.clientX)-rect.left
+let y=(e.touches?e.touches[0].clientY:e.clientY)-rect.top
+return {x,y}
+}
+
+function draw(e){
+if(!drawing) return
+e.preventDefault()
+
+let p=getXY(e)
+
+ctx.beginPath()
+ctx.arc(p.x,p.y,28,0,Math.PI*2)
+ctx.fill()
+
+check()
+}
+
+canvas.addEventListener("mousedown",()=>drawing=true)
+canvas.addEventListener("mouseup",()=>drawing=false)
+canvas.addEventListener("mousemove",draw)
+
+canvas.addEventListener("touchstart",()=>drawing=true,{passive:false})
+canvas.addEventListener("touchend",()=>drawing=false)
+canvas.addEventListener("touchmove",draw,{passive:false})
+
+function check(){
+let pixels=ctx.getImageData(0,0,canvas.width,canvas.height)
+let total=pixels.data.length/4
+let count=0
+
+for(let i=0;i<pixels.data.length;i+=4){
+if(pixels.data[i+3]===0) count++
+}
+
+if((count/total)*100>40){
+
+canvas.style.display="none"
+
+let btn=document.getElementById(`copy-${index}`)
+btn.style.display="block"
+
+showCelebration()
+showUnlockAlert()
+}
+}
+
+}
+
+// ALERT (slow smooth)
+function showUnlockAlert(){
+let el=document.getElementById("unlockAlert")
+el.classList.add("show")
+
+setTimeout(()=>el.classList.remove("show"),3000)
+}
+
+// 🎈 CELEBRATION (BOTTOM BALLOONS)
+function showCelebration(){
+let el=document.getElementById("celebration")
+el.style.display="flex"
+
+// clear old balloons
+el.querySelectorAll(".balloon").forEach(b=>b.remove())
+
+for(let i=0;i<40;i++){
+let b=document.createElement("div")
+b.className="balloon"
+
+b.style.left=Math.random()*100+"%"
+b.style.background=`hsl(${Math.random()*360},70%,60%)`
+
+// different speed
+b.style.animationDuration=(3+Math.random()*2)+"s"
+
+el.appendChild(b)
+}
+
+setTimeout(()=>{
+el.style.display="none"
+},3500)
+}
+
+// COPY
+function copyCode(text){
+
+if(navigator.clipboard){
+navigator.clipboard.writeText(text)
+}
+
+}
+</script>
+
+</body>
+</html>
