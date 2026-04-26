@@ -74,6 +74,13 @@
 </div>
 </div>
 
+<h2>Apply Coupon</h2>
+
+<div class="coupon-box">
+  <input type="text" id="couponInput" placeholder="Enter coupon code">
+  <button onclick="applyCoupon()">Apply</button>
+</div>
+
 <!-- 💰 TOTAL -->
 <h2 id="totalBox">Total ₹0</h2>
 
@@ -83,6 +90,41 @@
 <script src="supabase.js"></script>
 
 <script>
+  
+  let discountAmount = 0
+  async function applyCoupon(){
+
+let code = document.getElementById("couponInput").value.trim()
+
+if(!code){
+showAlert("Enter coupon code ❗","error")
+return
+}
+
+const { data, error } = await supabaseClient
+.from("coupons")
+.select("*")
+.eq("code", code)
+.single()
+
+if(error || !data){
+showAlert("Invalid coupon ❌","error")
+return
+}
+
+// % nikalna (30% OFF se 30)
+let percent = parseInt(data.discount)
+
+let totalText = document.getElementById("totalBox").innerText
+let total = parseInt(totalText.replace("Total ₹",""))
+
+discountAmount = Math.floor((total * percent)/100)
+
+showAlert("Coupon Applied 🎉","success")
+
+calculateTotal()
+}
+  
 
 // 🔔 ALERT FUNCTION (TOP SLIDE)
 function showAlert(msg,type="success"){
@@ -192,7 +234,10 @@ let double = 8999 * (+doubleRoom.innerText)
 
 let total = packageTotal + single + double
 
-document.getElementById("totalBox").innerText = "Total ₹" + total
+let finalTotal = total - discountAmount
+if(finalTotal < 0) finalTotal = 0
+
+document.getElementById("totalBox").innerText = "Total ₹" + finalTotal
 }
 
 // 💾 SAVE BOOKING
