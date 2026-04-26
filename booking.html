@@ -307,6 +307,8 @@ let singleRoomCount = +singleRoom.innerText
 let doubleRoomCount = +doubleRoom.innerText
 
 let total = packageTotal + (6999 * singleRoomCount) + (8999 * doubleRoomCount)
+let finalTotal = total - discountAmount
+if(finalTotal < 0) finalTotal = 0
 
 // ❌ VALIDATION START
 
@@ -364,7 +366,10 @@ children:child,
 infants:infant,
 single_room:singleRoomCount,
 double_room:doubleRoomCount,
-total_price:total,
+total_price: finalTotal,
+original_price: total,
+coupon_discount: discountAmount,
+coupon_code: document.getElementById("couponInput").value || null,
 status:"pending"
 }])
 
