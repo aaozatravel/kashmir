@@ -5,115 +5,172 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Login - Aaoza Travels Kashmir</title>
 <link rel="stylesheet" href="login.css">
+
 </head>
 <body>
-<!-- 🔔 TOAST -->
-<div id="toast"></div>
+
+<!-- 🔔 ALERT -->
+<div id="topAlert" class="top-alert"></div>
+
 <div class="login-box">
 <img src="logo.jpg">
 <h2>Aaoza Travels Kashmir</h2>
 <h3 id="formTitle">Login</h3>
+
 <input type="text" id="name" placeholder="Full Name" class="hide">
 <input type="text" id="phone" placeholder="Phone Number" class="hide">
 <input type="email" id="email" placeholder="Email">
 <input type="password" id="password" placeholder="Password">
+
 <p class="forgot" onclick="forgotPasswordHandler()">Forgot Password?</p>
+
 <button onclick="handleLogin()">Login</button>
 <button onclick="handleSignup()">Signup</button>
+
 <p class="switch" onclick="toggleMode()">Create account</p>
 </div>
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="supabase.js"></script>
+
 <script>
-  window.onload = async () => {
+
+// 🔥 AUTO LOGOUT
+window.onload = async () => {
   await supabaseClient.auth.signOut()
 }
-  
-// 🔔 TOAST
-function showToast(type, message){
-const toast = document.getElementById("toast");
-toast.className = "";
-toast.classList.add("toast", type === "success" ? "toast-success" : "toast-error");
-toast.innerHTML = `
-<div class="toast-icon">
-${type === "success" ? "✔" : "✖"}
-</div>
-<div>
-<div class="toast-title">${type === "success" ? "Success" : "Error"}</div>
-<div class="toast-msg">${message}</div>
-</div>
-`;
-setTimeout(()=> toast.classList.add("show"), 50);
-setTimeout(()=> toast.classList.remove("show"), 3500);
+
+// 🔔 ALERT FUNCTION
+function showAlert(msg,type="success"){
+
+const alertBox = document.getElementById("topAlert")
+
+let icon = ""
+
+// ✅ SUCCESS
+if(type === "success"){
+icon = `
+<svg viewBox="0 0 24 24">
+<path d="M22.25 12c0-1.43-.88-2.67-2.19-3.34.46-1.39.2-2.9-.81-3.91s-2.52-1.27-3.91-.81c-.67-1.31-1.91-2.19-3.34-2.19s-2.67.88-3.33 2.19c-1.4-.46-2.91-.2-3.92.81s-1.26 2.52-.8 3.91c-1.31.67-2.2 1.91-2.2 3.34s.89 2.67 2.2 3.34c-.46 1.39-.21 2.9.8 3.91s2.52 1.26 3.91.81c.67 1.31 1.91 2.19 3.34 2.19s2.68-.88 3.34-2.19c1.39.45 2.9.2 3.91-.81s1.27-2.52.81-3.91c1.31-.67 2.19-1.91 2.19-3.34z" fill="#22c55e"/>
+<path d="M9.5 14.58l-2.79-2.79-1.21 1.21 4 4 8-8-1.21-1.21z" fill="#ffffff"/>
+</svg>`
 }
-// 🔁 SWITCH
+
+// ❌ ERROR
+else{
+icon = `
+<svg viewBox="0 0 24 24">
+<path d="M22.25 12c0-1.43-.88-2.67-2.19-3.34.46-1.39.2-2.9-.81-3.91s-2.52-1.27-3.91-.81c-.67-1.31-1.91-2.19-3.34-2.19s-2.67.88-3.33 2.19c-1.4-.46-2.91-.2-3.92.81s-1.26 2.52-.8 3.91c-1.31.67-2.2 1.91-2.2 3.34s.89 2.67 2.2 3.34c-.46 1.39-.21 2.9.8 3.91s2.52 1.26 3.91.81c.67 1.31 1.91 2.19 3.34 2.19s2.68-.88 3.34-2.19c1.39.45 2.9.2 3.91-.81s1.27-2.52.81-3.91c1.31-.67 2.19-1.91 2.19-3.34z" fill="#ef4444"/>
+<path d="M15 9l-6 6M9 9l6 6" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
+</svg>`
+}
+
+alertBox.className = "top-alert show " + type
+
+alertBox.innerHTML = `
+<div class="alert-content">
+${icon}
+<span>${msg}</span>
+</div>
+`
+
+setTimeout(()=>{
+alertBox.classList.remove("show")
+},2500)
+}
+
+// 🔁 SWITCH MODE
 let signupMode = false;
+
 function toggleMode(){
 signupMode = !signupMode;
-document.getElementById("name").classList.toggle("hide");
-document.getElementById("phone").classList.toggle("hide");
-document.getElementById("formTitle").innerText = signupMode ? "Signup" : "Login";
+name.classList.toggle("hide");
+phone.classList.toggle("hide");
+formTitle.innerText = signupMode ? "Signup" : "Login";
 }
+
 // ✅ LOGIN
 async function handleLogin(){
+
 const email = document.getElementById("email").value.trim();
 const password = document.getElementById("password").value.trim();
+
 if(!email || !password){
-showToast("error","Enter email & password");
+showAlert("Enter email & password","error")
 return;
 }
+
 const { error } = await supabaseClient.auth.signInWithPassword({ email, password });
+
 if(error){
-showToast("error", error.message);
+showAlert(error.message,"error");
 return;
 }
-showToast("success","Login successful 🎉");
+
+showAlert("Login successful 🎉","success");
+
 setTimeout(()=>{
 window.location.href="index.html";
 },1500);
 }
+
 // ✅ SIGNUP
 async function handleSignup(){
+
 if(!signupMode){
-showToast("error","Switch to signup mode");
+showAlert("Switch to signup mode","error");
 return;
 }
+
 const name = document.getElementById("name").value;
 const phone = document.getElementById("phone").value;
 const email = document.getElementById("email").value;
 const password = document.getElementById("password").value;
+
 if(!name || !phone || !email || !password){
-showToast("error","Fill all fields");
+showAlert("Fill all fields","error");
 return;
 }
+
 const { data, error } = await supabaseClient.auth.signUp({ email, password });
+
 if(error){
-showToast("error", error.message);
+showAlert(error.message,"error");
 return;
 }
+
 await supabaseClient.from("users").insert({
 id: data.user.id,
 name,
 phone,
 email
 });
-showToast("success","Signup successful ✅");
+
+showAlert("Signup successful ✅","success");
+
 setTimeout(()=>{
 window.location.href="index.html";
 },1500);
 }
-// 🔁 FORGOT
+
+// 🔁 FORGOT PASSWORD
 async function forgotPasswordHandler(){
+
 const email = document.getElementById("email").value;
+
 if(!email){
-showToast("error","Enter email first");
+showAlert("Enter email first","error");
 return;
 }
+
 await supabaseClient.auth.resetPasswordForEmail(email,{
-redirectTo: window.location.origin + "/kashmir/reset-password.html"
+redirectTo: window.location.origin + "/reset-password.html"
 });
-showToast("success","Reset link sent 📩");
+
+showAlert("Reset link sent 📩","success");
 }
+
 </script>
+
 </body>
 </html>
