@@ -92,7 +92,15 @@
 <script>
   
   let discountAmount = 0
-  async function applyCoupon(){
+let couponApplied = false
+let appliedCoupon = null
+async function applyCoupon(){
+
+// ❌ already applied
+if(couponApplied){
+showAlert("Coupon already used ❌","error")
+return
+}
 
 let code = document.getElementById("couponInput").value.trim()
 
@@ -101,6 +109,7 @@ showAlert("Enter coupon code ❗","error")
 return
 }
 
+// 🔥 supabase se fetch
 const { data, error } = await supabaseClient
 .from("coupons")
 .select("*")
@@ -112,15 +121,38 @@ showAlert("Invalid coupon ❌","error")
 return
 }
 
-// % nikalna (30% OFF se 30)
+// 🔥 PACKAGE CHECK
+let packageName = localStorage.getItem("selectedPackage")
+
+if(data.package !== packageName){
+showAlert("Ye coupon is package ke liye nahi hai ❌","error")
+return
+}
+
+// 🔥 discount nikalna
 let percent = parseInt(data.discount)
 
-let totalText = document.getElementById("totalBox").innerText
-let total = parseInt(totalText.replace("Total ₹",""))
+// total calculate karo
+let price = parseInt(localStorage.getItem("selectedPrice") || 0)
+
+let adults = +adultCount.innerText
+let child = +childCount.innerText
+
+let paying = adults + child
+
+let packageTotal = price * paying
+
+let rooms = (6999 * (+singleRoom.innerText)) + (8999 * (+doubleRoom.innerText))
+
+let total = packageTotal + rooms
 
 discountAmount = Math.floor((total * percent)/100)
 
-showAlert("Coupon Applied 🎉","success")
+// ✅ lock kar do
+couponApplied = true
+appliedCoupon = data
+
+showAlert(`Coupon ${percent}% Applied 🎉`,"success")
 
 calculateTotal()
 }
@@ -370,6 +402,7 @@ total_price: finalTotal,
 original_price: total,
 coupon_discount: discountAmount,
 coupon_code: document.getElementById("couponInput").value || null,
+coupon_percent: appliedCoupon ? appliedCoupon.discount : null,
 status:"pending"
 }])
 
