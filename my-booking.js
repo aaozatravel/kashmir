@@ -295,27 +295,21 @@ ${updateHtml}
 <div class="total">
 
 ${b.coupon_code ? `
-<div style="text-decoration:line-through;color:#999">
-₹${b.original_price}
-</div>
+  <div style="text-decoration:line-through;color:#999">
+    ₹${b.original_price}
+  </div>
 
-<div style="color:green">
-${b.coupon_code ? `
-<div style="text-decoration:line-through;color:#999;font-size:14px">
-₹${b.original_price}
-</div>
+  <div style="color:#16a34a;font-weight:600">
+    🎁 ${b.coupon_code} (${b.coupon_percent || 0}%) applied
+  </div>
 
-<div style="color:#16a34a;font-weight:600">
-🎁 ${b.coupon_code} (${b.coupon_percent || ""}%) applied
-</div>
-
-<div style="color:#dc2626;font-size:14px">
--₹${b.coupon_discount} saved
-</div>
+  <div style="color:#dc2626;font-size:14px">
+    -₹${b.coupon_discount} saved
+  </div>
 ` : ""}
 
 <div style="font-weight:bold">
-Grand Total ₹${b.total_price}
+  Grand Total ₹${b.total_price}
 </div>
 
 </div>
