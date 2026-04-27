@@ -160,6 +160,14 @@ calculateTotal()
 
 // 🔔 ALERT FUNCTION (TOP SLIDE)
 function showAlert(msg,type="success"){
+if (navigator.vibrate) {
+  if (type === "success") {
+    navigator.vibrate([80, 40, 80])
+  } else {
+    navigator.vibrate(200)
+  }
+}
+
 
 const alertBox = document.getElementById("topAlert")
 
