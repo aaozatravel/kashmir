@@ -300,7 +300,17 @@ ${b.coupon_code ? `
 </div>
 
 <div style="color:green">
-Coupon (${b.coupon_code}) - ₹${b.coupon_discount}
+${b.coupon_code ? `
+<div style="text-decoration:line-through;color:#999;font-size:14px">
+₹${b.original_price}
+</div>
+
+<div style="color:#16a34a;font-weight:600">
+🎁 ${b.coupon_code} (${b.coupon_percent || ""}%) applied
+</div>
+
+<div style="color:#dc2626;font-size:14px">
+-₹${b.coupon_discount} saved
 </div>
 ` : ""}
 
