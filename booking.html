@@ -85,6 +85,8 @@
 <h2 id="totalBox">Total ₹0</h2>
 
 <button onclick="saveBooking()">Confirm Booking</button>
+<!-- 🔊 SUCCESS SOUND -->
+<audio id="successSound" src="success.mp3" preload="auto"></audio>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="supabase.js"></script>
@@ -436,6 +438,13 @@ if(error){
   console.log("❌ SUPABASE ERROR:", error) // 👈 IMPORTANT
   showAlert("Booking failed ❌","error")
   return
+}
+
+// 🔊 SUCCESS SOUND PLAY
+let successSound = document.getElementById("successSound")
+if(successSound){
+  successSound.currentTime = 0
+  successSound.play()
 }
 
 showAlert("Booking Sent Successfully 🎉","success")
