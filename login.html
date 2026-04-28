@@ -197,7 +197,8 @@ return
 }
 
 const { error } = await supabaseClient.auth.resetPasswordForEmail(email,{
-redirectTo: window.location.origin + "aaozatravel.github.io/kashmir/reset-password.html"
+redirectTo: window.location.origin + "/kashmir/reset-password.html"
+
 })
 
 if(error){
