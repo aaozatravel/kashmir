@@ -35,6 +35,19 @@
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 </head>
 <body>
+  
+  <!-- 🔥 BIG AD POPUP -->
+<div id="adPopup" class="ad-popup">
+  <div class="ad-box">
+    
+    <span class="close-ad" onclick="closeAd()">✖</span>
+
+    <a href="weading.html" class="ad-link">
+      <img src="https://i.ibb.co/zT85NZWm/In-Shot-20260428-165220055.jpg" alt="Wedding Offer">
+    </a>
+
+  </div>
+</div>
 
 <script>
 if(!sessionStorage.getItem("splashShown")){
@@ -157,6 +170,12 @@ if(!sessionStorage.getItem("splashShown")){
     <img src="local.jpg">
     <h3>Local Tour</h3>
     <p>₹29,999</p>
+  </a>
+  
+      <a href="weading.html" class="slide-card">
+    <img src="https://images.unsplash.com/photo-1520854221256-17451cc331bf">
+    <h3>weading package+</h3>
+    <p>₹25,000</p>
   </a>
 
   <a href="package-pro.html?type=pro" class="slide-card">
@@ -579,5 +598,30 @@ window.addEventListener("load", () => {
 
 });
 </script>
+<script>
+
+// 🔥 show after 10 sec
+window.addEventListener("load", () => {
+
+  if(sessionStorage.getItem("adShown")){
+    document.getElementById("adPopup").style.display = "none";
+    return;
+  }
+
+  // ⏱️ 10 sec delay
+  setTimeout(() => {
+    document.getElementById("adPopup").style.display = "flex";
+    sessionStorage.setItem("adShown","true");
+  }, 10000);
+
+});
+
+// ❌ close
+function closeAd(){
+  document.getElementById("adPopup").style.display = "none";
+}
+
+</script>
+
 </body>
 </html> 
