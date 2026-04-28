@@ -3,31 +3,56 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Login - Aaoza Travels Kashmir</title>
+<title>Aaoza Travels Login</title>
+
 <link rel="stylesheet" href="login.css">
 
 </head>
+
 <body>
 
-<!-- 🔔 ALERT -->
-<div id="topAlert" class="top-alert"></div>
+<div class="container">
 
-<div class="login-box">
-<img src="logo.jpg">
-<h2>Aaoza Travels Kashmir</h2>
-<h3 id="formTitle">Login</h3>
+  <!-- LEFT SIDE -->
+<div class="left">
 
-<input type="text" id="name" placeholder="Full Name" class="hide">
-<input type="text" id="phone" placeholder="Phone Number" class="hide">
-<input type="email" id="email" placeholder="Email">
-<input type="password" id="password" placeholder="Password">
+  <img src="logo.jpg" style="width:90px; margin-bottom:10px;">
 
-<p class="forgot" onclick="forgotPasswordHandler()">Forgot Password?</p>
+  <h1>Aaoza Travels Kashmir</h1>
 
-<button onclick="handleLogin()">Login</button>
-<button onclick="handleSignup()">Signup</button>
+  <p>Welcome Back 👋<br>
+  Login to continue your journey with Aaoza Travels Kashmir</p>
 
-<p class="switch" onclick="toggleMode()">Create account</p>
+</div>
+
+  <!-- RIGHT SIDE -->
+  <div class="right">
+
+    <!-- 🔔 ALERT -->
+    <div id="topAlert" class="top-alert"></div>
+
+    <div class="box">
+
+      <h2 id="title">Login</h2>
+
+      <input type="text" id="name" placeholder="Full Name" class="hide">
+      <input type="text" id="phone" placeholder="Phone Number" class="hide">
+
+      <input type="email" id="email" placeholder="Email">
+      <input type="password" id="password" placeholder="Password">
+
+      <button onclick="handleAuth()">Continue</button>
+
+      <p class="switch" onclick="toggleMode()">
+        <span id="switchText">Create account</span>
+      </p>
+
+      <p class="forgot" onclick="forgotPasswordHandler()">Forgot Password?</p>
+
+    </div>
+
+  </div>
+
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -35,33 +60,33 @@
 
 <script>
 
-// 🔥 AUTO LOGOUT
-window.onload = async () => {
-  await supabaseClient.auth.signOut()
-}
-
-// 🔔 ALERT FUNCTION
+// ==========================
+// ALERT (SAME - DO NOT CHANGE)
+// ==========================
 function showAlert(msg,type="success"){
-
+  // 📳 VIBRATION (MOBILE ONLY)
+if (navigator.vibrate) {
+  if (type === "success") {
+    navigator.vibrate([80, 40, 80])  // soft success vibration
+  } else {
+    navigator.vibrate(400)          // error vibration
+  }
+}
 const alertBox = document.getElementById("topAlert")
 
 let icon = ""
 
-// ✅ SUCCESS
 if(type === "success"){
 icon = `
 <svg viewBox="0 0 24 24">
 <path d="M22.25 12c0-1.43-.88-2.67-2.19-3.34.46-1.39.2-2.9-.81-3.91s-2.52-1.27-3.91-.81c-.67-1.31-1.91-2.19-3.34-2.19s-2.67.88-3.33 2.19c-1.4-.46-2.91-.2-3.92.81s-1.26 2.52-.8 3.91c-1.31.67-2.2 1.91-2.2 3.34s.89 2.67 2.2 3.34c-.46 1.39-.21 2.9.8 3.91s2.52 1.26 3.91.81c.67 1.31 1.91 2.19 3.34 2.19s2.68-.88 3.34-2.19c1.39.45 2.9.2 3.91-.81s1.27-2.52.81-3.91c1.31-.67 2.19-1.91 2.19-3.34z" fill="#22c55e"/>
 <path d="M9.5 14.58l-2.79-2.79-1.21 1.21 4 4 8-8-1.21-1.21z" fill="#ffffff"/>
 </svg>`
-}
-
-// ❌ ERROR
-else{
+}else{
 icon = `
 <svg viewBox="0 0 24 24">
 <path d="M22.25 12c0-1.43-.88-2.67-2.19-3.34.46-1.39.2-2.9-.81-3.91s-2.52-1.27-3.91-.81c-.67-1.31-1.91-2.19-3.34-2.19s-2.67.88-3.33 2.19c-1.4-.46-2.91-.2-3.92.81s-1.26 2.52-.8 3.91c-1.31.67-2.2 1.91-2.2 3.34s.89 2.67 2.2 3.34c-.46 1.39-.21 2.9.8 3.91s2.52 1.26 3.91.81c.67 1.31 1.91 2.19 3.34 2.19s2.68-.88 3.34-2.19c1.39.45 2.9.2 3.91-.81s1.27-2.52.81-3.91c1.31-.67 2.19-1.91 2.19-3.34z" fill="#ef4444"/>
-<path d="M15 9l-6 6M9 9l6 6" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
+<path d="M15 9l-6 6M9 9l6 6" stroke="#fff" stroke-width="2"/>
 </svg>`
 }
 
@@ -74,100 +99,113 @@ ${icon}
 </div>
 `
 
-setTimeout(()=>{
-alertBox.classList.remove("show")
-},2500)
+setTimeout(()=>alertBox.classList.remove("show"),2500)
 }
 
-// 🔁 SWITCH MODE
-let signupMode = false;
+// ==========================
+// MODE CONTROL
+// ==========================
+let isSignup = false;
 
 function toggleMode(){
-signupMode = !signupMode;
-name.classList.toggle("hide");
-phone.classList.toggle("hide");
-formTitle.innerText = signupMode ? "Signup" : "Login";
+isSignup = !isSignup;
+
+document.getElementById("name").classList.toggle("hide")
+document.getElementById("phone").classList.toggle("hide")
+
+document.getElementById("title").innerText = isSignup ? "Create Account" : "Login"
+document.getElementById("switchText").innerText = isSignup ? "Already have account? Login" : "Create account"
 }
 
-// ✅ LOGIN
-async function handleLogin(){
+// ==========================
+// LOGIN / SIGNUP ONE BUTTON
+// ==========================
+async function handleAuth(){
 
-const email = document.getElementById("email").value.trim();
-const password = document.getElementById("password").value.trim();
+const email = document.getElementById("email").value.trim()
+const password = document.getElementById("password").value.trim()
 
 if(!email || !password){
-showAlert("Enter email & password","error")
-return;
+showAlert("Fill email & password","error")
+return
 }
 
-const { error } = await supabaseClient.auth.signInWithPassword({ email, password });
+// ================= LOGIN =================
+if(!isSignup){
+
+const { error } = await supabaseClient.auth.signInWithPassword({
+email,
+password
+})
 
 if(error){
-showAlert(error.message,"error");
-return;
+showAlert(error.message,"error")
+return
 }
 
-showAlert("Login successful 🎉","success");
+showAlert("Login success 🎉","success")
 
-setTimeout(()=>{
-window.location.href="index.html";
-},1500);
+setTimeout(()=>window.location.href="index.html",1500)
+
 }
 
-// ✅ SIGNUP
-async function handleSignup(){
+// ================= SIGNUP =================
+else{
 
-if(!signupMode){
-showAlert("Switch to signup mode","error");
-return;
+const name = document.getElementById("name").value.trim()
+const phone = document.getElementById("phone").value.trim()
+
+if(!name || !phone){
+showAlert("Fill all fields","error")
+return
 }
 
-const name = document.getElementById("name").value;
-const phone = document.getElementById("phone").value;
-const email = document.getElementById("email").value;
-const password = document.getElementById("password").value;
-
-if(!name || !phone || !email || !password){
-showAlert("Fill all fields","error");
-return;
-}
-
-const { data, error } = await supabaseClient.auth.signUp({ email, password });
+const { data, error } = await supabaseClient.auth.signUp({
+email,
+password
+})
 
 if(error){
-showAlert(error.message,"error");
-return;
+showAlert(error.message,"error")
+return
 }
 
+// save profile
 await supabaseClient.from("users").insert({
 id: data.user.id,
 name,
 phone,
 email
-});
+})
 
-showAlert("Signup successful ✅","success");
+showAlert("Account created 🎉","success")
 
-setTimeout(()=>{
-window.location.href="index.html";
-},1500);
+setTimeout(()=>window.location.href="index.html",1500)
+}
 }
 
-// 🔁 FORGOT PASSWORD
+// ==========================
+// FORGOT PASSWORD FIXED
+// ==========================
 async function forgotPasswordHandler(){
 
-const email = document.getElementById("email").value;
+const email = document.getElementById("email").value.trim()
 
 if(!email){
-showAlert("Enter email first","error");
-return;
+showAlert("Enter email","error")
+return
 }
 
-await supabaseClient.auth.resetPasswordForEmail(email,{
+const { error } = await supabaseClient.auth.resetPasswordForEmail(email,{
 redirectTo: window.location.origin + "/reset-password.html"
-});
+})
 
-showAlert("Reset link sent 📩","success");
+if(error){
+showAlert(error.message,"error")
+return
+}
+
+showAlert("Reset link sent 📩","success")
 }
 
 </script>
