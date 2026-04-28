@@ -122,133 +122,128 @@
 }
 
 
-/* ===== PREMIUM SPLASH ===== */
+/* ===== LUXURY CLEAN SPLASH (WHITE LOGO FRIENDLY) ===== */
 #splash{
   position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-
-  /* 🔥 modern gradient background */
-  background: linear-gradient(135deg, #0f172a, #1e293b, #020617);
-
+  inset:0;
   display:none;
   justify-content:center;
   align-items:center;
   flex-direction:column;
   z-index:99999;
 
+  /* ✨ soft luxury gradient */
+  background: linear-gradient(135deg, #f8fafc, #e2e8f0, #f1f5f9);
+
   overflow:hidden;
 }
 
-/* ✨ animated glow background */
-#splash::before{
+/* 🌫 soft floating luxury glow */
+#splash::before,
+#splash::after{
   content:"";
   position:absolute;
-  width:300px;
-  height:300px;
-  background: radial-gradient(circle, rgba(255,0,0,0.3), transparent 70%);
-  animation: glowMove 6s linear infinite;
+  width:350px;
+  height:350px;
+  border-radius:50%;
+  filter:blur(90px);
+  opacity:0.35;
+  animation:float 8s infinite ease-in-out;
 }
 
-@keyframes glowMove{
-  0%{ transform:translate(-100px,-100px); }
-  50%{ transform:translate(100px,100px); }
-  100%{ transform:translate(-100px,-100px); }
+/* sky blue glow */
+#splash::before{
+  background:#60a5fa;
+  top:-120px;
+  left:-120px;
+}
+
+/* soft gold glow (luxury feel) */
+#splash::after{
+  background:#fbbf24;
+  bottom:-140px;
+  right:-140px;
+  animation-delay:2s;
 }
 
 /* ===== LOGO ===== */
 .splash-logo{
-  width:100px;
-  height:100px;
-  border-radius:25px;
-  margin-bottom:15px;
+  width:110px;
+  height:110px;
+  border-radius:22px;
 
-  box-shadow:0 0 25px rgba(255,0,0,0.6);
+  background:#fff;
 
-  animation:logoPop 0.8s ease;
+  box-shadow:
+    0 10px 30px rgba(0,0,0,0.12),
+    0 0 0 8px rgba(255,255,255,0.6);
+
+  animation:pop 0.9s ease;
   z-index:2;
 }
 
-/* ===== APP NAME ===== */
-.app-name{
-  color:#e5e7eb;
-  font-size:20px;
-  margin-top:12px;
-  letter-spacing:1px;
-
-  opacity:0;
-  animation:fadeIn 1s ease forwards;
-  animation-delay:2.5s;
-  z-index:2;
-}
-
-/* ===== WELCOME TEXT (PREMIUM) ===== */
+/* ===== WELCOME TEXT ===== */
 .welcome-svg text{
-  font-size:60px;
-  font-weight:800;
+  font-size:56px;
+  font-weight:900;
 
   fill:transparent;
-  stroke:#ff0000;
-  stroke-width:2;
+  stroke:#1e3a8a;
+  stroke-width:1.5;
 
   stroke-dasharray:500;
   stroke-dashoffset:500;
 
-  animation:
-    write 2.5s ease forwards,
-    fillColor 1s ease forwards,
-    glowText 2s ease infinite;
+  animation:draw 2.2s ease forwards;
+  filter:drop-shadow(0 4px 10px rgba(0,0,0,0.1));
+}
 
-  animation-delay: 0s, 2.5s, 3.5s;
+/* ===== APP NAME ===== */
+.app-name{
+  color:#334155;
+  font-size:18px;
+  margin-top:14px;
+  letter-spacing:1px;
+
+  opacity:0;
+  animation:fadeIn 1s ease forwards;
+  animation-delay:2s;
   z-index:2;
 }
 
-/* ✏️ writing effect */
-@keyframes write{
+/* ===== ANIMATIONS ===== */
+
+@keyframes draw{
   to{
     stroke-dashoffset:0;
+    fill:#1e3a8a;
   }
 }
 
-/* 🔴 fill red */
-@keyframes fillColor{
-  to{
-    fill:#ff0000;
-    stroke:transparent;
-  }
-}
-
-/* ✨ glow pulse */
-@keyframes glowText{
-  0%{ filter:drop-shadow(0 0 5px #ff0000); }
-  50%{ filter:drop-shadow(0 0 20px #ff0000); }
-  100%{ filter:drop-shadow(0 0 5px #ff0000); }
-}
-
-/* ===== LOGO POP ===== */
-@keyframes logoPop{
+@keyframes pop{
   from{
-    transform:scale(0.5) rotate(-10deg);
+    transform:scale(0.7);
     opacity:0;
   }
   to{
-    transform:scale(1) rotate(0deg);
+    transform:scale(1);
     opacity:1;
   }
 }
 
-/* ===== TEXT FADE ===== */
 @keyframes fadeIn{
-  to{
-    opacity:1;
-  }
+  to{ opacity:1; }
 }
 
-/* ===== SPLASH HIDE ===== */
+@keyframes float{
+  0%{ transform:translate(0,0); }
+  50%{ transform:translate(30px,40px); }
+  100%{ transform:translate(0,0); }
+}
+
+/* fade out */
 .splash-hide{
-  animation:fadeOut 1s ease forwards;
+  animation:fadeOut 0.8s ease forwards;
 }
 
 @keyframes fadeOut{
