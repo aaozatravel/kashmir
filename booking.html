@@ -86,6 +86,7 @@
 
 <button onclick="saveBooking()">Confirm Booking</button>
 <!-- 🔊 SUCCESS SOUND -->
+<audio id="couponSound" src="coupon.mp3" preload="auto"></audio>
 <audio id="successSound" src="sucess.mp3" preload="auto"></audio>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -155,6 +156,13 @@ couponApplied = true
 appliedCoupon = data
 
 showAlert(`Coupon ${percent}% Applied 🎉`,"success")
+let couponSound = document.getElementById("couponSound")
+if(couponSound){
+  couponSound.currentTime = 0
+  couponSound.play().catch(err=>{
+    console.log("Coupon sound blocked:", err)
+  })
+}
 
 calculateTotal()
 }
@@ -166,7 +174,7 @@ if (navigator.vibrate) {
   if (type === "success") {
     navigator.vibrate([80, 40, 80])
   } else {
-    navigator.vibrate(200)
+    navigator.vibrate(500)
   }
 }
 
