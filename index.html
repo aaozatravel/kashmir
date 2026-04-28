@@ -49,11 +49,6 @@
   </div>
 </div>
 
-<script>
-if(!sessionStorage.getItem("splashShown")){
-  document.write("<style>#splash{display:flex !important;}</style>");
-}
-</script>
 
 <div id="splash">
   <img src="logo.jpg" class="splash-logo">
@@ -574,7 +569,7 @@ window.location.href = "booking.html"
 
 </script>
 <script>
-window.addEventListener("load", () => {
+document.addEventListener("DOMContentLoaded", () => {
 
   const splash = document.getElementById("splash");
 
@@ -584,17 +579,14 @@ window.addEventListener("load", () => {
     return;
   }
 
-  // first time
+  // 🔥 show splash
+  splash.style.display = "flex";
   sessionStorage.setItem("splashShown", "true");
 
+  // 🔥 auto hide
   setTimeout(() => {
-    splash.classList.add("splash-hide");
-
-    setTimeout(()=>{
-      splash.style.display = "none";
-    },500);
-
-  }, 4000);
+    splash.style.display = "none";
+  }, 5000);
 
 });
 </script>
