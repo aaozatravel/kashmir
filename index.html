@@ -422,6 +422,23 @@ updateHero()
     
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="supabase.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", async () => {
+
+  try {
+    const { data: { user } } = await supabaseClient.auth.getUser();
+
+    // ❌ login nahi → login page bhejo
+    if (!user) {
+      window.location.href = "login.html";
+    }
+
+  } catch (err) {
+    window.location.href = "login.html";
+  }
+
+});
+</script>
 <script src="main.js"></script>
 
 
