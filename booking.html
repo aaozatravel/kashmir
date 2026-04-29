@@ -336,6 +336,11 @@ let child = +childCount.innerText
 let infant = +infantCount.innerText
 
 let packageName = localStorage.getItem("selectedPackage")
+
+// normalize safety fix
+if(packageName === "Local Tour") packageName = "Local"
+if(packageName === "Pro Tour") packageName = "Pro"
+if(packageName === "Premium Pro+") packageName = "Premium"
 let packagePrice = parseInt(localStorage.getItem("selectedPrice")) || 0
 
 let packageDetails = {}
@@ -437,7 +442,7 @@ double_room:doubleRoomCount,
 total_price: finalTotal,
 original_price: total,
 coupon_discount: discountAmount,
-coupon_code: document.getElementById("couponInput").value || null,
+coupon_code: document.getElementById("couponInput")?.value || null,
 coupon_percent: appliedCoupon ? appliedCoupon.discount : null,
 status:"pending"
 }])
