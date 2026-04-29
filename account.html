@@ -10,6 +10,9 @@
 </head>
 
 <body class="account-body" onload="initPage()">
+  
+  <!-- 🔔 ALERT BOX (ADD THIS) -->
+<div id="topAlert" class="top-alert"></div>
 
 <div class="account-header">
 <img src="logo.jpg" class="account-header-logo">
@@ -189,8 +192,8 @@ async function saveSettings(){
     window.open(url, "_blank")
   }
 
-  alert("Profile updated successfully ✅")
-
+  showAlert("Profile updated successfully ✅","success")
+playSound()
   setTimeout(()=>{
     loadUserProfile()
   },500)
@@ -214,6 +217,11 @@ async function loginGuide(){
 const email = document.getElementById("guideEmail").value
 const password = document.getElementById("guidePassword").value
 
+if(!email || !password){
+showAlert("Fill guide credentials ❗","error")
+return
+}
+
 const { data, error } = await supabaseClient
 .from("guides")
 .select("*")
@@ -222,13 +230,20 @@ const { data, error } = await supabaseClient
 .single()
 
 if(error || !data){
-alert("Invalid guide login ❌")
+showAlert("Invalid guide login ❌","error")
+playSound()
 return
 }
 
 localStorage.setItem("guide", JSON.stringify(data))
 
+showAlert("Guide login success 🎉","success")
+playSound()
+
+setTimeout(()=>{
 window.location.href="guide-dashboard.html"
+},1200)
+
 }
 
 // ================= LOGOUT =================
@@ -239,9 +254,62 @@ localStorage.clear()
 
 window.location.href = "login.html"
 }
+function showAlert(msg,type="success"){
+
+if (navigator.vibrate) {
+  if (type === "success") {
+    navigator.vibrate([100, 50, 100])
+  } else {
+    navigator.vibrate([300])
+  }
+}
+
+
+function playSound(){
+  const audio = new Audio("sound.mp3")
+  audio.currentTime = 0
+  audio.play().catch(err=>{
+    console.log("Sound blocked:", err)
+  })
+}
+
+
+const alertBox = document.getElementById("topAlert")
+
+let icon = ""
+
+if(type === "success"){
+icon = `
+<svg viewBox="0 0 24 24">
+<path d="M22.25 12c0-1.43-.88-2.67-2.19-3.34..." fill="#22c55e"/>
+<path d="M9.5 14.58l-2.79-2.79-1.21 1.21 4 4 8-8-1.21-1.21z" fill="#fff"/>
+</svg>`
+}else{
+icon = `
+<svg viewBox="0 0 24 24">
+<path d="M22.25 12c0-1.43..." fill="#ef4444"/>
+<path d="M8 8l8 8M16 8l-8 8" stroke="#fff" stroke-width="2"/>
+</svg>`
+}
+
+alertBox.className = "top-alert show " + type
+
+alertBox.innerHTML = `
+<div class="alert-content">
+${icon}
+<span>${msg}</span>
+</div>
+`
+
+setTimeout(()=>{
+alertBox.classList.remove("show")
+},2500)
+}
+
+
 
 </script>
-  <script src="back.js"></script>
+<script src="back.js"></script>
 
 </body>
 </html>
