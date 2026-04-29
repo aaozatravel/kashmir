@@ -192,7 +192,7 @@ async function saveSettings(){
     window.open(url, "_blank")
   }
 
-  showAlert("Profile updated successfully ✅","success")
+  showAlert("Profile updated successfully ","success")
 playSound()
   setTimeout(()=>{
     loadUserProfile()
@@ -214,12 +214,12 @@ function handleGuideClick(){
 
 async function loginGuide(){
 
-const email = document.getElementById("guideEmail").value
-const password = document.getElementById("guidePassword").value
+const email = document.getElementById("guideEmail").value.trim()
+const password = document.getElementById("guidePassword").value.trim()
 
 if(!email || !password){
-showAlert("Fill guide credentials ❗","error")
-return
+  showAlert("Fill guide credentials ❗","error")
+  return
 }
 
 const { data, error } = await supabaseClient
@@ -227,21 +227,20 @@ const { data, error } = await supabaseClient
 .select("*")
 .eq("email", email)
 .eq("password", password)
-.single()
 
-if(error || !data){
-showAlert("Invalid guide login ❌","error")
-playSound()
-return
+if(error || !data || data.length === 0){
+  showAlert("Invalid guide login ❌","error")
+  return
 }
 
-localStorage.setItem("guide", JSON.stringify(data))
+// ✅ correct data
+localStorage.setItem("guide", JSON.stringify(data[0]))
 
 showAlert("Guide login success 🎉","success")
 playSound()
 
 setTimeout(()=>{
-window.location.href="guide-dashboard.html"
+  window.location.href = "guide-dashboard.html"
 },1200)
 
 }
@@ -254,17 +253,6 @@ localStorage.clear()
 
 window.location.href = "login.html"
 }
-function showAlert(msg,type="success"){
-
-if (navigator.vibrate) {
-  if (type === "success") {
-    navigator.vibrate([100, 50, 100])
-  } else {
-    navigator.vibrate([300])
-  }
-}
-
-
 function playSound(){
   const audio = new Audio("sound.mp3")
   audio.currentTime = 0
@@ -274,6 +262,26 @@ function playSound(){
 }
 
 
+function showAlert(msg,type="success"){
+
+// 📳 VIBRATION
+if (navigator.vibrate) {
+  if (type === "success") {
+    navigator.vibrate([100, 50, 100])
+  } else {
+    navigator.vibrate([300])
+  }
+}
+
+// 🔊 SOUND ONLY FOR SUCCESS
+if(type === "success"){
+  const audio = new Audio("sound.mp3")
+  audio.currentTime = 0
+  audio.play().catch(err=>{
+    console.log("Sound blocked:", err)
+  })
+}
+
 const alertBox = document.getElementById("topAlert")
 
 let icon = ""
@@ -281,13 +289,13 @@ let icon = ""
 if(type === "success"){
 icon = `
 <svg viewBox="0 0 24 24">
-<path d="M22.25 12c0-1.43-.88-2.67-2.19-3.34..." fill="#22c55e"/>
+<path d="M22.25 12c0-1.43-.88-2.67-2.19-3.34.46-1.39.2-2.9-.81-3.91s-2.52-1.27-3.91-.81c-.67-1.31-1.91-2.19-3.34-2.19s-2.67.88-3.33 2.19c-1.4-.46-2.91-.2-3.92.81s-1.26 2.52-.8 3.91c-1.31.67-2.2 1.91-2.2 3.34s.89 2.67 2.2 3.34c-.46 1.39-.21 2.9.8 3.91s2.52 1.26 3.91.81c.67 1.31 1.91 2.19 3.34 2.19s2.68-.88 3.34-2.19c1.39.45 2.9.2 3.91-.81s1.27-2.52.81-3.91c1.31-.67 2.19-1.91 2.19-3.34z" fill="#22c55e"/>
 <path d="M9.5 14.58l-2.79-2.79-1.21 1.21 4 4 8-8-1.21-1.21z" fill="#fff"/>
 </svg>`
 }else{
 icon = `
 <svg viewBox="0 0 24 24">
-<path d="M22.25 12c0-1.43..." fill="#ef4444"/>
+<path d="M22.25 12c0-1.43-.88-2.67-2.19-3.34.46-1.39.2-2.9-.81-3.91s-2.52-1.27-3.91-.81c-.67-1.31-1.91-2.19-3.34-2.19s-2.67.88-3.33 2.19c-1.4-.46-2.91-.2-3.92.81s-1.26 2.52-.8 3.91c-1.31.67-2.2 1.91-2.2 3.34s.89 2.67 2.2 3.34c-.46 1.39-.21 2.9.8 3.91s2.52 1.26 3.91.81c.67 1.31 1.91 2.19 3.34 2.19s2.68-.88 3.34-2.19c1.39.45 2.9.2 3.91-.81s1.27-2.52.81-3.91c1.31-.67 2.19-1.91 2.19-3.34z" fill="#ef4444"/>
 <path d="M8 8l8 8M16 8l-8 8" stroke="#fff" stroke-width="2"/>
 </svg>`
 }
