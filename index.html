@@ -39,11 +39,14 @@
   <!-- 🔥 BIG AD POPUP -->
 <div id="adPopup" class="ad-popup">
   <div class="ad-box">
-    
-    <span class="close-ad" onclick="closeAd()">✖</span>
 
-    <a href="weading.html" class="ad-link">
-      <img src="https://i.ibb.co/zT85NZWm/In-Shot-20260428-165220055.jpg" alt="Wedding Offer">
+    <span class="close-ad" onclick="closeAd()">
+  <span id="adTimer"></span>
+  <span id="adCloseIcon">✖</span>
+</span>
+
+    <a id="adLink" href="#">
+      <img id="adImg" src="" alt="Ad">
     </a>
 
   </div>
@@ -423,17 +426,40 @@ updateHero()
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="supabase.js"></script>
 <script>
-document.addEventListener("DOMContentLoaded", async () => {
+let authChecked = false;
 
-  try {
-    const { data: { user } } = await supabaseClient.auth.getUser();
+// wait for real session restore
+supabaseClient.auth.getSession().then(({ data }) => {
 
-    // ❌ login nahi → login page bhejo
-    if (!user) {
-      window.location.href = "login.html";
-    }
+  const session = data.session;
 
-  } catch (err) {
+  if (!session) {
+    window.location.href = "login.html";
+  } else {
+    authChecked = true;
+    console.log("User logged in");
+  }
+
+});
+
+// real-time auth tracking
+supabaseClient.auth.onAuthStateChange((event, session) => {
+
+  if (event === "SIGNED_OUT") {
+    window.location.href = "login.html";
+  }
+
+  if (event === "SIGNED_IN") {
+    authChecked = true;
+  }
+
+});
+
+
+// 🔥 REAL TIME SESSION TRACK
+supabaseClient.auth.onAuthStateChange((event, session) => {
+
+  if (event === "SIGNED_OUT" || !session) {
     window.location.href = "login.html";
   }
 
@@ -607,29 +633,109 @@ document.addEventListener("DOMContentLoaded", () => {
 
 });
 </script>
+<script src="ads.js"></script>
+
 <script>
+function showAd(ad){
 
-// 🔥 show after 10 sec
-window.addEventListener("load", () => {
+  document.getElementById("adImg").src = ad.img
+  document.getElementById("adLink").href = ad.link
 
-  if(sessionStorage.getItem("adShown")){
-    document.getElementById("adPopup").style.display = "none";
-    return;
-  }
-
-  // ⏱️ 10 sec delay
-  setTimeout(() => {
-    document.getElementById("adPopup").style.display = "flex";
-    sessionStorage.setItem("adShown","true");
-  }, 10000);
-
-});
-
-// ❌ close
-function closeAd(){
-  document.getElementById("adPopup").style.display = "none";
+  document.getElementById("adPopup").style.display = "flex"
 }
 
+
+function loadAd(){
+
+  if(!adsData || adsData.length === 0){
+    console.log("No ads found")
+    return
+  }
+
+  const ad = adsData[0]
+
+  document.getElementById("adImg").src = ad.img
+  document.getElementById("adLink").href = ad.link
+}
+
+window.addEventListener("load", () => {
+
+  let index = 0
+
+  function runAds(){
+
+    if(index >= adsData.length) return
+
+    const ad = adsData[index]
+
+    showAd(ad)
+
+    // 👉 FIRST AD
+    if(index === 0){
+
+      // X button visible
+      document.querySelector(".close-ad").style.display = "block"
+
+    }
+
+    // 👉 SECOND AD
+    else{
+
+      let timeLeft = 5
+      const closeBtn = document.querySelector(".close-ad")
+
+      closeBtn.style.display = "none"
+
+      // countdown show
+      closeBtn.innerText = timeLeft
+
+      const timer = setInterval(() => {
+
+        timeLeft--
+        closeBtn.innerText = timeLeft
+
+        if(timeLeft <= 0){
+          clearInterval(timer)
+          closeBtn.innerText = "✖"
+          closeBtn.style.display = "block"
+        }
+
+      }, 1000)
+
+    }
+
+  }
+
+  // 👉 close button click
+  window.closeAd = function(){
+
+    document.getElementById("adPopup").style.display = "none"
+
+    index++
+
+    if(index < adsData.length){
+
+      // 👉 next ad 5 sec baad
+      setTimeout(runAds, 5000)
+
+    }
+
+  }
+
+  // 👉 first ad 8 sec baad
+  setTimeout(runAds, 8000)
+
+})
+
+
+// 🔥 show ad function
+function showAd(ad){
+
+  document.getElementById("adImg").src = ad.img
+  document.getElementById("adLink").href = ad.link
+
+  document.getElementById("adPopup").style.display = "flex"
+}
 </script>
 
 </body>
