@@ -18,12 +18,12 @@
 <div class="tour-card local">
   
   <div class="img-box">
-    <img src="local.jpg">
+    <img src="gulmarg.jpg">
     <span class="badge">Local</span>
   </div>
 
   <div class="content">
-    <h2>Local Tour</h2>
+    <h2>Local</h2>
     <p>Perfect for budget travellers</p>
 
     <div class="price">₹29,999</div>
@@ -42,12 +42,12 @@
 <div class="tour-card pro">
 
   <div class="img-box">
-    <img src="pro.jpg">
+    <img src="sonmarg.jpg">
     <span class="badge">Pro</span>
   </div>
 
   <div class="content">
-    <h2>Pro Tour</h2>
+    <h2>Pro</h2>
     <p>More places + activities</p>
 
     <div class="price">₹39,999</div>
@@ -66,12 +66,12 @@
 <div class="tour-card premium">
 
   <div class="img-box">
-    <img src="premium.jpg">
+    <img src="snow.jpg">
     <span class="badge">Premium+</span>
   </div>
 
   <div class="content">
-    <h2>Premium Pro+</h2>
+    <h2>Premium</h2>
     <p>Luxury + adventure experience</p>
 
     <div class="price">₹59,999</div>
@@ -111,20 +111,26 @@ function share(){
 // 🔥 ROUTING
 function goPackage(type){
 
+  // 🔥 SAVE PACKAGE NAME FIRST
   if(type === "local"){
+    localStorage.setItem("selectedPackage","Local")
     window.location.href = "package-localtour.html"
   }
+
   else if(type === "pro"){
+    localStorage.setItem("selectedPackage","Pro")
     window.location.href = "package-pro.html"
   }
+
   else if(type === "premium"){
+    localStorage.setItem("selectedPackage","Premium")
     window.location.href = "package-premium.html"
   }
 
 }
 
 </script>
-  <script src="back.js"></script>
+<script src="back.js"></script>
 
 </body>
 </html>
