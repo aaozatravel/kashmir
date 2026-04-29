@@ -307,3 +307,68 @@ input:focus{
 .back-btn:active{
   transform: scale(0.95);
 }
+
+
+/* =========================
+   PREMIUM TOP ALERT (SAME LOGIN STYLE)
+========================= */
+
+.top-alert{
+  position:fixed;
+  top:-120px;
+  left:50%;
+  transform:translateX(-50%) scale(0.9);
+  padding:14px 20px;
+  border-radius:16px;
+  z-index:9999;
+  transition:all 0.4s ease;
+  font-size:14px;
+  backdrop-filter: blur(12px);
+  box-shadow:0 8px 25px rgba(0,0,0,0.15);
+  opacity:0;
+  min-width:260px;
+  max-width:90%;
+}
+
+/* SHOW */
+.top-alert.show{
+  top:20px;
+  transform:translateX(-50%) scale(1);
+  opacity:1;
+}
+
+/* SUCCESS */
+.top-alert.success{
+  background:linear-gradient(135deg,#d1fae5,#bbf7d0);
+  color:#065f46;
+  border:1px solid rgba(34,197,94,0.2);
+  box-shadow:0 10px 30px rgba(34,197,94,0.25);
+}
+
+/* ERROR */
+.top-alert.error{
+  background:linear-gradient(135deg,#fee2e2,#fecaca);
+  color:#7f1d1d;
+  border:1px solid rgba(239,68,68,0.2);
+  box-shadow:0 10px 30px rgba(239,68,68,0.25);
+}
+
+/* CONTENT */
+.alert-content{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+/* ICON */
+.alert-content svg{
+  width:30px;
+  height:30px;
+  flex-shrink:0;
+}
+
+/* TEXT */
+.alert-content span{
+  font-weight:500;
+  line-height:1.4;
+}
