@@ -71,5 +71,14 @@ function closeAd(){
 }
 
 window.addEventListener("load", () => {
+
+  // ❌ agar ads already dikha diye is session me
+  if(sessionStorage.getItem("adsShown")){
+    return;
+  }
+
+  // ✅ mark karo ki ads dikha diye
+  sessionStorage.setItem("adsShown", "true");
+
   startAds();
 });
