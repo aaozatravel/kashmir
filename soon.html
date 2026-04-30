@@ -4,82 +4,86 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>HotBox - Coming Soon</title>
+<title>Aaoza HotBox - Coming Soon</title>
 
 <style>
 
 /* ================= BODY ================= */
 body{
   margin:0;
-  padding:0;
-  background:#ffffff;
   font-family:sans-serif;
-  overflow:hidden;
+  background:#ffffff;
 }
 
-/* ================= FULL IMAGE BG ================= */
-.bg{
-  position:fixed;
-  inset:0;
-  z-index:0;
-}
-
-.bg img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  filter:brightness(0.6);
-}
-
-/* ================= OVERLAY CONTENT ================= */
-.content{
-  position:absolute;
-  inset:0;
-  z-index:2;
-
+/* ================= HEADER ================= */
+.header{
   display:flex;
-  flex-direction:column;
   align-items:center;
-  justify-content:center;
+  gap:10px;
 
-  text-align:center;
-  color:#fff;
+  padding:12px 15px;
+
+  background:#ffffff;
+  border-bottom:2px solid #f2f2f2;
 }
 
-/* LOGO */
-.logo{
-  width:90px;
-  height:90px;
+.header img{
+  width:45px;
+  height:45px;
   border-radius:50%;
-  margin-bottom:15px;
-  box-shadow:0 8px 20px rgba(0,0,0,0.3);
+}
+
+.header h1{
+  font-size:20px;
+  margin:0;
+  color:#d40000;
+}
+
+/* ================= CONTENT ================= */
+.container{
+  padding:18px;
+  text-align:center;
 }
 
 /* TITLE */
 .title{
-  font-size:38px;
+  font-size:34px;
   font-weight:800;
-  letter-spacing:1px;
+  color:#d40000;
+  margin-bottom:10px;
 }
 
-/* SUB TEXT */
-.subtitle{
-  font-size:16px;
-  margin-top:8px;
-  opacity:0.9;
+/* PARAGRAPH */
+.desc{
+  font-size:14px;
+  line-height:1.6;
+  color:#444;
+  max-width:600px;
+  margin:auto;
+}
+
+/* ================= FULL IMAGE ================= */
+.full-img{
+  margin-top:20px;
+}
+
+.full-img img{
+  width:100%;
+  height:auto;
+  border-radius:12px;
 }
 
 /* ================= VIDEO ================= */
 .video-box{
-  margin-top:20px;
+  margin:20px auto;
+  width:90%;
+  max-width:350px;
+  height:200px;
 
-  width:220px;
-  height:140px;
-
-  border-radius:14px;
+  border-radius:15px;
   overflow:hidden;
 
-  box-shadow:0 10px 25px rgba(0,0,0,0.4);
+  box-shadow:0 10px 25px rgba(0,0,0,0.2);
 }
 
 .video-box video{
@@ -88,22 +92,34 @@ body{
   object-fit:cover;
 }
 
-/* ================= ANIMATION ================= */
-@keyframes pulse{
-  0%{ transform:scale(1); }
-  50%{ transform:scale(1.05); }
-  100%{ transform:scale(1); }
+/* ================= BUTTON ================= */
+.back-btn{
+  margin-top:20px;
+  display:inline-block;
+
+  padding:10px 18px;
+
+  background:#d40000;
+  color:#fff;
+
+  border-radius:25px;
+  text-decoration:none;
+
+  font-weight:600;
+
+  box-shadow:0 6px 15px rgba(212,0,0,0.3);
+  transition:0.3s;
 }
 
-.video-box{
-  animation:pulse 3s infinite;
+.back-btn:hover{
+  background:#b30000;
 }
 
 /* ================= BADGE ================= */
 .badge{
-  position:absolute;
-  top:20px;
-  right:20px;
+  position:fixed;
+  top:10px;
+  right:10px;
 
   background:#ff3d00;
   color:#fff;
@@ -121,36 +137,43 @@ body{
 
 <body>
 
-<!-- 🔥 BACKGROUND IMAGE -->
-<div class="bg">
-  <!-- 👇 YAHAN apni full image dalna -->
-  <img src="hotbox-bg.jpg">
+<!-- 🔴 HEADER -->
+<div class="header">
+  <img src="hotbox.jpg">
+  <h1>Aaoza HotBox</h1>
 </div>
 
 <!-- 🔥 CONTENT -->
-<div class="content">
+<div class="container">
 
-  <!-- LOGO -->
-  <img src="hotbox.jpg" class="logo">
+  <div class="title">🔥 Coming Soon</div>
 
-  <!-- TITLE -->
-  <div class="title">HOTBOX 🔥</div>
+  <div class="desc">
+    Aaoza Travel is growing rapidly and expanding its services to deliver even more value to its customers.  
+    Our team has taken a big step forward by introducing <b>Aaoza HotBox</b> — a complete food experience where you will enjoy fast food, bakery items, and restaurant-style meals.  
+    With easy home delivery and premium quality service, Aaoza HotBox is designed to bring delicious food right to your doorstep.  
+    Our team is currently preparing everything with care, and we will be launching very soon. Stay tuned!
+  </div>
 
-  <!-- TEXT -->
-  <div class="subtitle">Cooking Something Delicious... 🍔</div>
+  <!-- FULL IMAGE -->
+  <div class="full-img">
+    <img src="soon.png">
+  </div>
 
   <!-- VIDEO -->
   <div class="video-box">
-    <!-- 👇 YAHAN apna video dalna -->
     <video autoplay muted loop playsinline>
       <source src="hotbox.mp4" type="video/mp4">
     </video>
   </div>
 
+  <!-- BUTTON -->
+  <a href="index.html" class="back-btn">⬅ Back</a>
+
 </div>
 
-<!-- TOP BADGE -->
-<div class="badge">Coming Soon</div>
+<!-- BADGE -->
+<div class="badge">Cooking Soon 🍔</div>
 
 </body>
 </html>
