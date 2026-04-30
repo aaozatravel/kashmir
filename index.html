@@ -111,51 +111,102 @@
 <div class="hero-guides">
 <div class="hero-guides-track" id="heroGuides"></div>
 </div>
-</section> <section class="services">  
-<h2>Our Services</h2>  <div class="services-container">  <div class="service-card">  
-<img src="cab.png">  
-<h3>Travels Cab</h3>  
-</div>  <a href="hotels.html" class="service-link">  
-<div class="service-card">  
-<img src="ayaan.png">  
-<h3>Hotels</h3>  
-</div>  
-</a>  <a href="tour.html">  
-<div class="service-card">  
-    <img src="room.png">  
-    <h3>Tours</h3>  
-</div>  
-</a> 
-<a href="gallery.html">  
-<div class="service-card">  
-    <img src="gallery.png">  
-    <h3>Gallery</h3>  
-</div>  
-</a> 
-
-<a href="reels.html" class="service-link">  
-<div class="service-card">  
-<img src="reel.png">  
-<h3>Reel Video Shoot</h3>  
-</div>  
-</a> 
-<a href="coupon.html">  
-<div class="service-card">  
-    <img src="coupon.png">  
-    <h3>Gift Card</h3>  
-</div>  
-</a> 
-<a href="guide-badge.html" class="service-link">  
-<div class="service-card">  
-<img src="guide.png">  
-<h3>Guide</h3>  
-</div>  </a>
-<a href="weading.html" class="service-link">  
-<div class="service-card">  
-<img src="weading.png">  
-<h3>weading shoot booking</h3>  
-</div>  </a>  </div>  
 </section> 
+<!--==========Service==========-->
+<section class="services-pro">
+
+<h2>Our Services</h2>
+
+<div class="services-container">
+
+<!-- CARD -->
+<div class="service-card-pro">
+  <div class="media">
+    <img src="cab.png">
+    <!-- video use karna ho to img hata ke ye use karo -->
+    <!-- <video src="cab.mp4" autoplay muted loop></video> -->
+  </div>
+  <h3>Travels Cab</h3>
+</div>
+
+<a href="hotels.html">
+<div class="service-card-pro">
+  <div class="media">
+    <img src="ayaan.png">
+  </div>
+  <h3>Hotels</h3>
+</div>
+</a>
+
+<a href="tour.html">
+<div class="service-card-pro">
+  <div class="media">
+    <img src="room.png">
+  </div>
+  <h3>Tours</h3>
+</div>
+</a>
+
+<a href="gallery.html">
+<div class="service-card-pro">
+  <div class="media">
+    <img src="gallery.png">
+  </div>
+  <h3>Gallery</h3>
+</div>
+</a>
+
+<a href="reels.html">
+<div class="service-card-pro">
+  <div class="media">
+     <img src="reel.png">
+  </div>
+  <h3>Reel Video Shoot</h3>
+</div>
+</a>
+
+<a href="coupon.html">
+<div class="service-card-pro">
+  <div class="media">
+    <img src="coupon.png">
+  </div>
+  <h3>Gift Card</h3>
+</div>
+</a>
+
+<a href="guide-badge.html">
+<div class="service-card-pro">
+  <div class="media">
+    <img src="guide.png">
+  </div>
+  <h3>Guide</h3>
+</div>
+</a>
+
+<a href="weading.html">
+<div class="service-card-pro">
+  <div class="media">
+ <img src="weading.png">
+  </div>
+  <h3>Wedding Shoot</h3>
+</div>
+</a>
+
+<a href="soon.html">
+<div class="service-card-pro hotbox-special">
+  <div class="media">
+    <video src="hotbox.mp4" autoplay muted loop></video>
+  </div>
+  <h3>🔥 HotBox</h3>
+</div>
+</a>
+
+</div>
+</section>
+
+
+
+
 
 <!-- 🔥 PACKAGE SLIDER -->
 <section class="package-slider">
@@ -273,6 +324,27 @@
 <img src="https://cdn-icons-png.flaticon.com/512/1946/1946429.png">  
 <span>Account</span>  
 </a>  </div> 
+
+
+<!-- 🔥 HOTBOX FLOAT MINI BOX -->
+<div id="hotbox">
+
+  <!-- video background -->
+  <video autoplay muted loop playsinline>
+    <source src="hotbox.mp4" type="video/mp4">
+  </video>
+
+  <!-- content -->
+  <div class="hotbox-content">
+    <img src="hotbox.jpg" class="hotbox-logo">
+    <span>HotBox</span>
+  </div>
+
+</div>
+
+
+
+
 <script>
 var map = L.map('map', {  
     dragging: false,  
@@ -634,6 +706,90 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 </script>
 <script src="ads.js"></script>
+
+<script>
+const hotbox = document.getElementById("hotbox");
+
+// 👉 open page
+function openHotbox(){
+  window.location.href = "soon.html";
+}
+
+// ================= ONLY UP-DOWN DRAG =================
+let isDragging = false;
+let offsetY;
+
+hotbox.addEventListener("touchstart", (e) => {
+  isDragging = true;
+
+  const touch = e.touches[0];
+  offsetY = touch.clientY - hotbox.offsetTop;
+});
+
+hotbox.addEventListener("touchmove", (e) => {
+  if(!isDragging) return;
+
+  const touch = e.touches[0];
+
+  let newTop = touch.clientY - offsetY;
+
+  // 🔒 screen ke andar hi rahe
+  if(newTop < 10) newTop = 10;
+  if(newTop > window.innerHeight - 130){
+    newTop = window.innerHeight - 130;
+  }
+
+  hotbox.style.top = newTop + "px";
+});
+
+hotbox.addEventListener("touchend", () => {
+  isDragging = false;
+});
+
+// ================= LEFT-RIGHT SWIPE =================
+let startX = 0;
+
+hotbox.addEventListener("touchstart", e=>{
+  startX = e.touches[0].clientX;
+});
+
+hotbox.addEventListener("touchend", e=>{
+  let endX = e.changedTouches[0].clientX;
+
+  // 👉 swipe left → bahar
+  if(startX - endX > 50){
+    hotbox.classList.add("show");
+  }
+
+  // 👉 swipe right → andar
+  if(endX - startX > 50){
+    hotbox.classList.remove("show");
+  }
+});
+
+// ================= CLICK =================
+hotbox.addEventListener("click", openHotbox);
+
+// ================= AUTO PEEK =================
+function runHotbox(){
+
+  if(isDragging) return;
+
+  hotbox.classList.add("show");
+
+  setTimeout(()=>{
+    hotbox.classList.remove("show");
+  },4000); // 👈 kitni der bahar rahe
+
+}
+
+// first time
+setTimeout(runHotbox,2000);
+
+// repeat
+setInterval(runHotbox,9000);
+</script>
+
 
 </body>
 </html> 
