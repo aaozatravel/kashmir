@@ -310,3 +310,186 @@ font-weight:bold;
     height:130px;
   }
 }
+
+/* ================= HOTBOX FLOAT ================= */
+
+#hotbox{
+  position:fixed;
+  right:-80px; /* 👈 width ke equal (fully hidden) */
+  bottom:120px;
+  
+  width:140px;   /* 👈 SAME rakha */
+  height:70px;   /* 👈 SAME rakha */
+  
+  border-radius:20px 0 0 20px;
+  overflow:hidden;
+  
+  cursor:pointer;
+  z-index:9999;
+  
+  box-shadow:0 10px 30px rgba(0,0,0,0.3);
+  
+  transition:all 0.6s cubic-bezier(.22,1,.36,1);
+}
+
+/* 👇 jab show ho */
+#hotbox.show{
+  right:0px; /* 👈 half visible same as tum chahte ho */
+}
+#hotbox video{
+  position:absolute;
+  top:0;
+  left:0;
+
+  width:100%;
+  height:100%;
+
+  object-fit:cover;   /* 👈 full fill kare */
+  object-position:center; /* 👈 center focus */
+}
+
+/* ================= SERVICES PRO PREMIUM ================= */
+
+.services-pro{
+  padding:20px 10px;
+  text-align:center;
+}
+
+.services-pro h2{
+  margin-bottom:16px;
+  color:#1c3faa;
+  font-weight:700;
+  letter-spacing:.5px;
+}
+
+/* GRID */
+.services-pro .services-container{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
+}
+
+/* CARD */
+.service-card-pro{
+  background:#ffffff;
+  border-radius:18px;
+  padding:12px 6px;
+
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+
+  height:105px;
+
+  box-shadow:0 6px 14px rgba(0,0,0,0.08);
+
+  transition:all 0.3s ease;
+  position:relative;
+  overflow:hidden;
+}
+
+/* ✨ premium glow effect */
+.service-card-pro::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(120deg,#1c3faa22,#00bcd422);
+  opacity:0;
+  transition:0.3s;
+}
+
+/* hover / tap */
+.service-card-pro:hover{
+  transform:translateY(-5px) scale(1.03);
+  box-shadow:0 12px 25px rgba(0,0,0,0.15);
+}
+
+.service-card-pro:hover::before{
+  opacity:1;
+}
+
+.service-card-pro:active{
+  transform:scale(0.92);
+}
+
+/* MEDIA */
+.service-card-pro .media{
+  width:100%;
+  height:45px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  margin-bottom:6px;
+  position:relative;
+  z-index:2;
+}
+
+/* IMAGE */
+.service-card-pro img{
+  width:48px;
+  height:48px;
+  object-fit:contain;
+  transition:0.3s;
+}
+
+/* VIDEO */
+.service-card-pro video{
+  width:48px;
+  height:48px;
+  object-fit:cover;
+  border-radius:10px;
+}
+
+/* 🎯 icon hover animation */
+.service-card-pro:hover img{
+  transform:scale(1.15) rotate(3deg);
+}
+
+/* TEXT */
+.service-card-pro h3{
+  font-size:12px;
+  font-weight:600;
+  color:#333;
+  margin:0;
+  text-align:center;
+  z-index:2;
+}
+
+/* 🔥 subtle shine animation */
+.service-card-pro::after{
+  content:"";
+  position:absolute;
+  top:-100%;
+  left:-50%;
+  width:200%;
+  height:200%;
+  background:linear-gradient(
+    120deg,
+    transparent,
+    rgba(255,255,255,0.5),
+    transparent
+  );
+  transform:rotate(25deg);
+  transition:0.5s;
+}
+
+.service-card-pro:hover::after{
+  top:100%;
+}
+
+/* MOBILE */
+@media(max-width:768px){
+  .services-pro .services-container{
+    grid-template-columns:repeat(4,1fr);
+  }
+}
+
+
+.services-pro a{
+  text-decoration:none;
+  color:inherit;
+  display:block;
+         }
