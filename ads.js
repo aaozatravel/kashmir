@@ -1,6 +1,6 @@
 const adsData = [
   {
-    img: "soon1.png",
+    img: "soon2.png",
     link: "soon.html",
     delay: 8000,
     countdown: false
