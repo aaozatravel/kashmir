@@ -1,13 +1,13 @@
 const adsData = [
   {
-    img: "https://i.ibb.co/zT85NZWm/In-Shot-20260428-165220055.jpg",
-    link: "weading.html",
+    img: "soon1.png",
+    link: "soon.html",
     delay: 8000,
     countdown: false
   },
   {
-    img: "https://i.ibb.co/1JTtk9tB/voucher7.png",
-    link: "coupon.html",
+    img: "https://i.ibb.co/zT85NZWm/In-Shot-20260428-165220055.jpg",
+    link: "weading.html",
     delay: 10000,
     countdown: true
   }
