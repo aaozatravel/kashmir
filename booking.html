@@ -56,23 +56,67 @@
 <!-- 🏨 ROOMS -->
 <h2>Rooms</h2>
 
+<p style="color:gray;font-size:13px">
+*Note: These prices are for 4 Nights stay
+</p>
+
+<!-- DELUXE -->
 <div class="row">
-<span>Single Room ₹6999</span>
+<span>
+  Deluxe • 4/N ₹59,999
+</span>
 <div>
-<button onclick="changeRoom('single',-1)">-</button>
-<span id="singleRoom">0</span>
-<button onclick="changeRoom('single',1)">+</button>
+
+<!-- DELUXE -->
+<button id="deluxeBtn" onclick="toggleRoom('deluxe')">
+  <span class="tick"></span>
+</button>
+
+<!-- ✅ ADD THIS -->
+<a href="viewdetail.html" class="view-btn">View Details</a>
+
 </div>
 </div>
 
 <div class="row">
-<span>Double Room ₹8999</span>
+<span>Extra Room ₹29,999</span>
 <div>
-<button onclick="changeRoom('double',-1)">-</button>
-<span id="doubleRoom">0</span>
-<button onclick="changeRoom('double',1)">+</button>
+<button onclick="changeExtra('deluxe',-1)">-</button>
+<span id="deluxeExtra">0</span>
+<button onclick="changeExtra('deluxe',1)">+</button>
 </div>
 </div>
+
+<hr>
+
+<!-- STANDARD -->
+<div class="row">
+<span>
+  Standard • 4/N ₹89,999
+</span>
+<div>
+<!-- STANDARD -->
+<button id="standardBtn" onclick="toggleRoom('standard')">
+  <span class="tick"></span>
+</button>
+
+<!-- ✅ ADD THIS -->
+<a href="viewdetail2.html" class="view-btn">View Details</a>
+
+</div>
+</div>
+
+<div class="row">
+<span>Extra Room ₹19,999</span>
+<div>
+<button onclick="changeExtra('standard',-1)">-</button>
+<span id="standardExtra">0</span>
+<button onclick="changeExtra('standard',1)">+</button>
+</div>
+</div>
+
+
+
 
 <h2>Apply Coupon</h2>
 
@@ -145,9 +189,17 @@ let paying = adults + child
 
 let packageTotal = price * paying
 
-let rooms = (6999 * (+singleRoom.innerText)) + (8999 * (+doubleRoom.innerText))
+let total = packageTotal
 
-let total = packageTotal + rooms
+if(selectedRooms.deluxe){
+  total += 59999
+  total += (+deluxeExtra.innerText) * 29999
+}
+
+if(selectedRooms.standard){
+  total += 89999
+  total += (+standardExtra.innerText) * 19999
+}
 
 discountAmount = Math.floor((total * percent)/100)
 
@@ -297,10 +349,19 @@ let paying = adults + child
 
 let packageTotal = price * paying
 
-let single = 6999 * (+singleRoom.innerText)
-let double = 8999 * (+doubleRoom.innerText)
+let total = packageTotal
 
-let total = packageTotal + single + double
+// DELUXE
+if(selectedRooms.deluxe){
+  total += 59999
+  total += (+deluxeExtra.innerText) * 29999
+}
+
+// STANDARD
+if(selectedRooms.standard){
+  total += 89999
+  total += (+standardExtra.innerText) * 19999
+}
 
 let finalTotal = total - discountAmount
 if(finalTotal < 0) finalTotal = 0
@@ -376,20 +437,27 @@ if(packageName === "Premium"){
 let paying = adults + child
 let packageTotal = packagePrice * paying
 
-let singleRoomCount = +singleRoom.innerText
-let doubleRoomCount = +doubleRoom.innerText
+let total = packageTotal
 
-let total = packageTotal + (6999 * singleRoomCount) + (8999 * doubleRoomCount)
+if(selectedRooms.deluxe){
+  total += 59999
+  total += (+deluxeExtra.innerText) * 29999
+}
+
+if(selectedRooms.standard){
+  total += 89999
+  total += (+standardExtra.innerText) * 19999
+}
 let finalTotal = total - discountAmount
 if(finalTotal < 0) finalTotal = 0
 
-// ❌ VALIDATION START
-
 // room check
-if(+singleRoom.innerText === 0 && +doubleRoom.innerText === 0){
+if(!selectedRooms.deluxe && !selectedRooms.standard){
   showAlert("Please select at least 1 room 🏨","error")
   return
 }
+
+  
 
 // traveller check
 for(let t of travellers){
@@ -429,16 +497,16 @@ package_price:packagePrice,
 // ✅ FIXED STRUCTURE
 traveller_details: JSON.stringify({
   travellers: travellers,
-  package_details: packageDetails, // 🔥 YE LINE IMPORTANT HAI
-  single_room: singleRoomCount,
-  double_room: doubleRoomCount
+  package_details: packageDetails,
+  deluxe:selectedRooms.deluxe,
+  standard:selectedRooms.standard,
+  deluxe_extra:+deluxeExtra.innerText,
+  standard_extra:+standardExtra.innerText
 }),
 
 adults,
 children:child,
 infants:infant,
-single_room:singleRoomCount,
-double_room:doubleRoomCount,
 total_price: finalTotal,
 original_price: total,
 coupon_discount: discountAmount,
@@ -466,6 +534,52 @@ setTimeout(()=>{
 window.location.href="my-booking.html"
 },2000)
 
+}
+let selectedRooms = {
+  deluxe:false,
+  standard:false
+}
+
+// ✔ ROOM SELECT (tick/cross)
+function toggleRoom(type){
+
+  selectedRooms[type] = !selectedRooms[type]
+
+  let tick = document.querySelector("#"+type+"Btn .tick")
+
+  if(selectedRooms[type]){
+    tick.classList.add("active")
+  }else{
+    tick.classList.remove("active")
+
+    // reset extra
+    document.getElementById(type+"Extra").innerText = 0
+  }
+
+  showAlert(type + (selectedRooms[type] ? " selected ✅" : " removed ❌"))
+
+  calculateTotal()
+}
+
+// ➕ EXTRA ROOM
+function changeExtra(type,val){
+
+  if(!selectedRooms[type]){
+    showAlert("Select main room first ❗","error")
+    return
+  }
+
+  let id = type+"Extra"
+  let el = document.getElementById(id)
+
+  let num = +el.innerText
+  num += val
+
+  if(num < 0) num = 0
+
+  el.innerText = num
+
+  calculateTotal()
 }
 
 // INIT
