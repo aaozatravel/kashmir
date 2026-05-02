@@ -1,180 +1,253 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Aaoza Travel Kashmir - Coming Soon</title>
-
-<style>
-body{
-  margin:0;
-  font-family:Arial, sans-serif;
-  background:linear-gradient(135deg,#000,#1a0000,#330000);
-  color:white;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  height:100vh;
-  overflow:hidden;
-}
-
-/* 🔥 MAIN BOX */
-.container{
-  text-align:center;
-  padding:25px;
-  max-width:350px;
-}
-
-/* 🔥 LOGO */
-.logo{
-  width:100px;
-  border-radius:20px;
-  box-shadow:0 0 25px red;
-  margin-bottom:15px;
-}
-
-/* 🔥 TITLE */
-h1{
-  margin:0;
-  font-size:22px;
-}
-
-h2{
-  margin:10px 0;
-  color:#ff3c00;
-  font-size:20px;
-}
-
-/* 🔥 TEXT */
-p{
-  font-size:14px;
-  color:#ccc;
-  line-height:1.5;
-}
-
+<!DOCTYPE html>  
+<html lang="en">  
+<head>  
+<meta charset="UTF-8">  
+<meta name="viewport" content="width=device-width, initial-scale=1.0">  
+  
+<title>Aaoza Travel Kashmir - Coming Soon</title>  
+  
+<style>  
+body{  
+  margin:0;  
+  font-family:Arial, sans-serif;  
+  background:linear-gradient(135deg,#000,#1a0000,#330000);  
+  color:white;  
+  min-height:100vh;  
+  overflow-y:auto;  
+}  
+  
+.container{  
+  text-align:center;  
+  padding:20px;  
+  max-width:420px;  
+  margin:auto;  
+}  
+  
+.logo{  
+  width:100px;  
+  border-radius:20px;  
+  box-shadow:0 0 25px red;  
+  margin:20px auto;  
+  display:block;  
+}  
+  
+h1{  
+  margin:0;  
+  font-size:22px;  
+}  
+  
+h2{  
+  margin:10px 0;  
+  color:#ff3c00;  
+  font-size:20px;  
+}  
+  
+p{  
+  font-size:14px;  
+  color:#ccc;  
+  line-height:1.6;  
+}  
+  
 /* 🔥 LOCATIONS */
-.locations{
+.locations{  
+  margin-top:15px;  
+  display:flex;  
+  flex-wrap:wrap;  
+  justify-content:center;  
+  gap:10px;  
+}  
+  
+.location-box{  
+  background:#111;  
+  border:1px solid red;  
+  padding:8px 12px;  
+  border-radius:20px;  
+  font-size:13px;  
+  display:flex;  
+  align-items:center;  
+  gap:6px;  
+}  
+
+/* ✅ SVG ICON UPDATED */
+.tick{
+  width:18px;
+  height:18px;
+  stroke: #00ff88;
+  stroke-width: 3;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.pending{
+  width:16px;
+  height:16px;
+  fill:orange;
+}
+
+/* 🔥 HOTEL CARDS */
+.hotel{
   margin-top:15px;
-  display:flex;
-  flex-wrap:wrap;
-  justify-content:center;
-  gap:10px;
-}
-
-.locations span{
-  background:#111;
+  background:#111;  
   border:1px solid red;
-  padding:6px 12px;
-  border-radius:20px;
-  font-size:13px;
+  border-radius:15px;
+  padding:15px;
+  text-align:center;
 }
 
-/* 🔥 GLOW */
-.glow{
-  animation:glow 2s infinite alternate;
+.hotel img{
+  width:70px;
+  border-radius:12px;
+  margin-bottom:8px;
+  box-shadow:0 0 10px red;
 }
 
-@keyframes glow{
-  from{ box-shadow:0 0 10px red; }
-  to{ box-shadow:0 0 30px red; }
+.hotel h4{
+  margin:5px 0;
+  font-size:15px;
+  color:#ff3c00;
+}
+
+.hotel p{
+  font-size:12px;
+  color:#bbb;
 }
 
 /* 🔥 LOADER */
-.loader{
-  margin-top:20px;
-  height:5px;
-  width:100%;
-  background:#222;
-  border-radius:10px;
-  overflow:hidden;
-}
+.loader{  
+  margin-top:20px;  
+  height:5px;  
+  width:100%;  
+  background:#222;  
+  border-radius:10px;  
+  overflow:hidden;  
+}  
+  
+.loader span{  
+  display:block;  
+  height:100%;  
+  width:40%;  
+  background:red;  
+  animation:load 2s infinite;  
+}  
+  
+@keyframes load{  
+  0%{margin-left:-40%;}  
+  100%{margin-left:100%;}  
+}  
+  
+#timerText{  
+  margin-top:15px;  
+  font-size:16px;  
+  color:#ff3c00;  
+  font-weight:bold;  
+}  
+  
+</style>  
+</head>  
+  
+<body>  
+  
+<div class="container">  
+  
+  <img src="logo.jpg" class="logo">  
+  
+  <h1>Aaoza Travel Kashmir</h1>  
+  <h2>🚧 Coming Soon</h2>  
+  
+<p>  
+  We’re excited to share that our hotel listings for Gulmarg and Pahalgam are now fully completed and ready.<br><br>  
 
-.loader span{
-  display:block;
-  height:100%;
-  width:40%;
-  background:red;
-  animation:load 2s infinite;
-}
+  Our team is currently working on bringing Srinagar and Sonmarg to the platform, ensuring the same high-quality experience.<br>  
+  These sections will be launched very soon.<br><br>  
 
-@keyframes load{
-  0%{margin-left:-40%;}
-  100%{margin-left:100%;}
-}
+  Until everything is perfectly ready, the app will remain temporarily closed.<br>  
+  Thank you for your patience and continued support.  
+</p>
+  
+  <div class="locations">  
+    
+    <div class="location-box">
+      Gulmarg
+      <svg class="tick" viewBox="0 0 24 24">
+        <polyline points="20 6 9 17 4 12"></polyline>
+      </svg>
+    </div>
 
-/* 🔥 TIMER */
-#timerText{
-  margin-top:15px;
-  font-size:16px;
-  color:#ff3c00;
-  font-weight:bold;
-}
+    <div class="location-box">
+      Pahalgam
+      <svg class="tick" viewBox="0 0 24 24">
+        <polyline points="20 6 9 17 4 12"></polyline>
+      </svg>
+    </div>
 
-</style>
-</head>
+    <div class="location-box">
+      Srinagar
+      <svg class="pending" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="10"/>
+      </svg>
+    </div>
 
-<body>
+    <div class="location-box">
+      Sonmarg
+      <svg class="pending" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="10"/>
+      </svg>
+    </div>
 
-<div class="container">
+  </div>  
 
-  <img src="logo.jpg" class="logo glow">
+  <h3 style="margin-top:20px;color:#ff3c00;">Completed Hotels</h3>
 
-  <h1>Aaoza Travel Kashmir</h1>
-  <h2>🚧 Coming Soon</h2>
-
-  <p>
-    Our team is currently working on the Hotels section.<br>
-    The app will be live very soon after upgrade completion.
-  </p>
-
-  <div class="locations">
-    <span>📍 Gulmarg</span>
-    <span>📍 Sonmarg</span>
-    <span>📍 Pahalgam</span>
-    <span>📍 Srinagar</span>
+  <div class="hotel">
+    <img src="raaziklogo.png">
+    <h4>The Raazik Resort</h4>
+    <p>
+      Lidroo, Pahalgam<br>
+      Anantnag, Jammu & Kashmir – 1921
+    </p>
   </div>
 
-  <!-- 🔥 TIMER -->
-  <h3 id="timerText">Launching in: --:--:--</h3>
-
-  <!-- 🔥 LOADER -->
-  <div class="loader">
-    <span></span>
+  <div class="hotel">
+    <img src="pinelogo.png">
+    <h4>Pine Palace Resorts & Platinum</h4>
+    <p>
+      Gulmarg, Jammu & Kashmir
+    </p>
   </div>
-
-</div>
-
-<script>
-
-// 🔥 first time open
-if(!localStorage.getItem("startTime")){
-  localStorage.setItem("startTime", new Date().getTime());
-}
-
-// 🔥 saved start time
-const startTime = parseInt(localStorage.getItem("startTime"));
-
-// 🔥 update timer (COUNT UP)
-function updateTimer(){
-
-  const now = new Date().getTime();
-  const elapsed = now - startTime;
-
-  let hours = Math.floor(elapsed / (1000 * 60 * 60));
-  let minutes = Math.floor((elapsed % (1000 * 60 * 60)) / (1000 * 60));
-  let seconds = Math.floor((elapsed % (1000 * 60)) / 1000);
-
-  document.getElementById("timerText").innerText =
-    `⏳ Working since: ${hours}h ${minutes}m ${seconds}s`;
-
-}
-
-// run
-setInterval(updateTimer,1000);
-updateTimer();
-
-</script>
-
-</body>
+  
+  <h3 id="timerText">⏳ Loading...</h3>  
+  
+  <div class="loader">  
+    <span></span>  
+  </div>  
+  
+</div>  
+  
+<script>  
+  
+if(!localStorage.getItem("startTime")){  
+  localStorage.setItem("startTime", new Date().getTime());  
+}  
+  
+const startTime = parseInt(localStorage.getItem("startTime"));  
+  
+function updateTimer(){  
+  const now = new Date().getTime();  
+  const elapsed = now - startTime;  
+  
+  let hours = Math.floor(elapsed / (1000 * 60 * 60));  
+  let minutes = Math.floor((elapsed % (1000 * 60 * 60)) / (1000 * 60));  
+  let seconds = Math.floor((elapsed % (1000 * 60)) / 1000);  
+  
+  document.getElementById("timerText").innerText =  
+    `⏳ Working since: ${hours}h ${minutes}m ${seconds}s`;  
+}  
+  
+setInterval(updateTimer,1000);  
+updateTimer();  
+  
+</script>  
+  
+</body>  
 </html>
