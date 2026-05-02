@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The raazik resort - Aaoza Travel Kashmir</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+<style>
+:root{
+  --bg:#0a0a0d;
+  --card:#121218;
+  --card2:#181821;
+  --text:#f5f7fb;
+  --muted:#a8adbb;
+  --brand:#ff2d2d;
+  --brand2:#ff7a18;
+  --line:#262633;
+  --gold:#ffcc66;
+}
+
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:'Poppins',sans-serif;
+  background:
+    radial-gradient(circle at top, rgba(255,45,45,.16), transparent 35%),
+    linear-gradient(180deg,#09090d 0%, #0d0d12 100%);
+  color:var(--text);
+  overflow-x:hidden;
+}
+
+a{color:inherit;text-decoration:none}
+
+.header{
+  position:sticky;
+  top:0;
+  z-index:50;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  padding:14px 16px;
+  background:rgba(8,8,12,.82);
+  backdrop-filter:blur(14px);
+  border-bottom:1px solid rgba(255,255,255,.06);
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  min-width:0;
+}
+
+.brand img{
+  width:46px;
+  height:46px;
+  border-radius:14px;
+  object-fit:cover;
+  box-shadow:0 0 0 2px rgba(255,255,255,.08), 0 0 22px rgba(255,45,45,.25);
+}
+
+.brand-text{
+  min-width:0;
+}
+
+.brand-text h1{
+  margin:0;
+  font-size:16px;
+  line-height:1.1;
+  font-weight:800;
+  letter-spacing:.2px;
+}
+
+.brand-text p{
+  margin:3px 0 0;
+  font-size:12px;
+  color:var(--gold);
+  font-weight:600;
+}
+
+.contact-top{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  justify-content:flex-end;
+}
+
+.top-btn{
+  width:38px;
+  height:38px;
+  display:grid;
+  place-items:center;
+  border-radius:12px;
+  background:linear-gradient(135deg, rgba(255,45,45,.18), rgba(255,122,24,.14));
+  border:1px solid rgba(255,255,255,.08);
+  color:#fff;
+  transition:.25s transform,.25s background;
+}
+.top-btn:active{transform:scale(.95)}
+.top-btn:hover{background:linear-gradient(135deg, rgba(255,45,45,.30), rgba(255,122,24,.20))}
+
+.hero{
+  position:relative;
+  padding:14px 14px 8px;
+}
+
+.hero-shell{
+  overflow:hidden;
+  border-radius:24px;
+  background:#000;
+  border:1px solid rgba(255,255,255,.08);
+  box-shadow:0 18px 40px rgba(0,0,0,.45);
+}
+
+.hero-slider{
+  display:flex;
+  overflow-x:auto;
+  scroll-snap-type:x mandatory;
+  scroll-behavior:smooth;
+  -webkit-overflow-scrolling:touch;
+  scrollbar-width:none;
+}
+.hero-slider::-webkit-scrollbar{display:none}
+
+.hero-slide{
+  flex:0 0 100%;
+  min-width:100%;
+  height:290px;
+  position:relative;
+  scroll-snap-align:start;
+}
+
+.hero-slide img,
+.hero-slide video{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+}
+
+.hero-overlay{
+  position:absolute;
+  inset:auto 0 0 0;
+  padding:18px 16px 16px;
+  background:linear-gradient(180deg, transparent, rgba(0,0,0,.85));
+}
+
+.hero-overlay .name{
+  margin:0;
+  font-size:22px;
+  font-weight:800;
+  line-height:1.15;
+}
+
+.hero-overlay .tag{
+  margin:6px 0 0;
+  font-size:13px;
+  color:#ffd4c8;
+}
+
+.section{
+  padding:12px 14px 0;
+}
+
+.card{
+  background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:22px;
+  padding:14px;
+  box-shadow:0 12px 30px rgba(0,0,0,.22);
+}
+
+.title-row{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:10px;
+}
+
+.title-row h2{
+  margin:0;
+  font-size:22px;
+  font-weight:800;
+  line-height:1.2;
+}
+
+.badge{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding:8px 12px;
+  border-radius:999px;
+  background:rgba(255,45,45,.12);
+  color:#ffb0b0;
+  border:1px solid rgba(255,45,45,.28);
+  font-size:12px;
+  white-space:nowrap;
+}
+
+.subline{
+  margin:8px 0 0;
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.6;
+}
+
+.meta{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-top:14px;
+}
+
+.meta-item{
+  background:rgba(255,255,255,.03);
+  border:1px solid rgba(255,255,255,.06);
+  border-radius:16px;
+  padding:12px;
+}
+
+.meta-item .k{
+  display:block;
+  font-size:12px;
+  color:#babfca;
+  margin-bottom:4px;
+}
+
+.meta-item .v{
+  font-size:14px;
+  font-weight:700;
+}
+
+.chips{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:12px;
+}
+
+.chip{
+  padding:8px 12px;
+  border-radius:999px;
+  background:linear-gradient(135deg, rgba(255,45,45,.14), rgba(255,122,24,.12));
+  border:1px solid rgba(255,255,255,.08);
+  font-size:12px;
+  color:#ffe8e8;
+}
+
+.section-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin:4px 0 10px;
+}
+
+.section-head h3{
+  margin:0;
+  font-size:16px;
+  font-weight:800;
+}
+
+.section-head span{
+  color:var(--gold);
+  font-size:12px;
+  font-weight:600;
+}
+
+.scroller{
+  display:flex;
+  gap:12px;
+  overflow-x:auto;
+  scroll-snap-type:x mandatory;
+  padding-bottom:4px;
+  -webkit-overflow-scrolling:touch;
+  scrollbar-width:none;
+}
+.scroller::-webkit-scrollbar{display:none}
+
+.mini-card{
+  flex:0 0 82%;
+  max-width:82%;
+  scroll-snap-align:start;
+  background:var(--card);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:20px;
+  overflow:hidden;
+  box-shadow:0 10px 24px rgba(0,0,0,.25);
+}
+
+.mini-card img,
+.mini-card video{
+  width:100%;
+  height:170px;
+  object-fit:cover;
+  display:block;
+}
+
+.mini-card .txt{
+  padding:12px;
+}
+
+.mini-card .txt h4{
+  margin:0;
+  font-size:15px;
+  font-weight:800;
+}
+
+.mini-card .txt p{
+  margin:6px 0 0;
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.5;
+}
+
+.rates-wrap{
+  overflow:hidden;
+  border-radius:22px;
+  border:1px solid rgba(255,255,255,.08);
+  background:#fff;
+}
+
+.rates-wrap img{
+  width:100%;
+  display:block;
+}
+
+.gallery-grid{
+  display:grid;
+  grid-template-columns:repeat(2, 1fr);
+  gap:10px;
+}
+
+.photo{
+  position:relative;
+  overflow:hidden;
+  border-radius:18px;
+  background:#111;
+  border:1px solid rgba(255,255,255,.08);
+  aspect-ratio:1/1;
+  box-shadow:0 10px 24px rgba(0,0,0,.28);
+  cursor:pointer;
+}
+.photo img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+  transition:.3s transform;
+}
+.photo:active img{transform:scale(.97)}
+
+.social{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
+}
+
+.social a{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  padding:12px 10px;
+  border-radius:16px;
+  background:#11131a;
+  border:1px solid rgba(255,255,255,.08);
+  font-weight:700;
+  font-size:13px;
+}
+
+.social a i{font-size:16px}
+
+.footer-space{height:28px}
+
+.floating{
+  position:fixed;
+  right:14px;
+  bottom:14px;
+  z-index:60;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+.fab{
+  width:54px;
+  height:54px;
+  border-radius:18px;
+  display:grid;
+  place-items:center;
+  color:#fff;
+  box-shadow:0 12px 28px rgba(0,0,0,.35);
+  border:1px solid rgba(255,255,255,.1);
+}
+
+.wa{background:#25D366}
+.ig{background:linear-gradient(135deg,#f58529,#dd2a7b,#8134af)}
+.fb{background:#1877f2}
+.yt{background:#ff0000}
+
+.lightbox{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.92);
+  z-index:100;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+}
+.lightbox img{
+  width:100%;
+  max-width:520px;
+  max-height:86vh;
+  object-fit:contain;
+  border-radius:18px;
+  box-shadow:0 20px 60px rgba(0,0,0,.5);
+}
+
+.close{
+  position:absolute;
+  top:18px;
+  right:18px;
+  width:42px;
+  height:42px;
+  border:none;
+  border-radius:50%;
+  background:rgba(255,255,255,.12);
+  color:#fff;
+  font-size:18px;
+  z-index:101;
+}
+
+@media (min-width:768px){
+  .hero-slide{height:380px}
+  .mini-card{flex-basis:42%;max-width:42%}
+  .gallery-grid{grid-template-columns:repeat(4,1fr)}
+  .social{grid-template-columns:repeat(4,1fr)}
+  .title-row h2{font-size:28px}
+}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <a class="brand" href="#">
+    <img src="raaziklogo.png" alt="The raazik resort">
+    <div class="brand-text">
+      <h1>The raazik resort</h1>
+      <p>Hotel & resort</p>
+    </div>
+  </a>
+
+  <div class="contact-top">
+    <a class="top-btn" href="tel:+917051932522" aria-label="Call"><i class="fa-solid fa-phone"></i></a>
+    <a class="top-btn" href="https://wa.me/917051932522" target="_blank" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-shell">
+    <div class="hero-slider" id="heroSlider">
+      <div class="hero-slide">
+        <img src="raazik1.jpg" alt="Hilltop Banner 1">
+        <div class="hero-overlay">
+          <h2 class="name">The raazik resort</h2>
+          <p class="tag">Luxury stay in Pahalgam</p>
+        </div>
+      </div>
+
+      <div class="hero-slide">
+        <img src="razeek3.jpg" alt="Hilltop Banner 2">
+        <div class="hero-overlay">
+          <h2 class="name">Premium Rooms</h2>
+          <p class="tag">Comfort, view, and elegance</p>
+        </div>
+      </div>
+
+      <div class="hero-slide">
+        <video autoplay muted loop playsinline>
+          <source src="hiltop.mp4" type="video/mp4">
+        </video>
+        <div class="hero-overlay">
+          <h2 class="name">Hotel Experience</h2>
+          <p class="tag">Swipe for rooms, food and gallery</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="card">
+    <div class="title-row">
+      <div>
+        <h2>The raazik resort</h2>
+        <div class="subline">Premium hotel detail page with rooms, food, gallery and booking info.</div>
+      </div>
+      <div class="badge"><i class="fa-solid fa-star"></i> Luxury Stay</div>
+    </div>
+
+    <div class="meta">
+      <div class="meta-item">
+        <span class="k">Location</span>
+        <span class="v">Lidroo Pahalgam, jammu and kashmir, Anatnag, jammu and kashmir 192126</span>
+      </div>
+      <div class="meta-item">
+        <span class="k">Contact</span>
+        <span class="v">+91 8899912611 </span>
+      </div>
+      <div class="meta-item">
+        <span class="k">Check-in</span>
+        <span class="v">3:00 PM</span>
+      </div>
+      <div class="meta-item">
+        <span class="k">Check-out</span>
+        <span class="v">12:00 PM</span>
+      </div>
+    </div>
+
+    <div class="chips">
+      <span class="chip">Room Service</span>
+      <span class="chip">Wi-Fi</span>
+      <span class="chip">Parking</span>
+      <span class="chip">Food Dining</span>
+      <span class="chip">Family Friendly</span>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-head">
+    <h3>Rooms</h3>
+    <span>Swipe horizontally</span>
+  </div>
+
+  <div class="scroller" id="roomFoodSlider">
+    
+    <div class="mini-card">
+      <img src="raazik1.jpg" alt="The Raazik Resorts">
+      <div class="txt">
+        <h4> The Raazik Resorts</h4>
+        <p>beautiful view and luxury room dinner break fast all of avlable .</p>
+      </div>
+    </div>
+    
+        <div class="mini-card">
+      <img src="razeek5.jpg" alt="Family Room">
+      <div class="txt">
+        <h4> Super Delux Room </h4>
+        <p>spend your comfortable holiday innthehearts of the beautiful Pahalgam.</p>
+      </div>
+    </div>
+    
+    
+    <div class="mini-card">
+      <img src="razeek4.jpg" alt="Deluxe Room">
+      <div class="txt">
+        <h4> Deluxe Room</h4>
+        <p>Elegant room with valley view, attached bathroom and premium comfort.</p>
+      </div>
+    </div>
+
+
+    <div class="mini-card">
+      <img src="razeek9.jpg" alt="WashRoom">
+      <div class="txt">
+        <h4> WashRoom</h4>
+        <p>Beast and clean washrooms.</p>
+      </div>
+    </div>
+
+    
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-head">
+    <h3>Room Rates</h3>
+    <span>Tap to zoom</span>
+  </div>
+
+<div class="rates-wrap" style="overflow-x:auto; border-radius:12px; box-shadow:0 5px 15px rgba(0,0,0,0.2); margin-bottom:20px;">
+
+  <!-- 🔥 HOTEL NAME TOP -->
+  <div style="background:linear-gradient(90deg,#ff0000,#ff3c00); color:#fff; padding:12px; font-size:16px; font-weight:bold; text-align:center;">
+    Raazik Resort Pahalgam
+  </div>
+
+  <table style="width:100%; border-collapse:collapse; font-size:13px; color:#000;">
+    
+    <thead>
+      <tr style="background:#111; color:#fff;">
+        <th style="padding:10px; border:1px solid #ddd;">Meal Plan</th>
+        <th style="padding:10px; border:1px solid #ddd;">Deluxe Block</th>
+        <th style="padding:10px; border:1px solid #ddd;">Premium Block</th>
+        <th style="padding:10px; border:1px solid #ddd;">Extra Bed</th>
+        <th style="padding:10px; border:1px solid #ddd;">CNB</th>
+      </tr>
+    </thead>
+
+    <tbody style="background:#fff;">
+      <tr>
+        <td style="padding:10px; border:1px solid #ddd;">MAP</td>
+        <td style="padding:10px; border:1px solid #ddd;">₹3000</td>
+        <td style="padding:10px; border:1px solid #ddd;">₹4000</td>
+        <td style="padding:10px; border:1px solid #ddd;">₹800</td>
+        <td style="padding:10px; border:1px solid #ddd;">₹1200</td>
+      </tr>
+
+      <tr>
+        <td style="padding:10px; border:1px solid #ddd;">CP</td>
+        <td style="padding:10px; border:1px solid #ddd;">₹3500</td>
+        <td style="padding:10px; border:1px solid #ddd;">₹5000</td>
+        <td style="padding:10px; border:1px solid #ddd;">₹800</td>
+        <td style="padding:10px; border:1px solid #ddd;">—</td>
+      </tr>
+
+      <tr>
+        <td style="padding:10px; border:1px solid #ddd;">EP</td>
+        <td style="padding:10px; border:1px solid #ddd;">₹2500</td>
+        <td style="padding:10px; border:1px solid #ddd;">₹3000</td>
+        <td style="padding:10px; border:1px solid #ddd;">₹500</td>
+        <td style="padding:10px; border:1px solid #ddd;">—</td>
+      </tr>
+    </tbody>
+
+  </table>
+
+  <div style="padding:10px; font-size:12px; color:#666; text-align:center;">
+    Rates From 01 Jan 2026 to 31 July 2026
+  </div>
+
+</div>
+
+
+
+
+</section>
+
+<section class="section">
+  <div class="section-head">
+    <h3>Hotel Gallery</h3>
+    <span>Tap any photo</span>
+  </div>
+
+  <div class="gallery-grid" id="galleryGrid"></div>
+</section>
+
+<section class="section">
+  <div class="section-head">
+    <h3>Connect With Us</h3>
+    <span>Official links</span>
+  </div>
+
+  <div class="social">
+    <a href="https://wa.me/917051932522" target="_blank"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
+    <a href="https://instagram.com/" target="_blank"><i class="fa-brands fa-instagram"></i> Instagram</a>
+    <a href="https://facebook.com/" target="_blank"><i class="fa-brands fa-facebook"></i> Facebook</a>
+    <a href="https://youtube.com/" target="_blank"><i class="fa-brands fa-youtube"></i> YouTube</a>
+  </div>
+</section>
+
+<div class="footer-space"></div>
+
+<div class="floating">
+  <a class="fab wa" href="https://wa.me/918899912611" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
+  <a class="fab ig" href="https://instagram.com/" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+  <a class="fab fb" href="https://facebook.com/" target="_blank"><i class="fa-brands fa-facebook-f"></i></a>
+  <a class="fab yt" href="https://youtube.com/" target="_blank"><i class="fa-brands fa-youtube"></i></a>
+</div>
+
+<div class="lightbox" id="lightbox">
+  <button class="close" id="closeLightbox">×</button>
+  <img id="lightboxImg" src="" alt="Preview">
+</div>
+
+<script>
+const heroSlider = document.getElementById("heroSlider");
+let heroIndex = 0;
+
+setInterval(() => {
+  heroIndex++;
+  const max = heroSlider.children.length - 1;
+  if (heroIndex > max) heroIndex = 0;
+  heroSlider.scrollTo({
+    left: heroSlider.clientWidth * heroIndex,
+    behavior: "smooth"
+  });
+}, 3500);
+
+const galleryImages = [
+  "razeek3.jpg",
+  "razeek4.jpg",
+  "razeek5.jpg",
+  "razeek6.jpg",
+  "razeek7.jpg",
+  "razeek8.jpg",
+  "razeek9.jpg",
+  "razeek10.jpg",
+  "razeek11.jpg",
+  "razeek12.jpg"
+];
+
+const galleryGrid = document.getElementById("galleryGrid");
+const lightbox = document.getElementById("lightbox");
+const lightboxImg = document.getElementById("lightboxImg");
+const closeLightbox = document.getElementById("closeLightbox");
+
+galleryImages.forEach((src, i) => {
+  const box = document.createElement("div");
+  box.className = "photo";
+  box.innerHTML = `<img src="${src}" alt="Hotel photo ${i+1}">`;
+  box.addEventListener("click", () => {
+    lightboxImg.src = src;
+    lightbox.style.display = "flex";
+  });
+  galleryGrid.appendChild(box);
+});
+
+closeLightbox.addEventListener("click", () => {
+  lightbox.style.display = "none";
+  lightboxImg.src = "";
+});
+
+lightbox.addEventListener("click", (e) => {
+  if (e.target === lightbox) {
+    lightbox.style.display = "none";
+    lightboxImg.src = "";
+  }
+});
+</script>
+
+</body>
+</html>
