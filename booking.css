@@ -6,28 +6,23 @@ body{
   color:#111;
   padding:15px;
 
-  /* 🔥 WATERMARK */
   background-image: url('logo.jpg');
   background-repeat: no-repeat;
   background-position: center;
-  background-size: 250px;
+  background-size: 220px;
   background-attachment: fixed;
 }
 
-/* WATERMARK LIGHT EFFECT */
 body::before{
   content:"";
   position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
+  inset:0;
   background:white;
-  opacity:0.9;
+  opacity:0.92;
   z-index:-1;
 }
 
-/* 🔙 ALL BUTTON RESET */
+/* 🔙 BUTTON RESET */
 button{
   cursor:pointer;
   border:none;
@@ -41,11 +36,11 @@ h1{
   color:#dc2626;
 }
 
-/* 🔹 SECTION TITLE */
+/* 🔹 SECTION */
 h2{
   margin-top:25px;
   margin-bottom:10px;
-  font-size:18px;
+  font-size:17px;
   color:#dc2626;
 }
 
@@ -54,85 +49,80 @@ h2{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  background:#ffe4e6;
-  padding:12px;
+  background:#fff1f2;
+  padding:10px 12px;
   border-radius:10px;
   margin-bottom:10px;
   border:1px solid #fecaca;
 }
 
-/* ➕➖ BUTTON (ONLY COUNTER BUTTONS) */
-.row button:not(#deluxeBtn):not(#standardBtn){
-  width:30px;
-  height:30px;
+/* ➕➖ COUNTER BUTTON */
+.row button:not(.room-btn){
+  width:28px;
+  height:28px;
   border-radius:6px;
   background:#dc2626;
   color:white;
-  font-size:18px;
+  font-size:16px;
 }
 
-/* COUNT TEXT */
+/* TEXT */
 .row span{
-  margin:0 10px;
-  font-weight:bold;
-  color:#111;
+  font-weight:600;
+  font-size:14px;
 }
 
-/* 👤 TRAVELLER BOX */
+/* 👤 TRAVELLER */
 .traveller{
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:8px;
-  background:#ffe4e6;
+  background:#fff1f2;
   padding:10px;
   border-radius:10px;
   margin-bottom:10px;
   border:1px solid #fecaca;
 }
 
-/* INPUT */
 .traveller input,
 .traveller select{
   padding:8px;
   border-radius:6px;
-  background:white;
   border:1px solid #fca5a5;
-  color:#111;
   font-size:14px;
 }
 
-/* PLACEHOLDER */
 ::placeholder{
   color:#9ca3af;
 }
 
-/* 💰 TOTAL BOX */
+/* 💰 TOTAL */
 #totalBox{
   background:#dc2626;
   color:white;
-  padding:15px;
+  padding:14px;
   border-radius:12px;
   text-align:center;
   margin-top:20px;
-  font-size:20px;
+  font-size:18px;
 }
 
-/* ✅ CONFIRM BUTTON */
+/* ✅ CONFIRM */
 button[onclick="saveBooking()"]{
   width:100%;
   margin-top:15px;
-  padding:15px;
+  padding:14px;
   border-radius:12px;
   background:#dc2626;
   color:white;
-  font-size:16px;
+  font-size:15px;
   font-weight:bold;
 }
 
-/* 🔙 BACK BUTTON */
+/* 🔙 BACK */
 button:first-child{
   background:#dc2626;
-  padding:8px 12px;
+  padding:7px 12px;
   border-radius:8px;
   color:white;
   margin-bottom:10px;
@@ -145,61 +135,66 @@ button:first-child{
   }
 }
 
-/* ================= ALERT ================= */
-
-.top-alert{
-  position:fixed;
-  top:-120px;
-  left:50%;
-  transform:translateX(-50%) scale(0.9);
-  padding:14px 20px;
-  border-radius:16px;
-  z-index:9999;
-  transition:all 0.4s ease;
-  font-size:14px;
-  backdrop-filter: blur(12px);
-  box-shadow:0 8px 25px rgba(0,0,0,0.15);
-  opacity:0;
-  min-width:260px;
-  max-width:90%;
-}
-
-.top-alert.show{
-  top:20px;
-  transform:translateX(-50%) scale(1);
-  opacity:1;
-}
-
-/* SUCCESS */
-.top-alert.success{
-  background:linear-gradient(135deg,#d1fae5,#bbf7d0);
-  color:#065f46;
-  border:1px solid rgba(34,197,94,0.2);
-  box-shadow:0 10px 30px rgba(34,197,94,0.25);
-}
-
-/* ERROR */
-.top-alert.error{
-  background:linear-gradient(135deg,#fee2e2,#fecaca);
-  color:#7f1d1d;
-  border:1px solid rgba(239,68,68,0.2);
-  box-shadow:0 10px 30px rgba(239,68,68,0.25);
-}
-
-/* ALERT CONTENT */
-.alert-content{
+/* ✅ ROOM BUTTON FIX */
+/* ❌ REMOVE ANY RED BACKGROUND FROM ROOM BUTTON */
+.room-btn{
+  background:transparent !important;
+  border:none;
+  padding:0;
   display:flex;
   align-items:center;
-  gap:12px;
+  justify-content:center;
 }
 
-.alert-content svg{
-  width:30px;
-  height:30px;
+/* 🔲 NORMAL TICK (BLACK BORDER) */
+.tick{
+  width:20px;
+  height:20px;
+  border:2px solid #333; /* black border */
+  border-radius:5px;
+  position:relative;
+  transition:0.25s;
+  background:transparent;
 }
 
-.alert-content span{
-  font-weight:500;
+/* 🔵 ACTIVE (BLUE STYLE) */
+.tick.active{
+  background:#2563eb;   /* blue */
+  border-color:#2563eb;
+}
+
+/* ✔ ICON */
+.tick.active::after{
+  content:"";
+  position:absolute;
+  left:5px;
+  top:2px;
+  width:5px;
+  height:10px;
+  border:solid white;
+  border-width:0 2px 2px 0;
+  transform:rotate(45deg);
+}
+
+/* 🔥 HOVER (SMOOTH EFFECT) */
+.tick:hover{
+  border-color:#2563eb;
+}
+
+/* ================= VIEW BUTTON ================= */
+
+.view-btn{
+  margin-left:8px;
+  padding:5px 10px;
+  background:#111;
+  color:#fff;
+  border-radius:6px;
+  font-size:11px;
+  text-decoration:none;
+}
+
+.view-btn:hover{
+  background:#333;
 }
 
 /* ================= COUPON ================= */
@@ -218,69 +213,54 @@ button:first-child{
 }
 
 .coupon-box button{
-  padding:10px 15px;
+  padding:10px 14px;
   background:#22c55e;
   color:white;
   border-radius:10px;
 }
 
-/* ================= TICK BUTTON ================= */
+/* ================= ALERT ================= */
 
-/* remove red box */
-#deluxeBtn,
-#standardBtn{
-  background:none;
-  padding:0;
+.top-alert{
+  position:fixed;
+  top:-80px;
+  left:50%;
+  transform:translateX(-50%);
+  padding:10px 14px;
+  border-radius:12px;
+  z-index:9999;
+  transition:all 0.35s ease;
+  font-size:13px;
+  box-shadow:0 6px 18px rgba(0,0,0,0.12);
+  opacity:0;
+  min-width:200px;
 }
 
-/* tick box */
-.tick{
-  display:inline-block;
-  width:22px;
-  height:22px;
-  border:2px solid #ccc;
-  border-radius:6px;
-  position:relative;
-  transition:0.3s;
+.top-alert.show{
+  top:15px;
+  opacity:1;
 }
 
-/* active */
-.tick.active{
-  background:#22c55e;
-  border-color:#22c55e;
+/* SUCCESS */
+.top-alert.success{
+  background:#dcfce7;
+  color:#166534;
 }
 
-/* ✔ icon */
-.tick.active::after{
-  content:"";
-  position:absolute;
-  left:6px;
-  top:3px;
-  width:6px;
-  height:12px;
-  border:solid white;
-  border-width:0 2px 2px 0;
-  transform:rotate(45deg);
+/* ERROR */
+.top-alert.error{
+  background:#fee2e2;
+  color:#991b1b;
 }
 
-/* 🔥 hover effect (premium feel) */
-.tick:hover{
-  border-color:#22c55e;
+/* ALERT CONTENT */
+.alert-content{
+  display:flex;
+  align-items:center;
+  gap:8px;
 }
 
-
-.view-btn {
-  display: inline-block;
-  margin-left: 10px;
-  padding: 6px 12px;
-  background: #111;
-  color: #fff;
-  border-radius: 6px;
-  font-size: 12px;
-  text-decoration: none;
-  transition: 0.3s;
-}
-
-.view-btn:hover {
-  background: #333;
+.alert-content svg{
+  width:20px;
+  height:20px;
 }
