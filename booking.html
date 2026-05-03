@@ -53,67 +53,13 @@
 
 <div id="travellerRows"></div>
 
-<!-- 🏨 ROOMS -->
 <h2>Rooms</h2>
 
 <p style="color:gray;font-size:13px">
 *Note: These prices are for 4 Nights stay
 </p>
 
-<!-- DELUXE -->
-<div class="row">
-<span>
-  Deluxe • 4/N ₹59,999
-</span>
-<div>
-
-<!-- DELUXE -->
-<button id="deluxeBtn" onclick="toggleRoom('deluxe')">
-  <span class="tick"></span>
-</button>
-
-<!-- ✅ ADD THIS -->
-<a href="viewdetail.html" class="view-btn">View Details</a>
-
-</div>
-</div>
-
-<div class="row">
-<span>Extra Room ₹29,999</span>
-<div>
-<button onclick="changeExtra('deluxe',-1)">-</button>
-<span id="deluxeExtra">0</span>
-<button onclick="changeExtra('deluxe',1)">+</button>
-</div>
-</div>
-
-<hr>
-
-<!-- STANDARD -->
-<div class="row">
-<span>
-  Standard • 4/N ₹89,999
-</span>
-<div>
-<!-- STANDARD -->
-<button id="standardBtn" onclick="toggleRoom('standard')">
-  <span class="tick"></span>
-</button>
-
-<!-- ✅ ADD THIS -->
-<a href="viewdetail2.html" class="view-btn">View Details</a>
-
-</div>
-</div>
-
-<div class="row">
-<span>Extra Room ₹19,999</span>
-<div>
-<button onclick="changeExtra('standard',-1)">-</button>
-<span id="standardExtra">0</span>
-<button onclick="changeExtra('standard',1)">+</button>
-</div>
-</div>
+<div id="roomsContainer"></div>
 
 
 
@@ -137,6 +83,64 @@
 <script src="supabase.js"></script>
 
 <script>
+  
+  let roomPrices = {}
+
+async function loadRoomPrices(){
+
+  const { data, error } = await supabaseClient
+    .from("rooms")
+    .select("*")
+
+  if(error){
+    console.log("Room fetch error:", error)
+    return
+  }
+
+  let container = document.getElementById("roomsContainer")
+  container.innerHTML = ""
+
+  data.forEach((room, index)=>{
+
+    roomPrices[room.room_type] = room
+    selectedRooms[room.room_type] = false
+
+    container.innerHTML += `
+
+    <div class="row">
+      <span>
+        ${room.room_type.toUpperCase()} • ${room.nights} Nights ₹${room.price}
+      </span>
+
+      <div>
+
+        <!-- BUTTON -->
+        <button class="room-btn" onclick="toggleRoom('${room.room_type}')">
+          <span class="tick" id="${room.room_type}Tick"></span>
+        </button>
+
+        <!-- VIEW DETAILS -->
+        <a href="viewdetail${index+1}.html" class="view-btn">
+          View Details
+        </a>
+
+      </div>
+    </div>
+
+    <div class="row">
+      <span>Extra Room ₹${room.extra_price}</span>
+      <div>
+        <button onclick="changeExtra('${room.room_type}',-1)">-</button>
+        <span id="${room.room_type}Extra">0</span>
+        <button onclick="changeExtra('${room.room_type}',1)">+</button>
+      </div>
+    </div>
+
+    <hr>
+    `
+  })
+}
+  
   
   let discountAmount = 0
 let couponApplied = false
@@ -191,15 +195,12 @@ let packageTotal = price * paying
 
 let total = packageTotal
 
-if(selectedRooms.deluxe){
-  total += 59999
-  total += (+deluxeExtra.innerText) * 29999
-}
-
-if(selectedRooms.standard){
-  total += 89999
-  total += (+standardExtra.innerText) * 19999
-}
+Object.keys(selectedRooms).forEach(type=>{
+  if(selectedRooms[type] && roomPrices[type]){
+    total += roomPrices[type].price
+    total += (+document.getElementById(type+"Extra").innerText) * roomPrices[type].extra_price
+  }
+})
 
 discountAmount = Math.floor((total * percent)/100)
 
@@ -352,16 +353,12 @@ let packageTotal = price * paying
 let total = packageTotal
 
 // DELUXE
-if(selectedRooms.deluxe){
-  total += 59999
-  total += (+deluxeExtra.innerText) * 29999
-}
-
-// STANDARD
-if(selectedRooms.standard){
-  total += 89999
-  total += (+standardExtra.innerText) * 19999
-}
+Object.keys(selectedRooms).forEach(type=>{
+  if(selectedRooms[type] && roomPrices[type]){
+    total += roomPrices[type].price
+    total += (+document.getElementById(type+"Extra").innerText) * roomPrices[type].extra_price
+  }
+})
 
 let finalTotal = total - discountAmount
 if(finalTotal < 0) finalTotal = 0
@@ -439,20 +436,20 @@ let packageTotal = packagePrice * paying
 
 let total = packageTotal
 
-if(selectedRooms.deluxe){
-  total += 59999
-  total += (+deluxeExtra.innerText) * 29999
-}
-
-if(selectedRooms.standard){
-  total += 89999
-  total += (+standardExtra.innerText) * 19999
-}
+Object.keys(selectedRooms).forEach(type=>{
+  if(selectedRooms[type] && roomPrices[type]){
+    total += roomPrices[type].price
+    total += (+document.getElementById(type+"Extra").innerText) * roomPrices[type].extra_price
+  }
+})
 let finalTotal = total - discountAmount
 if(finalTotal < 0) finalTotal = 0
 
 // room check
-if(!selectedRooms.deluxe && !selectedRooms.standard){
+// room check (FIXED)
+let anyRoomSelected = Object.values(selectedRooms).some(v => v === true)
+
+if(!anyRoomSelected){
   showAlert("Please select at least 1 room 🏨","error")
   return
 }
@@ -460,12 +457,17 @@ if(!selectedRooms.deluxe && !selectedRooms.standard){
   
 
 // traveller check
-for(let t of travellers){
+// EMPTY travellers remove karo
+travellers = travellers.filter(t => t.name && t.name.trim() !== "")
 
-  if(!t.name || t.name.trim() === ""){
-    showAlert("Enter traveller name ❗","error")
-    return
-  }
+// check at least 1 traveller
+if(travellers.length === 0){
+  showAlert("Enter at least 1 traveller ❗","error")
+  return
+}
+
+// validation
+for(let t of travellers){
 
   if(!t.gender){
     showAlert("Select gender ❗","error")
@@ -477,12 +479,16 @@ for(let t of travellers){
     return
   }
 
-  if(t.age > 2 && (!t.phone || t.phone.trim() === "")){
-    showAlert("Phone number required 📱","error")
-    return
+  if(t.age > 2){
+    if(!t.phone || t.phone.trim() === ""){
+      showAlert("Phone number required 📱","error")
+      return
+    }
   }
 
 }
+
+
 
 // ❌ VALIDATION END
 
@@ -498,10 +504,16 @@ package_price:packagePrice,
 traveller_details: JSON.stringify({
   travellers: travellers,
   package_details: packageDetails,
-  deluxe:selectedRooms.deluxe,
-  standard:selectedRooms.standard,
-  deluxe_extra:+deluxeExtra.innerText,
-  standard_extra:+standardExtra.innerText
+  rooms: Object.keys(selectedRooms).map(type => ({
+  type: type,
+  selected: selectedRooms[type],
+
+  // 🔥 SAVE PRICE SNAPSHOT
+  price: roomPrices[type]?.price || 0,
+  extra_price: roomPrices[type]?.extra_price || 0,
+
+  extra: +(document.getElementById(type+"Extra")?.innerText || 0)
+}))
 }),
 
 adults,
@@ -523,9 +535,12 @@ if(error){
 
 // 🔊 SUCCESS SOUND PLAY
 let successSound = document.getElementById("successSound")
+
 if(successSound){
   successSound.currentTime = 0
-  successSound.play()
+  successSound.play().catch(err=>{
+    console.log("Sound blocked:", err)
+  })
 }
 
 showAlert("Booking Sent Successfully 🎉","success")
@@ -545,14 +560,12 @@ function toggleRoom(type){
 
   selectedRooms[type] = !selectedRooms[type]
 
-  let tick = document.querySelector("#"+type+"Btn .tick")
+  let tick = document.getElementById(type+"Tick")
 
   if(selectedRooms[type]){
     tick.classList.add("active")
   }else{
     tick.classList.remove("active")
-
-    // reset extra
     document.getElementById(type+"Extra").innerText = 0
   }
 
@@ -585,9 +598,10 @@ function changeExtra(type,val){
 // INIT
 updateTravellers()
 calculateTotal()
-
+loadRoomPrices()
 </script>
 
 
 </body>
 </html>
+
