@@ -58,8 +58,35 @@ let details = parsed.package_details || {}
 let validTravellers = travellers.filter(t => Number(t.age) > 1)
 
 // 🏨 ROOMS FIX
-let singleRoom = parsed.single_room || b.single_room || 0
-let doubleRoom = parsed.double_room || b.double_room || 0
+let rooms = parsed.rooms || []
+
+let roomsHtml = rooms
+  .filter(r => r.selected)
+  .map(r => {
+
+    let base = r.price || 0
+    let extraPrice = r.extra_price || 0
+    let extra = r.extra || 0
+
+    let extraTotal = extra * extraPrice
+    let total = base + extraTotal
+
+    return `
+    <div style="margin-bottom:10px">
+      <b>${r.type.toUpperCase()}</b><br>
+
+      Room Price: ₹${base}<br>
+
+      ${extra > 0 ? `
+        Extra Rooms: ${extra} × ₹${extraPrice} = ₹${extraTotal}<br>
+      ` : ""}
+
+      <b>Total Room: ₹${total}</b>
+    </div>
+    `
+  })
+  .join("")
+
 
 // ===============================
 // 👨‍✈️ GUIDE (OPTIMIZED)
@@ -280,8 +307,7 @@ ${validTravellers.map(t=>`
 `).join("")}
 
 <div class="section-title">🏨 Rooms</div>
-<div>Single: ${singleRoom}</div>
-<div>Double: ${doubleRoom}</div>
+${roomsHtml || "<div>No rooms selected</div>"}
 
 ${guideHtml}
 ${cabHtml}
