@@ -326,7 +326,7 @@ ${b.coupon_code ? `
   </div>
 
   <div style="color:#16a34a;font-weight:600">
-    🎁 ${b.coupon_code} (${b.coupon_percent || 0}%) applied
+    🎁 ${b.coupon_code} Applied
   </div>
 
   <div style="color:#dc2626;font-size:14px">
