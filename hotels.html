@@ -3,24 +3,83 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Hotels - Aaoza Travel</title>
 
 <style>
+
+/* 🌌 BODY */
 body{
   margin:0;
   font-family:'Segoe UI',sans-serif;
-  background:linear-gradient(180deg,#0a0a0a,#111);
+  background:#0b0b0b; /* 🔥 dark premium */
   color:white;
+  overflow-x:hidden;
 }
 
-/* 🔥 HEADER */
+/* ✨ ANIMATED GLOW LINES */
+body::after{
+  content:"";
+  position:fixed;
+  width:200%;
+  height:200%;
+  top:-50%;
+  left:-50%;
+  
+  background:repeating-linear-gradient(
+  120deg,
+  rgba(0, 170, 255, 0.12) 0px,
+  rgba(0, 170, 255, 0.12) 2px,
+  transparent 2px,
+  transparent 35px
+);
+
+  animation:moveLines 8s linear infinite;
+  z-index:0;
+  pointer-events:none;
+}
+
+/* 🌟 EXTRA GLOW EFFECT */
+body::before{
+  content:"";
+  position:fixed;
+  width:100%;
+  height:100%;
+  background:radial-gradient(circle at center, rgba(255,255,255,0.05), transparent 70%);
+  z-index:0;
+}
+
+/* 🔄 ANIMATION */
+@keyframes moveLines{
+  0%{transform:translate(0,0);}
+  100%{transform:translate(150px,150px);}
+}
+
+/* 🌊 WATERMARK */
+body::before{
+  content:"";
+  position:fixed;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  width:280px;
+  height:280px;
+  background:url('watermark.png') no-repeat center;
+  background-size:contain;
+  opacity:0.04;
+  z-index:0;
+}
+
+/* HEADER */
 .header{
   display:flex;
-  justify-content:space-between;
   align-items:center;
   padding:12px;
-  background:#000;
-  border-bottom:1px solid rgba(255,0,0,0.3);
+  background:rgba(0,0,0,0.6);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid rgba(255,255,255,0.1);
+  position:relative;
+  z-index:2;
 }
 
 .logo{
@@ -34,9 +93,11 @@ body{
   border-radius:10px;
 }
 
-/* 🔍 SEARCH */
+/* SEARCH */
 .search-box{
   padding:10px;
+  position:relative;
+  z-index:2;
 }
 
 .search-box input{
@@ -44,16 +105,17 @@ body{
   padding:12px;
   border:none;
   border-radius:10px;
-  outline:none;
   background:#1a1a1a;
   color:white;
 }
 
-/* 🔥 SLIDER */
+/* SLIDER */
 .slider{
   overflow:hidden;
   margin:10px;
   border-radius:15px;
+  position:relative;
+  z-index:2;
 }
 
 .slides{
@@ -76,22 +138,25 @@ body{
   position:absolute;
   bottom:15px;
   left:15px;
-  background:rgba(0,0,0,0.7);
+  background:rgba(0,0,0,0.6);
   padding:8px 14px;
   border-radius:10px;
 }
 
-/* 🔥 HOTEL */
+/* HOTEL CARD */
 .container{
   padding:10px;
+  position:relative;
+  z-index:2;
 }
 
 .card{
-  background:#111;
+  background:rgba(255,255,255,0.05);
+  backdrop-filter:blur(12px);
   border-radius:15px;
   margin-bottom:15px;
   overflow:hidden;
-  box-shadow:0 10px 20px rgba(255,0,0,0.2);
+  border:1px solid rgba(255,255,255,0.1);
 }
 
 .card img{
@@ -104,87 +169,36 @@ body{
   padding:12px;
 }
 
-.card h3{
-  margin:5px 0;
-}
-
 .card p{
   color:#ccc;
-  font-size:13px;
 }
 
-/* 🔘 BUTTON */
+/* CALL BUTTONS */
+.call-buttons{
+  display:flex;
+  gap:8px;
+  margin-top:10px;
+}
+
+.call-btn{
+  flex:1;
+  padding:8px;
+  font-size:12px;
+  border:none;
+  background:#008cff;
+  color:white;
+  border-radius:8px;
+}
+
+/* VIEW BUTTON */
 .btn{
   margin-top:10px;
   padding:10px;
   width:100%;
   border:none;
-  background:red;
+  background:#ff3b3b;
   color:white;
   border-radius:10px;
-}
-
-/* 🌐 SOCIAL ICONS */
-.social{
-  display:flex;
-  gap:10px;
-  margin-top:10px;
-}
-
-.icon{
-  width:35px;
-  height:35px;
-  border-radius:50%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  border:1px solid rgba(255,255,255,0.2);
-}
-
-/* FLOAT BUTTON */
-.floating{
-  position:fixed;
-  bottom:15px;
-  right:15px;
-}
-
-.floating a{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  width:55px;
-  height:55px;
-  border-radius:50%;
-  background:#25D366;
-}
-
-.back-btn{
-  position: fixed;
-  top: 70px;   /* ⬅️ yahan adjust kiya (logo ke neeche) */
-  left: 12px;
-  width: 40px;
-  height: 40px;
-
-  border-radius: 50%;
-  border: 1px solid rgba(255,255,255,0.4);
-
-  background: rgba(255,255,255,0.15);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-
-  color: #fff;
-  font-size: 18px;
-  font-weight: 600;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  z-index: 9999;
-  cursor: pointer;
-
-  box-shadow: 0 6px 18px rgba(0,0,0,0.25);
-  transition: all 0.2s ease;
 }
 
 </style>
@@ -208,6 +222,7 @@ body{
 <!-- SLIDER -->
 <div class="slider">
   <div class="slides" id="slides">
+
     <div class="slide">
       <img src="razeek3.jpg">
       <h2>Raazik Resort</h2>
@@ -215,120 +230,120 @@ body{
 
     <div class="slide">
       <img src="pine1.jpg">
-      <h2>Pine Palace Resorts & Pine Palace Platinum</h2>
+      <h2>Pine Palace</h2>
     </div>
+
   </div>
 </div>
 
 <!-- HOTELS -->
-<div class="container" id="hotelList">
+<div class="container">
 
-  <!-- HOTEL -->
-  <div class="card" data-name="raazik">
-    <img src="raazik1.jpg">
-    <div class="card-content">
-      <h3>Raazik Resort</h3>
-      <p>📍 Pahalgam</p>
-      <p>📞 8899912611</p>
+<div class="card" data-name="raazik">
+  <img src="raazik1.jpg">
+  <div class="card-content">
+    <h3>Raazik Resort</h3>
+<p style="display:flex;align-items:center;gap:6px;">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="#00aaff">
+    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 
+    9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 
+    1.12 2.5 2.5S13.38 11.5 12 11.5z"/>
+  </svg>
+  Pahalgam
+</p>
 
-      <!-- SOCIAL -->
-      <div class="social">
-
-        <!-- WhatsApp SVG -->
-        <a class="icon" href="https://wa.me/918899912611">
-          <svg width="20" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24">
-            <path d="M21 12a9 9 0 1 0-4 7.5L21 21l-1.5-4A9 9 0 0 0 21 12z"/>
-          </svg>
+    <div class="call-buttons">
+      <a href="tel:+919186182238">
+<button class="call-btn">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="#fff">
+    <path d="M6.62 10.79a15.05 15.05 0 006.59 
+    6.59l2.2-2.2a1 1 0 011-.24 
+    11.36 11.36 0 003.57.57 1 1 0 
+    011 1v3.5a1 1 0 01-1 1A17.5 
+    17.5 0 012 5a1 1 0 011-1H6.5a1 
+    1 0 011 1c0 1.23.2 2.43.57 
+    3.57a1 1 0 01-.25 1z"/>
+  </svg>
+  Aura Stays
+</button>
         </a>
-
-        <!-- Instagram -->
-        <a class="icon" href="#">
-          <svg width="20" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24">
-            <rect x="3" y="3" width="18" height="18" rx="5"/>
-            <circle cx="12" cy="12" r="4"/>
-          </svg>
+      <a href="tel:+917051932522">
+        <button class="call-btn">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="#fff">
+    <path d="M6.62 10.79a15.05 15.05 0 006.59 
+    6.59l2.2-2.2a1 1 0 011-.24 
+    11.36 11.36 0 003.57.57 1 1 0 
+    011 1v3.5a1 1 0 01-1 1A17.5 
+    17.5 0 012 5a1 1 0 011-1H6.5a1 
+    1 0 011 1c0 1.23.2 2.43.57 
+    3.57a1 1 0 01-.25 1z"/>
+  </svg>
+  Aaoza Travel
+</button>
         </a>
-
-        <!-- Facebook -->
-        <a class="icon" href="#">
-          <svg width="20" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24">
-            <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
-          </svg>
-        </a>
-
-      </div>
-
-      <a href="raazik.html">
-        <button class="btn">View Details</button>
-      </a>
-
     </div>
+
+    <a href="raazik.html">
+  <button class="btn">View Details</button>
+</a>
   </div>
-  <!=========HOTEL 2========-->
-  <div class="card" data-name="royal">
+</div>
+
+<div class="card" data-name="pine">
   <img src="pine4.jpg">
   <div class="card-content">
-    <h3>Pine Palace Resorts & Pine Palace Platinum</h3>
-    <p>📍 Gulmarg</p>
-    <p>📞 7051932522</p>
+    <h3>Pine Palace Resort</h3>
+<p style="display:flex;align-items:center;gap:6px;">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="#00aaff">
+    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 
+    9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 
+    1.12 2.5 2.5S13.38 11.5 12 11.5z"/>
+  </svg>
+  Gulmarg
+</p>
 
-    <!-- SOCIAL -->
-    <div class="social">
-
-      <!-- WhatsApp -->
-      <a class="icon" href="https://wa.me/917051932522">
-        <svg width="20" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24">
-          <path d="M21 12a9 9 0 1 0-4 7.5L21 21l-1.5-4A9 9 0 0 0 21 12z"/>
-        </svg>
-      </a>
-
-      <!-- Instagram -->
-      <a class="icon" href="https://instagram.com/yourhotel">
-        <svg width="20" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24">
-          <rect x="3" y="3" width="18" height="18" rx="5"/>
-          <circle cx="12" cy="12" r="4"/>
-        </svg>
-      </a>
-
-      <!-- Facebook -->
-      <a class="icon" href="https://facebook.com/yourhotel">
-        <svg width="20" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24">
-          <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
-        </svg>
-      </a>
-
+    <div class="call-buttons">
+      <a href="tel:+919186182238">
+<button class="call-btn">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="#fff">
+    <path d="M6.62 10.79a15.05 15.05 0 006.59 
+    6.59l2.2-2.2a1 1 0 011-.24 
+    11.36 11.36 0 003.57.57 1 1 0 
+    011 1v3.5a1 1 0 01-1 1A17.5 
+    17.5 0 012 5a1 1 0 011-1H6.5a1 
+    1 0 011 1c0 1.23.2 2.43.57 
+    3.57a1 1 0 01-.25 1z"/>
+  </svg>
+  Aura Stays
+</button>
+        </a>
+      <a href="tel:+917051932522">
+        <button class="call-btn">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="#fff">
+    <path d="M6.62 10.79a15.05 15.05 0 006.59 
+    6.59l2.2-2.2a1 1 0 011-.24 
+    11.36 11.36 0 003.57.57 1 1 0 
+    011 1v3.5a1 1 0 01-1 1A17.5 
+    17.5 0 012 5a1 1 0 011-1H6.5a1 
+    1 0 011 1c0 1.23.2 2.43.57 
+    3.57a1 1 0 01-.25 1z"/>
+  </svg>
+  Aaoza Travel
+</button>
+        </a>
     </div>
 
-    <!-- BUTTON -->
     <a href="pine.html">
-      <button class="btn">View Details</button>
-    </a>
-
+  <button class="btn">View Details</button>
+</a>
   </div>
 </div>
-  
-  
-  
-  
 
-</div>
-
-<!-- FLOAT WHATSAPP -->
-<div class="floating">
-  <a href="https://wa.me/918899912611" target="_blank">
-    
-    <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
-      <path d="M16.04 3C9.39 3 4 8.39 4 15.04c0 2.65.86 5.1 2.33 7.09L4 29l6.99-2.31a11.96 11.96 0 0 0 5.05 1.13h.01c6.65 0 12.04-5.39 12.04-12.04C28.09 8.39 22.7 3 16.04 3z" fill="white" fill-opacity="0.08"/>
-      
-      <path d="M23.52 19.59c-.36-.18-2.12-1.05-2.45-1.17-.33-.12-.57-.18-.81.18-.24.36-.93 1.17-1.14 1.41-.21.24-.42.27-.78.09-.36-.18-1.51-.56-2.88-1.78-1.07-.96-1.79-2.14-2-2.5-.21-.36-.02-.55.16-.73.16-.16.36-.42.54-.63.18-.21.24-.36.36-.6.12-.24.06-.45-.03-.63-.09-.18-.81-1.95-1.11-2.67-.29-.7-.59-.6-.81-.61h-.69c-.24 0-.63.09-.96.45-.33.36-1.26 1.23-1.26 3s1.29 3.48 1.47 3.72c.18.24 2.54 3.87 6.15 5.43.86.37 1.53.59 2.05.75.86.27 1.64.23 2.26.14.69-.1 2.12-.87 2.42-1.71.3-.84.3-1.56.21-1.71-.09-.15-.33-.24-.69-.42z" fill="white"/>
-    </svg>
-
-  </a>
 </div>
 
 <script>
 
-// 🔥 SLIDER
+// SLIDER
 let i=0;
 setInterval(()=>{
   i++;
@@ -336,7 +351,7 @@ setInterval(()=>{
   document.getElementById("slides").style.transform=`translateX(-${i*100}%)`
 },3000);
 
-// 🔍 SEARCH FUNCTION
+// SEARCH
 document.getElementById("search").addEventListener("keyup",function(){
   let value = this.value.toLowerCase();
   document.querySelectorAll(".card").forEach(card=>{
@@ -346,7 +361,6 @@ document.getElementById("search").addEventListener("keyup",function(){
 });
 
 </script>
-<script src="back.js"></script>
 
 </body>
 </html>
