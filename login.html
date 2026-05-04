@@ -218,10 +218,9 @@ showAlert("Enter email","error")
 return
 }
 
-const { error } = await supabaseClient.auth.resetPasswordForEmail(email,{
-redirectTo: window.location.origin + "/kashmir/reset-password.html"
-
-})
+const { error } = await supabaseClient.auth.resetPasswordForEmail(email, {
+  redirectTo: "https://aaoza.in/reset-password.html"
+});
 
 if(error){
 showAlert(error.message,"error")
