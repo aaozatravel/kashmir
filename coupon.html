@@ -75,7 +75,7 @@ card.innerHTML=`
 <img src="logo.jpg" class="logo">
 
 <div class="title">${c.title || "Offer"}</div>
-<div class="discount">${c.discount || "30% OFF"}</div>
+<div class="discount">₹${c.discount_amount || 1000} OFF</div>
 
 <div class="code-box">
 <span id="code-${i}">${c.code}</span>
