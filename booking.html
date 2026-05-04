@@ -166,6 +166,7 @@ const { data, error } = await supabaseClient
 .select("*")
 .eq("code", code)
 .single()
+console.log("COUPON DATA:", data)
 
 if(error || !data){
 showAlert("Invalid coupon ❌","error")
@@ -175,13 +176,20 @@ return
 // 🔥 PACKAGE CHECK
 let packageName = localStorage.getItem("selectedPackage")
 
+// ✅ SAME NORMALIZATION (VERY IMPORTANT)
+if(packageName === "Local Tour") packageName = "Local"
+if(packageName === "Pro Tour") packageName = "Pro"
+if(packageName === "Premium Pro+") packageName = "Premium"
+
+console.log("PACKAGE:", packageName)
+console.log("COUPON PACKAGE:", data.package)
+
 if(data.package !== packageName){
 showAlert("Ye coupon is package ke liye nahi hai ❌","error")
 return
 }
 
 // 🔥 discount nikalna
-let percent = parseInt(data.discount)
 
 // total calculate karo
 let price = parseInt(localStorage.getItem("selectedPrice") || 0)
@@ -202,13 +210,20 @@ Object.keys(selectedRooms).forEach(type=>{
   }
 })
 
-discountAmount = Math.floor((total * percent)/100)
+let fixedDiscount = parseInt(data.discount_amount || data.discount || 0)
+
+if(fixedDiscount <= 0){
+  showAlert("Coupon invalid amount ❌","error")
+  return
+}
+
+discountAmount = fixedDiscount
 
 // ✅ lock kar do
 couponApplied = true
 appliedCoupon = data
 
-showAlert(`Coupon ${percent}% Applied 🎉`,"success")
+showAlert(`Coupon ₹${fixedDiscount} Applied 🎉`,"success")
 let couponSound = document.getElementById("couponSound")
 if(couponSound){
   couponSound.currentTime = 0
@@ -395,7 +410,7 @@ let infant = +infantCount.innerText
 
 let packageName = localStorage.getItem("selectedPackage")
 
-// normalize safety fix
+// ✅ normalize same as saveBooking
 if(packageName === "Local Tour") packageName = "Local"
 if(packageName === "Pro Tour") packageName = "Pro"
 if(packageName === "Premium Pro+") packageName = "Premium"
@@ -604,4 +619,3 @@ loadRoomPrices()
 
 </body>
 </html>
-
