@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Economy EP Room</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body{
+  font-family:'Poppins',sans-serif;
+  background:#f3f4f6;
+  color:#111827;
+  padding:16px;
+}
+
+/* BACK BUTTON */
+.back-btn{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:12px 18px;
+  background:linear-gradient(45deg,#dc2626,#ef4444);
+  color:#fff;
+  text-decoration:none;
+  border-radius:14px;
+  font-size:15px;
+  font-weight:600;
+  box-shadow:0 5px 15px rgba(220,38,38,0.25);
+  margin-bottom:18px;
+}
+
+/* HEADER CARD */
+.header{
+  background:#fff;
+  border-radius:24px;
+  padding:22px;
+  margin-bottom:20px;
+  position:relative;
+  overflow:hidden;
+  box-shadow:0 10px 30px rgba(0,0,0,0.08);
+}
+
+.header::before{
+  content:"";
+  position:absolute;
+  top:-40px;
+  right:-40px;
+  width:140px;
+  height:140px;
+  background:#fee2e2;
+  border-radius:50%;
+}
+
+.header h1{
+  font-size:30px;
+  color:#dc2626;
+  margin-bottom:10px;
+  position:relative;
+  z-index:2;
+}
+
+.price{
+  display:inline-block;
+  background:linear-gradient(45deg,#dc2626,#ef4444);
+  color:#fff;
+  padding:10px 18px;
+  border-radius:999px;
+  font-size:15px;
+  font-weight:700;
+  position:relative;
+  z-index:2;
+}
+
+/* MAIN TABLE BOX */
+.table-box{
+  background:#fff;
+  border-radius:24px;
+  overflow:hidden;
+  box-shadow:0 10px 30px rgba(0,0,0,0.08);
+}
+
+/* TABLE */
+table{
+  width:100%;
+  border-collapse:collapse;
+}
+
+/* SECTION TITLE */
+th{
+  background:linear-gradient(45deg,#dc2626,#ef4444);
+  color:#fff;
+  padding:16px;
+  font-size:15px;
+  letter-spacing:.5px;
+  text-align:left;
+}
+
+/* ROWS */
+td{
+  padding:16px;
+  border-bottom:1px solid #f1f5f9;
+  font-size:14px;
+  vertical-align:top;
+}
+
+tr:last-child td{
+  border-bottom:none;
+}
+
+/* LEFT LABEL */
+.label{
+  width:38%;
+  font-weight:600;
+  color:#dc2626;
+  background:#fff5f5;
+}
+
+/* RIGHT VALUE */
+.value{
+  color:#374151;
+  line-height:1.7;
+}
+
+/* ICON STYLE */
+.icon{
+  margin-right:6px;
+}
+
+/* MOBILE */
+@media(max-width:600px){
+
+  body{
+    padding:12px;
+  }
+
+  .header h1{
+    font-size:24px;
+  }
+
+  td{
+    padding:14px 12px;
+    font-size:13px;
+  }
+
+  .label{
+    width:42%;
+  }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<a href="javascript:history.back()" class="back-btn">
+← Back
+</a>
+
+<!-- HEADER -->
+<div class="header">
+
+  <h1>Economy EP Room</h1>
+
+  <div class="price">
+    ₹12,499
+  </div>
+
+</div>
+
+<!-- TABLE -->
+<div class="table-box">
+
+<table>
+
+<!-- STAY PLAN -->
+<tr>
+  <th colspan="2">🛏 Stay Plan</th>
+</tr>
+
+<tr>
+  <td class="label">Day 1</td>
+  <td class="value">D1 / N1 Stay</td>
+</tr>
+
+<tr>
+  <td class="label">Day 2</td>
+  <td class="value">D2 / N2 Stay</td>
+</tr>
+
+<tr>
+  <td class="label">Day 3</td>
+  <td class="value">D3 / N3 Stay</td>
+</tr>
+
+<tr>
+  <td class="label">Day 4</td>
+  <td class="value">D4 / N4 Stay</td>
+</tr>
+
+<tr>
+  <td class="label">Day 5</td>
+  <td class="value">Checkout</td>
+</tr>
+
+<!-- EP DETAILS -->
+<tr>
+  <th colspan="2">📋 EP Plan Details</th>
+</tr>
+
+<tr>
+  <td class="label">EP Meaning</td>
+  <td class="value">
+    European Plan (Only Room Stay)
+  </td>
+</tr>
+
+<tr>
+  <td class="label">Meals</td>
+  <td class="value">
+    ❌ Breakfast Not Included <br>
+    ❌ Lunch Not Included <br>
+    ❌ Dinner Not Included
+  </td>
+</tr>
+
+<tr>
+  <td class="label">Room Quality</td>
+  <td class="value">
+    Clean, comfortable & peaceful economy room with modern interior
+  </td>
+</tr>
+
+<!-- FACILITIES -->
+<tr>
+  <th colspan="2">✨ Room Facilities</th>
+</tr>
+
+<tr>
+  <td class="label">Bed</td>
+  <td class="value">🛏 Premium Comfortable Bed</td>
+</tr>
+
+<tr>
+  <td class="label">Wi-Fi</td>
+  <td class="value">📶 Free High Speed Wi-Fi</td>
+</tr>
+
+<tr>
+  <td class="label">Bathroom</td>
+  <td class="value">🚿 Attached Washroom + Hot Water</td>
+</tr>
+
+<tr>
+  <td class="label">TV</td>
+  <td class="value">📺 Smart TV Available</td>
+</tr>
+
+<tr>
+  <td class="label">Parking</td>
+  <td class="value">🅿 Free Parking Facility</td>
+</tr>
+
+<tr>
+  <td class="label">View</td>
+  <td class="value">🏔 Beautiful Mountain View</td>
+</tr>
+
+<tr>
+  <td class="label">Cleaning</td>
+  <td class="value">🧹 Daily Room Cleaning Service</td>
+</tr>
+
+<tr>
+  <td class="label">Heater</td>
+  <td class="value">🔥 Heater Available on Request</td>
+</tr>
+
+<!-- EXTRA -->
+<tr>
+  <th colspan="2">ℹ Extra Information</th>
+</tr>
+
+<tr>
+  <td class="label">Hotel Type</td>
+  <td class="value">
+    Budget Friendly Hotel
+  </td>
+</tr>
+
+<tr>
+  <td class="label">Environment</td>
+  <td class="value">
+    Safe, peaceful & family friendly atmosphere
+  </td>
+</tr>
+
+<tr>
+  <td class="label">Location</td>
+  <td class="value">
+    Near famous tourist attractions & local market
+  </td>
+</tr>
+
+<tr>
+  <td class="label">Best For</td>
+  <td class="value">
+    Couples, families & budget travellers
+  </td>
+</tr>
+
+</table>
+
+</div>
+
+</body>
+</html>

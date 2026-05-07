@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Deluxe CP Room</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body{
+  font-family:'Poppins',sans-serif;
+  background:#f3f4f6;
+  color:#111827;
+  padding:16px;
+}
+
+/* BACK BUTTON */
+.back-btn{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:12px 18px;
+  background:linear-gradient(45deg,#dc2626,#ef4444);
+  color:#fff;
+  text-decoration:none;
+  border-radius:14px;
+  font-size:15px;
+  font-weight:600;
+  box-shadow:0 5px 15px rgba(220,38,38,0.25);
+  margin-bottom:18px;
+}
+
+/* HEADER CARD */
+.header{
+  background:#fff;
+  border-radius:24px;
+  padding:22px;
+  margin-bottom:20px;
+  position:relative;
+  overflow:hidden;
+  box-shadow:0 10px 30px rgba(0,0,0,0.08);
+}
+
+.header::before{
+  content:"";
+  position:absolute;
+  top:-40px;
+  right:-40px;
+  width:140px;
+  height:140px;
+  background:#fee2e2;
+  border-radius:50%;
+}
+
+.header h1{
+  font-size:30px;
+  color:#dc2626;
+  margin-bottom:10px;
+  position:relative;
+  z-index:2;
+}
+
+.price{
+  display:inline-block;
+  background:linear-gradient(45deg,#dc2626,#ef4444);
+  color:#fff;
+  padding:10px 18px;
+  border-radius:999px;
+  font-size:15px;
+  font-weight:700;
+  position:relative;
+  z-index:2;
+}
+
+/* TABLE BOX */
+.table-box{
+  background:#fff;
+  border-radius:24px;
+  overflow:hidden;
+  box-shadow:0 10px 30px rgba(0,0,0,0.08);
+}
+
+/* TABLE */
+table{
+  width:100%;
+  border-collapse:collapse;
+}
+
+/* SECTION HEAD */
+th{
+  background:linear-gradient(45deg,#dc2626,#ef4444);
+  color:#fff;
+  padding:16px;
+  font-size:15px;
+  letter-spacing:.5px;
+  text-align:left;
+}
+
+/* TABLE CELLS */
+td{
+  padding:16px;
+  border-bottom:1px solid #f1f5f9;
+  font-size:14px;
+  vertical-align:top;
+}
+
+tr:last-child td{
+  border-bottom:none;
+}
+
+/* LEFT LABEL */
+.label{
+  width:38%;
+  font-weight:600;
+  color:#dc2626;
+  background:#fff5f5;
+}
+
+/* RIGHT VALUE */
+.value{
+  color:#374151;
+  line-height:1.7;
+}
+
+/* MOBILE */
+@media(max-width:600px){
+
+  body{
+    padding:12px;
+  }
+
+  .header h1{
+    font-size:24px;
+  }
+
+  td{
+    padding:14px 12px;
+    font-size:13px;
+  }
+
+  .label{
+    width:42%;
+  }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<a href="javascript:history.back()" class="back-btn">
+← Back
+</a>
+
+<!-- HEADER -->
+<div class="header">
+
+  <h1>Deluxe CP Room</h1>
+
+  <div class="price">
+    ₹20,499
+  </div>
+
+</div>
+
+<!-- TABLE -->
+<div class="table-box">
+
+<table>
+
+<!-- STAY PLAN -->
+<tr>
+  <th colspan="2">🛏 Stay Plan</th>
+</tr>
+
+<tr>
+  <td class="label">Day 1</td>
+  <td class="value">D1 / N1 Stay</td>
+</tr>
+
+<tr>
+  <td class="label">Day 2</td>
+  <td class="value">D2 / N2 Stay</td>
+</tr>
+
+<tr>
+  <td class="label">Day 3</td>
+  <td class="value">D3 / N3 Stay</td>
+</tr>
+
+<tr>
+  <td class="label">Day 4</td>
+  <td class="value">D4 / N4 Stay</td>
+</tr>
+
+<tr>
+  <td class="label">Day 5</td>
+  <td class="value">Checkout</td>
+</tr>
+
+<!-- CP DETAILS -->
+<tr>
+  <th colspan="2">🍽 CP Plan Details</th>
+</tr>
+
+<tr>
+  <td class="label">CP Meaning</td>
+  <td class="value">
+    CP = Continental Plan
+  </td>
+</tr>
+
+<tr>
+  <td class="label">Included</td>
+  <td class="value">
+    ✅ Deluxe Room Stay <br>
+    ✅ Morning Breakfast Included
+  </td>
+</tr>
+
+<tr>
+  <td class="label">Meals</td>
+  <td class="value">
+    ✔ Breakfast Included <br>
+    ❌ Lunch Not Included <br>
+    ❌ Dinner Not Included
+  </td>
+</tr>
+
+<tr>
+  <td class="label">Room Type</td>
+  <td class="value">
+    Premium Deluxe Room with stylish interior & comfortable luxury stay
+  </td>
+</tr>
+
+<!-- ROOM FACILITIES -->
+<tr>
+  <th colspan="2">✨ Deluxe Room Facilities</th>
+</tr>
+
+<tr>
+  <td class="label">Bed</td>
+  <td class="value">🛏 King Size Luxury Bed</td>
+</tr>
+
+<tr>
+  <td class="label">Wi-Fi</td>
+  <td class="value">📶 Free Unlimited High Speed Wi-Fi</td>
+</tr>
+
+<tr>
+  <td class="label">Bathroom</td>
+  <td class="value">🚿 Premium Attached Washroom + 24×7 Hot Water</td>
+</tr>
+
+<tr>
+  <td class="label">TV</td>
+  <td class="value">📺 Smart LED TV</td>
+</tr>
+
+<tr>
+  <td class="label">Parking</td>
+  <td class="value">🅿 Free Secure Parking</td>
+</tr>
+
+<tr>
+  <td class="label">View</td>
+  <td class="value">🏔 Beautiful Mountain & Nature View</td>
+</tr>
+
+<tr>
+  <td class="label">Cleaning</td>
+  <td class="value">🧹 Daily Professional Room Cleaning</td>
+</tr>
+
+<tr>
+  <td class="label">Heater</td>
+  <td class="value">🔥 Room Heater Available</td>
+</tr>
+
+<tr>
+  <td class="label">Room Service</td>
+  <td class="value">🛎 Fast Room Service Support</td>
+</tr>
+
+<!-- EXTRA -->
+<tr>
+  <th colspan="2">ℹ Extra Information</th>
+</tr>
+
+<tr>
+  <td class="label">Hotel Category</td>
+  <td class="value">
+    Premium Deluxe Hotel
+  </td>
+</tr>
+
+<tr>
+  <td class="label">Environment</td>
+  <td class="value">
+    Peaceful, safe & family friendly atmosphere
+  </td>
+</tr>
+
+<tr>
+  <td class="label">Location</td>
+  <td class="value">
+    Near famous tourist attractions & market area
+  </td>
+</tr>
+
+<tr>
+  <td class="label">Best For</td>
+  <td class="value">
+    Couples, honeymoon trips & family vacations
+  </td>
+</tr>
+
+<tr>
+  <td class="label">Special</td>
+  <td class="value">
+    Elegant interior with premium comfort experience
+  </td>
+</tr>
+
+</table>
+
+</div>
+
+</body>
+</html>
