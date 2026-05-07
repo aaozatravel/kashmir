@@ -419,29 +419,105 @@ let packagePrice = parseInt(localStorage.getItem("selectedPrice")) || 0
 let packageDetails = {}
 
 if(packageName === "Local"){
+
   packageDetails = {
-    places: ["Gulmarg","Sonmarg","Srinagar","Dal Lake","Nishat","Shalimar","Doodhpathri"],
-    activities: ["Gondola Phase 1","Horse Ride 1hr"],
-    services: ["Cab","Driver","Guide"],
-    media: ["Photography","Reels (10)"]
+
+    places: [
+      "Gulmarg",
+      "Mughal Garden",
+      "Dal Lake",
+      "Nishat Shalimar",
+      "Drung Water Fall",
+      "Doodhpathri"
+    ],
+
+    activities: [
+      "Gondola Phase 1",
+      "Horse Ride 3hr 3 Place"
+    ],
+
+    services: [
+      "Cab",
+      "Driver",
+      "Guide"
+    ],
+
+    media: [
+      "Photography",
+      "Reels (10)"
+    ]
+
   }
 }
 
 if(packageName === "Pro"){
+
   packageDetails = {
-    places: ["Gulmarg","Sonmarg","Doodhpathri","Srinagar","Dal Lake","Gardens","Drang Waterfall"],
-    activities: ["Gondola Phase 1 & 2","Horse Ride 2hr"],
-    services: ["Cab","Driver","Guide"],
-    media: ["Photoshoot","Video","Reels (15)"]
+
+    places: [
+      "Srinagar Dal Lake",
+      "Nishat Shalimar",
+      "Mughal Garden",
+      "Pari Mahal",
+      "Sonmarg",
+      "Gulmarg",
+      "Doodhpathri",
+      "Pahalgam",
+      "Drung Water Fall",
+      "Manasbal"
+    ],
+
+    activities: [
+      "Gondola Phase 1 & 2",
+      "Horse Ride Unlimited",
+      "Sledge Ride",
+      "ATV Car Ride"
+    ],
+
+    services: [
+      "Cab",
+      "Driver",
+      "Guide"
+    ],
+
+    media: [
+      "Video",
+      "Reels (15)",
+      "Photography Unlimited"
+    ]
+
   }
 }
 
 if(packageName === "Premium"){
+
   packageDetails = {
-    places: ["All Places","Waterfalls","Hidden Spots"],
-    activities: ["Gondola 1,2,3","Skiing","Cycling","Full Day Horse Ride"],
-    services: ["Cab","Driver","Guide"],
-    media: ["Unlimited Photos","Unlimited Reels"]
+
+    places: [
+      "All Places",
+      "Waterfalls",
+      "Hidden Spots",
+      "All Pro+ Destinations"
+    ],
+
+    activities: [
+      "Gondola Phase 1, 2 & 3",
+      "Skiing",
+      "Cycling",
+      "Full Day Horse Ride"
+    ],
+
+    services: [
+      "Cab",
+      "Driver",
+      "Guide"
+    ],
+
+    media: [
+      "Unlimited Photos",
+      "Unlimited Reels"
+    ]
+
   }
 }
 
