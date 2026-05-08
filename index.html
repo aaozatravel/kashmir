@@ -925,5 +925,15 @@ document.addEventListener("DOMContentLoaded", () => {
 </script>
 <script src="ads.js"></script>
 
+<script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+<script>
+  window.OneSignalDeferred = window.OneSignalDeferred || [];
+  OneSignalDeferred.push(async function(OneSignal) {
+    await OneSignal.init({
+      appId: "0ab6337e-8084-4d22-bfd6-89c6e3f9b66f",
+    });
+  });
+</script>
+
 </body>
 </html> 
