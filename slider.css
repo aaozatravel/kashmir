@@ -650,3 +650,83 @@ font-weight:bold;
 .call:hover{
   opacity:0.9;
 }
+
+/* ===== PREMIUM SECTION TITLES ===== */
+
+.services-pro h2,
+.package-slider h2,
+.hotel-section h2,
+.reels-section h2,
+.gallery-preview h2,
+.kashmir-map h2{
+
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+
+  width: 100%;
+
+  font-size: 30px;
+  font-weight: 800;
+
+  color: #111;
+
+  margin-bottom: 55px;
+
+  text-align: center;
+
+  letter-spacing: .5px;
+}
+
+/* LEFT LINE */
+.services-pro h2::before,
+.package-slider h2::before,
+.hotel-section h2::before,
+.reels-section h2::before,
+.gallery-preview h2::before,
+.kashmir-map h2::before{
+
+  content:"";
+
+  width: 70px;
+  height: 4px;
+
+  border-radius: 999px;
+
+  background: linear-gradient(
+  90deg,
+  transparent,
+  #ff4fd8
+  );
+
+  box-shadow: 0 0 12px rgba(255,79,216,.5);
+}
+
+/* RIGHT LINE */
+.services-pro h2::after,
+.package-slider h2::after,
+.hotel-section h2::after,
+.reels-section h2::after,
+.gallery-preview h2::after,
+.kashmir-map h2::after{
+
+  content:"";
+
+  width: 70px;
+  height: 4px;
+
+  border-radius: 999px;
+
+  background: linear-gradient(
+  90deg,
+  #ff4fd8,
+  transparent
+  );
+
+  box-shadow: 0 0 12px rgba(255,79,216,.5);
+}
+
+
