@@ -282,6 +282,37 @@ html += `
 <h2>${b.package_name}</h2>
 <div class="status">Status: ${b.status}</div>
 
+${(b.status?.toLowerCase() === "pending" || 
+   b.status?.toLowerCase() === "waiting") ? `
+
+<div class="alert-box">
+
+  <div class="alert-title">
+    ⚠ Important Booking Alert
+  </div>
+
+  <div class="alert-text">
+    Team Aaoza will call you for booking confirmation and payment details.
+    Please note that you will only receive calls/messages from the official numbers below:
+  </div>
+
+  <div class="alert-number">📞 +91 7051932522</div>
+  <div class="alert-number">📞 +91 7051654368</div>
+  <div class="alert-number">📞 +91 8899737138</div>
+
+  <div class="alert-email">
+    📧 teamaaoza@gmail.com
+  </div>
+
+  <div class="alert-warning">
+    Any call, message, or email from another number/email may be fake or spam.
+    Please stay alert and avoid sharing payment details with unknown persons.
+  </div>
+
+</div>
+
+` : ""}
+
 <div class="section-title">📍 Places</div>
 <div>${(details.places || []).join(", ")}</div>
 
