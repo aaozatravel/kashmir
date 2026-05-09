@@ -651,82 +651,185 @@ font-weight:bold;
   opacity:0.9;
 }
 
-/* ===== PREMIUM SECTION TITLES ===== */
 
+/* SECTION TITLE DESIGN */
 .services-pro h2,
 .package-slider h2,
 .hotel-section h2,
 .reels-section h2,
 .gallery-preview h2,
 .kashmir-map h2{
-
   position: relative;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 14px;
-
-  width: 100%;
-
-  font-size: 30px;
+  display: inline-block;
+  font-size: 28px;
   font-weight: 800;
-
+  margin-bottom: 45px;
   color: #111;
-
-  margin-bottom: 55px;
-
-  text-align: center;
-
-  letter-spacing: .5px;
 }
 
-/* LEFT LINE */
-.services-pro h2::before,
-.package-slider h2::before,
-.hotel-section h2::before,
-.reels-section h2::before,
-.gallery-preview h2::before,
-.kashmir-map h2::before{
-
-  content:"";
-
-  width: 70px;
-  height: 4px;
-
-  border-radius: 999px;
-
-  background: linear-gradient(
-  90deg,
-  transparent,
-  #ff4fd8
-  );
-
-  box-shadow: 0 0 12px rgba(255,79,216,.5);
-}
-
-/* RIGHT LINE */
+/* WAVE LINE */
 .services-pro h2::after,
 .package-slider h2::after,
 .hotel-section h2::after,
 .reels-section h2::after,
 .gallery-preview h2::after,
 .kashmir-map h2::after{
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -18px;
 
-  content:"";
+  width: 120px;
+  height: 12px;
 
-  width: 70px;
-  height: 4px;
+  background: #ff4fd8;
 
-  border-radius: 999px;
+  border-radius: 50px;
 
-  background: linear-gradient(
-  90deg,
-  #ff4fd8,
-  transparent
+  clip-path: polygon(
+    0% 50%,
+    8% 0%,
+    16% 50%,
+    24% 100%,
+    32% 50%,
+    40% 0%,
+    48% 50%,
+    56% 100%,
+    64% 50%,
+    72% 0%,
+    80% 50%,
+    88% 100%,
+    96% 50%,
+    100% 50%
   );
-
-  box-shadow: 0 0 12px rgba(255,79,216,.5);
 }
 
 
+/* =========================
+   SPLASH DEVELOPER SIMPLE
+========================= */
+
+.developer-box{
+  position:absolute;
+
+  bottom:18px;
+  left:50%;
+
+  transform:translateX(-50%);
+
+  display:flex;
+  flex-direction:row; /* side by side */
+
+  align-items:center;
+  justify-content:center;
+
+  gap:10px;
+
+  text-align:left;
+
+  z-index:5;
+
+  animation:devFade 1s ease;
+}
+
+/* logo */
+.developer-logo{
+  width:42px;
+  height:42px;
+
+  border-radius:50%;
+  object-fit:cover;
+
+  border:2px solid #1da1ff;
+
+  box-shadow:
+    0 0 10px rgba(29,161,255,0.6);
+
+  flex-shrink:0;
+}
+
+/* MADE BY */
+.made-by{
+  display:block;
+
+  font-size:7px;
+
+  color:#9fd8ff;
+
+  letter-spacing:1.5px;
+
+  text-transform:uppercase;
+
+  margin-bottom:1px;
+
+  font-weight:600;
+}
+
+/* SHEIKH DEVELOPER */
+.developer-text h3{
+  margin:0;
+
+  font-size:12px;
+  font-weight:700;
+
+  color:#42b6ff;
+
+  letter-spacing:.5px;
+
+  line-height:1.1;
+
+  text-shadow:
+    0 0 8px rgba(66,182,255,0.5);
+}
+
+/* AAMIR NAME */
+.developer-text p{
+  margin-top:1px;
+
+  font-size:8px;
+
+  color:#000000;
+
+  letter-spacing:1px;
+
+  font-weight:500;
+}
+
+/* animation */
+@keyframes devFade{
+  from{
+    opacity:0;
+    transform:translateX(-50%) translateY(10px);
+  }
+
+  to{
+    opacity:1;
+    transform:translateX(-50%) translateY(0);
+  }
+}
+
+/* MOBILE */
+@media(max-width:768px){
+
+  .developer-box{
+    bottom:14px;
+    gap:8px;
+  }
+
+  .developer-logo{
+    width:36px;
+    height:36px;
+  }
+
+  .developer-text h3{
+    font-size:10px;
+  }
+
+  .developer-text p{
+    font-size:7px;
+  }
+
+  .made-by{
+    font-size:6px;
+  }
+}
