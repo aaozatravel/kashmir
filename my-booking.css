@@ -450,3 +450,55 @@ h1{
   }
 
 }
+
+/* 🚨 ALERT BOX */
+.alert-box{
+  margin-top:18px;
+  background:linear-gradient(135deg,#eff6ff,#f8fafc);
+  border:1px solid #bfdbfe;
+  border-left:5px solid #2563eb;
+  border-radius:22px;
+  padding:18px;
+  box-shadow:0 8px 24px rgba(37,99,235,.08);
+}
+
+.alert-title{
+  font-size:18px;
+  font-weight:800;
+  color:#1d4ed8;
+  margin-bottom:10px;
+}
+
+.alert-text{
+  color:#334155;
+  line-height:1.7;
+  font-size:14px;
+  margin-bottom:12px;
+}
+
+.alert-number{
+  background:#ffffff;
+  padding:12px 14px;
+  border-radius:14px;
+  margin-bottom:10px;
+  font-weight:700;
+  color:#0f172a;
+  border:1px solid #dbeafe;
+}
+
+.alert-email{
+  background:#ffffff;
+  padding:12px 14px;
+  border-radius:14px;
+  font-weight:700;
+  color:#0f172a;
+  border:1px solid #dbeafe;
+  margin-bottom:12px;
+}
+
+.alert-warning{
+  font-size:13px;
+  color:#dc2626;
+  line-height:1.7;
+  font-weight:600;
+}
