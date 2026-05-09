@@ -652,58 +652,6 @@ font-weight:bold;
 }
 
 
-/* SECTION TITLE DESIGN */
-.services-pro h2,
-.package-slider h2,
-.hotel-section h2,
-.reels-section h2,
-.gallery-preview h2,
-.kashmir-map h2{
-  position: relative;
-  display: inline-block;
-  font-size: 28px;
-  font-weight: 800;
-  margin-bottom: 45px;
-  color: #111;
-}
-
-/* WAVE LINE */
-.services-pro h2::after,
-.package-slider h2::after,
-.hotel-section h2::after,
-.reels-section h2::after,
-.gallery-preview h2::after,
-.kashmir-map h2::after{
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: -18px;
-
-  width: 120px;
-  height: 12px;
-
-  background: #ff4fd8;
-
-  border-radius: 50px;
-
-  clip-path: polygon(
-    0% 50%,
-    8% 0%,
-    16% 50%,
-    24% 100%,
-    32% 50%,
-    40% 0%,
-    48% 50%,
-    56% 100%,
-    64% 50%,
-    72% 0%,
-    80% 50%,
-    88% 100%,
-    96% 50%,
-    100% 50%
-  );
-}
-
 
 /* =========================
    SPLASH DEVELOPER SIMPLE
@@ -831,5 +779,253 @@ font-weight:bold;
 
   .made-by{
     font-size:6px;
+  }
+}
+
+
+
+
+/* ===================================
+   ✈️ ULTRA PREMIUM SECTION TITLES
+=================================== */
+
+.services-pro h2,
+.package-slider h2,
+.hotel-section h2,
+.reels-section h2,
+.gallery-preview h2,
+.kashmir-map h2{
+
+  position:relative;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  gap:18px;
+
+  width:100%;
+
+  margin-bottom:60px;
+
+  text-align:center;
+
+  font-size:34px;
+  font-weight:900;
+
+  letter-spacing:.8px;
+
+  color:#0f172a;
+
+  text-transform:uppercase;
+
+  overflow:hidden;
+}
+
+/* ===== LEFT GLOW LINE ===== */
+.services-pro h2::before,
+.package-slider h2::before,
+.hotel-section h2::before,
+.reels-section h2::before,
+.gallery-preview h2::before,
+.kashmir-map h2::before{
+
+  content:"";
+
+  width:90px;
+  height:4px;
+
+  border-radius:999px;
+
+  background:linear-gradient(
+    90deg,
+    transparent,
+    #00bfff,
+    #7c3aed
+  );
+
+  box-shadow:
+    0 0 15px rgba(0,191,255,.6),
+    0 0 30px rgba(124,58,237,.4);
+
+  animation:leftGlow 3s linear infinite;
+}
+
+/* ===== RIGHT GLOW LINE ===== */
+.services-pro h2::after,
+.package-slider h2::after,
+.hotel-section h2::after,
+.reels-section h2::after,
+.gallery-preview h2::after,
+.kashmir-map h2::after{
+
+  content:"✈";
+
+  font-size:28px;
+
+  color:#00bfff;
+
+  filter:
+    drop-shadow(0 0 10px rgba(0,191,255,.7));
+
+  animation:planeFly 3s ease-in-out infinite;
+}
+
+/* ===== TEXT EFFECT ===== */
+.services-pro h2,
+.package-slider h2,
+.hotel-section h2,
+.reels-section h2,
+.gallery-preview h2,
+.kashmir-map h2{
+
+  background:linear-gradient(
+    90deg,
+    #00bfff,
+    #7c3aed,
+    #ff4fd8
+  );
+
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+/* ===== ANIMATIONS ===== */
+
+@keyframes planeFly{
+
+  0%{
+    transform:
+      translateX(-8px)
+      translateY(0)
+      rotate(-8deg);
+  }
+
+  50%{
+    transform:
+      translateX(8px)
+      translateY(-4px)
+      rotate(5deg);
+  }
+
+  100%{
+    transform:
+      translateX(-8px)
+      translateY(0)
+      rotate(-8deg);
+  }
+}
+
+@keyframes leftGlow{
+
+  0%{
+    opacity:.5;
+    transform:scaleX(.8);
+  }
+
+  50%{
+    opacity:1;
+    transform:scaleX(1.1);
+  }
+
+  100%{
+    opacity:.5;
+    transform:scaleX(.8);
+  }
+}
+
+/* ===== EXTRA PREMIUM LIGHT ===== */
+.services-pro h2 span,
+.package-slider h2 span,
+.hotel-section h2 span,
+.reels-section h2 span,
+.gallery-preview h2 span,
+.kashmir-map h2 span{
+
+  position:relative;
+}
+
+.services-pro h2 span::after,
+.package-slider h2 span::after,
+.hotel-section h2 span::after,
+.reels-section h2 span::after,
+.gallery-preview h2 span::after,
+.kashmir-map h2 span::after{
+
+  content:"";
+
+  position:absolute;
+
+  left:0;
+  bottom:-6px;
+
+  width:100%;
+  height:2px;
+
+  background:linear-gradient(
+    90deg,
+    transparent,
+    #00bfff,
+    transparent
+  );
+
+  animation:shine 2s linear infinite;
+}
+
+@keyframes shine{
+
+  0%{
+    opacity:0;
+    transform:scaleX(.2);
+  }
+
+  50%{
+    opacity:1;
+    transform:scaleX(1);
+  }
+
+  100%{
+    opacity:0;
+    transform:scaleX(.2);
+  }
+}
+
+/* ===== MOBILE ===== */
+
+@media(max-width:768px){
+
+  .services-pro h2,
+  .package-slider h2,
+  .hotel-section h2,
+  .reels-section h2,
+  .gallery-preview h2,
+  .kashmir-map h2{
+
+    font-size:22px;
+
+    gap:10px;
+
+    margin-bottom:40px;
+  }
+
+  .services-pro h2::before,
+  .package-slider h2::before,
+  .hotel-section h2::before,
+  .reels-section h2::before,
+  .gallery-preview h2::before,
+  .kashmir-map h2::before{
+
+    width:45px;
+    height:3px;
+  }
+
+  .services-pro h2::after,
+  .package-slider h2::after,
+  .hotel-section h2::after,
+  .reels-section h2::after,
+  .gallery-preview h2::after,
+  .kashmir-map h2::after{
+
+    font-size:20px;
   }
 }
