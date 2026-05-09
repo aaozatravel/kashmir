@@ -768,41 +768,8 @@ updateHero()
     </script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="supabase.js"></script>
+<script src="auth-check.js"></script>
 
-<script>
-let authChecked = false;
-
-// 🔥 delay login check
-setTimeout(() => {
-
-  supabaseClient.auth.getSession().then(({ data }) => {
-
-    const session = data.session;
-
-    if (!session) {
-      window.location.href = "login.html";
-    } else {
-      authChecked = true;
-      console.log("User logged in");
-    }
-
-  });
-
-}, 1000);
-
-// real-time auth tracking
-supabaseClient.auth.onAuthStateChange((event, session) => {
-
-  if (event === "SIGNED_OUT") {
-    window.location.href = "login.html";
-  }
-
-  if (event === "SIGNED_IN") {
-    authChecked = true;
-  }
-
-});
-</script>
 
 <script src="main.js"></script>
 <script>
