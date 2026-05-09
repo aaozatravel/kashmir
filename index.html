@@ -768,34 +768,42 @@ updateHero()
     </script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="supabase.js"></script>
+
 <script>
 let authChecked = false;
-// wait for real session restore
-supabaseClient.auth.getSession().then(({ data }) => {
-  const session = data.session;
-  if (!session) {
-    window.location.href = "login.html";
-  } else {
-    authChecked = true;
-    console.log("User logged in");
-  }
-});
+
+// 🔥 delay login check
+setTimeout(() => {
+
+  supabaseClient.auth.getSession().then(({ data }) => {
+
+    const session = data.session;
+
+    if (!session) {
+      window.location.href = "login.html";
+    } else {
+      authChecked = true;
+      console.log("User logged in");
+    }
+
+  });
+
+}, 1000);
+
 // real-time auth tracking
 supabaseClient.auth.onAuthStateChange((event, session) => {
+
   if (event === "SIGNED_OUT") {
     window.location.href = "login.html";
   }
+
   if (event === "SIGNED_IN") {
     authChecked = true;
   }
-});
-// 🔥 REAL TIME SESSION TRACK
-supabaseClient.auth.onAuthStateChange((event, session) => {
-  if (event === "SIGNED_OUT" || !session) {
-    window.location.href = "login.html";
-  }
+
 });
 </script>
+
 <script src="main.js"></script>
 <script>
   async function loadBookingNotification(){
@@ -926,13 +934,38 @@ document.addEventListener("DOMContentLoaded", () => {
 <script src="ads.js"></script>
 
 <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+
 <script>
-  window.OneSignalDeferred = window.OneSignalDeferred || [];
-  OneSignalDeferred.push(async function(OneSignal) {
-    await OneSignal.init({
-      appId: "0ab6337e-8084-4d22-bfd6-89c6e3f9b66f",
-    });
+window.OneSignalDeferred = window.OneSignalDeferred || [];
+
+OneSignalDeferred.push(async function(OneSignal) {
+
+  await OneSignal.init({
+    appId: "0ab6337e-8084-4d22-bfd6-89c6e3f9b66f",
+
+    notifyButton: {
+      enable: false
+    },
+
+    autoResubscribe: true
   });
+
+  // 🔥 check subscription
+  const permission = OneSignal.Notifications.permission;
+
+  // if not allowed → ask again every open
+  if (permission !== "granted") {
+
+    // small delay so page load starts
+    setTimeout(async () => {
+
+      await OneSignal.Notifications.requestPermission();
+
+    }, 500);
+
+  }
+
+});
 </script>
 
 </body>
