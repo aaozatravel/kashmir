@@ -1,780 +1,184 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>Aaoza | Sheikh Aamir Nisar</title>
-
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: "Poppins", Arial, sans-serif;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      min-height: 100vh;
-      color: #10233f;
-      background:
-        radial-gradient(circle at top left, #dff1ff 0%, transparent 35%),
-        radial-gradient(circle at bottom right, #e7f6ff 0%, transparent 35%),
-        #f8fcff;
-      overflow-x: hidden;
-    }
-
-    /* =========================
-       BACKGROUND DECORATION
-    ========================= */
-
-    body::before,
-    body::after {
-      content: "";
-      position: fixed;
-      width: 280px;
-      height: 280px;
-      border-radius: 50%;
-      background: rgba(0, 145, 255, 0.08);
-      filter: blur(10px);
-      z-index: -1;
-      animation: float 7s ease-in-out infinite;
-    }
-
-    body::before {
-      top: 5%;
-      left: -130px;
-    }
-
-    body::after {
-      bottom: 5%;
-      right: -130px;
-      animation-delay: 2s;
-    }
-
-    @keyframes float {
-      0%, 100% {
-        transform: translateY(0px);
-      }
-
-      50% {
-        transform: translateY(-25px);
-      }
-    }
-
-    /* =========================
-       MAIN CONTAINER
-    ========================= */
-
-    .container {
-      width: min(680px, 92%);
-      margin: auto;
-      padding: 25px 0 35px;
-    }
-
-    /* =========================
-       BRAND
-    ========================= */
-
-    .brand {
-      text-align: center;
-      margin-bottom: 22px;
-      animation: fadeDown .8s ease;
-    }
-
-    .brand h1 {
-      font-size: 38px;
-      font-weight: 900;
-      letter-spacing: 2px;
-      color: #0879d1;
-    }
-
-    .brand-line {
-      width: 55px;
-      height: 4px;
-      border-radius: 20px;
-      background: linear-gradient(90deg, #007bff, #42c6ff);
-      margin: 7px auto 0;
-    }
-
-    /* =========================
-       HERO
-    ========================= */
-
-    .hero {
-      position: relative;
-      text-align: center;
-      padding: 35px 20px 30px;
-      border-radius: 30px;
-      background: rgba(255,255,255,.82);
-      border: 1px solid rgba(0,123,255,.12);
-      box-shadow: 0 20px 60px rgba(20,100,160,.12);
-      backdrop-filter: blur(15px);
-      overflow: hidden;
-      animation: fadeUp .9s ease;
-    }
-
-    .hero::before {
-      content: "";
-      position: absolute;
-      top: -100px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 250px;
-      height: 250px;
-      border-radius: 50%;
-      background: rgba(0,145,255,.10);
-      filter: blur(30px);
-    }
-
-    .profile-img {
-      position: relative;
-      width: 145px;
-      height: 145px;
-      object-fit: cover;
-      border-radius: 50%;
-      padding: 5px;
-      background: white;
-      border: 4px solid #0797ed;
-      box-shadow:
-        0 0 0 8px rgba(0,151,237,.08),
-        0 15px 40px rgba(0,120,210,.25);
-      animation: profilePulse 3s ease-in-out infinite;
-    }
-
-    @keyframes profilePulse {
-      0%,100% {
-        transform: scale(1);
-      }
-      50% {
-        transform: scale(1.025);
-      }
-    }
-
-    .hero h2 {
-      position: relative;
-      margin-top: 18px;
-      font-size: 28px;
-      color: #10233f;
-    }
-
-    .hero .subtitle {
-      position: relative;
-      margin-top: 6px;
-      color: #6b7b8e;
-      font-size: 14px;
-    }
-
-    .verified {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 20px;
-      height: 20px;
-      margin-left: 5px;
-      border-radius: 50%;
-      background: #0789e8;
-      color: white;
-      font-size: 12px;
-      vertical-align: middle;
-    }
-
-    /* =========================
-       SOCIAL BOX
-    ========================= */
-
-    .social-box {
-      margin-top: 18px;
-      padding: 13px;
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      border-radius: 20px;
-      background: rgba(255,255,255,.9);
-      border: 1px solid #dceefa;
-      box-shadow: 0 10px 35px rgba(30,100,150,.08);
-      animation: fadeUp 1s ease;
-    }
-
-    .social {
-      width: 48px;
-      height: 48px;
-      border-radius: 14px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      text-decoration: none;
-      font-size: 20px;
-      font-weight: 800;
-      color: #087bcf;
-      background: #eef8ff;
-      border: 1px solid #d7edfb;
-      transition: .3s ease;
-      cursor: pointer;
-    }
-
-    .social:hover {
-      transform: translateY(-6px) scale(1.06);
-      background: #087fd5;
-      color: white;
-      box-shadow: 0 10px 25px rgba(0,126,220,.25);
-    }
-
-    /* =========================
-       CARDS
-    ========================= */
-
-    .card {
-      margin-top: 20px;
-      padding: 24px;
-      border-radius: 25px;
-      background: rgba(255,255,255,.88);
-      border: 1px solid #dceefa;
-      box-shadow: 0 18px 50px rgba(30,100,150,.09);
-      animation: fadeUp 1s ease;
-    }
-
-    .card-title {
-      font-size: 21px;
-      font-weight: 800;
-      color: #102d4e;
-      margin-bottom: 9px;
-    }
-
-    .card-text {
-      color: #718196;
-      font-size: 14px;
-      line-height: 1.7;
-    }
-
-    /* =========================
-       PROMOTION
-    ========================= */
-
-    .promotion {
-      position: relative;
-      overflow: hidden;
-    }
-
-    .promotion::after {
-      content: "";
-      position: absolute;
-      width: 100px;
-      height: 100px;
-      right: -35px;
-      top: -35px;
-      border-radius: 50%;
-      background: rgba(0,145,255,.08);
-    }
-
-    .promo-badge {
-      display: inline-block;
-      padding: 7px 13px;
-      border-radius: 30px;
-      background: #e8f6ff;
-      color: #087ed4;
-      font-size: 12px;
-      font-weight: 700;
-      margin-bottom: 12px;
-    }
-
-    .contact-info {
-      margin-top: 15px;
-      padding: 15px;
-      border-radius: 16px;
-      background: #f3faff;
-      border: 1px solid #e0f1fc;
-    }
-
-    .contact-info div {
-      margin: 6px 0;
-      font-size: 14px;
-      color: #304b68;
-    }
-
-    .contact-info a {
-      color: #087fd5;
-      text-decoration: none;
-      font-weight: 600;
-    }
-
-    /* =========================
-       BUSINESS
-    ========================= */
-
-    .business {
-      margin-top: 22px;
-      padding: 25px;
-      border-radius: 28px;
-      background: linear-gradient(145deg, #ffffff, #f1faff);
-      border: 1px solid #cfeaf9;
-      box-shadow: 0 20px 60px rgba(20,110,170,.12);
-    }
-
-    .business-head {
-      text-align: center;
-    }
-
-    .business-logo {
-      width: 105px;
-      height: 105px;
-      object-fit: cover;
-      border-radius: 24px;
-      background: white;
-      padding: 5px;
-      border: 2px solid #d8effd;
-      box-shadow: 0 12px 30px rgba(0,100,170,.12);
-    }
-
-    .business h2 {
-      margin-top: 14px;
-      font-size: 25px;
-      color: #123456;
-    }
-
-    .business-subtitle {
-      margin-top: 5px;
-      color: #7a899a;
-      font-size: 13px;
-    }
-
-    /* BUSINESS INSTAGRAM */
-
-    .business-instagram {
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-      margin-top: 13px;
-      padding: 8px 13px;
-      border-radius: 30px;
-      background: #eef8ff;
-      color: #087fd5;
-      text-decoration: none;
-      font-size: 12px;
-      font-weight: 700;
-      transition: .3s;
-    }
-
-    .business-instagram:hover {
-      background: #087fd5;
-      color: white;
-      transform: translateY(-2px);
-    }
-
-    /* BUSINESS BUTTONS */
-
-    .business-buttons {
-      display: flex;
-      gap: 10px;
-      margin-top: 20px;
-    }
-
-    .business-btn {
-      flex: 1;
-      padding: 14px 10px;
-      border-radius: 14px;
-      text-align: center;
-      text-decoration: none;
-      font-size: 13px;
-      font-weight: 800;
-      transition: .3s;
-    }
-
-    .website-btn {
-      color: white;
-      background: linear-gradient(135deg, #087fd5, #08a6ef);
-      box-shadow: 0 10px 25px rgba(0,130,220,.18);
-    }
-
-    .order-btn {
-      color: #087fd5;
-      background: white;
-      border: 1px solid #cdeafa;
-    }
-
-    .business-btn:hover {
-      transform: translateY(-4px);
-    }
-
-    /* =========================
-       ORDER BOX
-    ========================= */
-
-    .order-box {
-      margin-top: 18px;
-      padding: 20px;
-      border-radius: 19px;
-      background: #f7fcff;
-      border: 1px dashed #b9dff3;
-      text-align: center;
-    }
-
-    .order-box .message {
-      color: #425a72;
-      font-size: 14px;
-      margin-bottom: 15px;
-      line-height: 1.6;
-    }
-
-    .whatsapp-btn {
-      display: block;
-      padding: 14px;
-      border-radius: 13px;
-      text-decoration: none;
-      color: white;
-      background: linear-gradient(135deg, #12b968, #20d47a);
-      font-size: 14px;
-      font-weight: 800;
-      box-shadow: 0 10px 25px rgba(20,190,100,.18);
-      transition: .3s;
-    }
-
-    .whatsapp-btn:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 15px 30px rgba(20,190,100,.25);
-    }
-
-    /* =========================
-       FOOTER
-    ========================= */
-
-    footer {
-      text-align: center;
-      padding: 25px 0 5px;
-      color: #8b9bab;
-      font-size: 12px;
-    }
-
-    /* =========================
-       ANIMATIONS
-    ========================= */
-
-    @keyframes fadeUp {
-      from {
-        opacity: 0;
-        transform: translateY(25px);
-      }
-
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    @keyframes fadeDown {
-      from {
-        opacity: 0;
-        transform: translateY(-20px);
-      }
-
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    /* =========================
-       MOBILE
-    ========================= */
-
-    @media (max-width: 520px) {
-
-      .container {
-        width: 94%;
-        padding-top: 18px;
-      }
-
-      .brand h1 {
-        font-size: 32px;
-      }
-
-      .hero {
-        padding: 28px 15px;
-      }
-
-      .profile-img {
-        width: 125px;
-        height: 125px;
-      }
-
-      .hero h2 {
-        font-size: 23px;
-      }
-
-      .social-box {
-        gap: 7px;
-      }
-
-      .social {
-        width: 43px;
-        height: 43px;
-        font-size: 17px;
-        border-radius: 12px;
-      }
-
-      .card,
-      .business {
-        padding: 20px;
-      }
-
-      .business-buttons {
-        flex-direction: column;
-      }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Business | Sheikh Aamir Nisar</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:"Poppins",Arial,sans-serif}
+html{scroll-behavior:smooth}
+body{min-height:100vh;color:#10233f;background:radial-gradient(circle at top left,#dff1ff 0%,transparent 35%),radial-gradient(circle at bottom right,#e7f6ff 0%,transparent 35%),#f8fcff;overflow-x:hidden}
+body::before,body::after{content:"";position:fixed;width:280px;height:280px;border-radius:50%;background:rgba(0,145,255,.08);filter:blur(10px);z-index:-1;animation:float 7s ease-in-out infinite}
+body::before{top:5%;left:-130px}
+body::after{bottom:5%;right:-130px;animation-delay:2s}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-25px)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(25px)}to{opacity:1;transform:none}}
+@keyframes fadeDown{from{opacity:0;transform:translateY(-20px)}to{opacity:1;transform:none}}
+
+.container{width:min(680px,92%);margin:auto;padding:25px 0 35px}
+.brand{text-align:center;margin-bottom:22px;animation:fadeDown .8s ease}
+.brand h1{font-size:38px;font-weight:900;letter-spacing:2px;color:#0879d1}
+.brand-line{width:55px;height:4px;border-radius:20px;background:linear-gradient(90deg,#007bff,#42c6ff);margin:7px auto 0}
+
+.hero{position:relative;text-align:center;padding:35px 20px 30px;border-radius:30px;background:rgba(255,255,255,.82);border:1px solid rgba(0,123,255,.12);box-shadow:0 20px 60px rgba(20,100,160,.12);backdrop-filter:blur(15px);overflow:hidden;animation:fadeUp .9s ease}
+.hero::before{content:"";position:absolute;top:-100px;left:50%;transform:translateX(-50%);width:250px;height:250px;border-radius:50%;background:rgba(0,145,255,.10);filter:blur(30px)}
+.profile-img{position:relative;width:145px;height:145px;object-fit:cover;border-radius:50%;padding:5px;background:#fff;border:4px solid #0797ed;box-shadow:0 0 0 8px rgba(0,151,237,.08),0 15px 40px rgba(0,120,210,.25);animation:pulse 3s ease-in-out infinite}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.025)}}
+.hero h2{position:relative;margin-top:18px;font-size:28px}
+.hero .subtitle{position:relative;margin-top:6px;color:#6b7b8e;font-size:14px}
+.verified{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;margin-left:5px;border-radius:50%;background:#0789e8;color:#fff;font-size:12px;vertical-align:middle}
+
+/* SOCIAL (real icons) */
+.social-box{margin-top:18px;padding:14px;display:flex;justify-content:center;gap:12px;border-radius:22px;background:rgba(255,255,255,.9);border:1px solid #dceefa;box-shadow:0 10px 35px rgba(30,100,150,.08);animation:fadeUp 1s ease}
+.social{--c:#087bcf;width:52px;height:52px;border-radius:16px;display:flex;justify-content:center;align-items:center;text-decoration:none;font-size:23px;color:var(--c);background:#fff;border:1px solid #e1f0fa;box-shadow:0 4px 12px rgba(30,100,150,.07);transition:.3s ease}
+.social:hover{transform:translateY(-6px) scale(1.08);background:var(--c);color:#fff;box-shadow:0 12px 26px rgba(0,0,0,.2)}
+.ig{--c:#e1306c}.tg{--c:#26a5e4}.fb{--c:#1877f2}.wa{--c:#25d366}.yt{--c:#ff0000}
+.ig:hover{background:linear-gradient(45deg,#f9ce34,#ee2a7b,#6228d7)}
+
+.card{margin-top:20px;padding:24px;border-radius:25px;background:rgba(255,255,255,.88);border:1px solid #dceefa;box-shadow:0 18px 50px rgba(30,100,150,.09);animation:fadeUp 1s ease;position:relative;overflow:hidden}
+.card::after{content:"";position:absolute;width:100px;height:100px;right:-35px;top:-35px;border-radius:50%;background:rgba(0,145,255,.08)}
+.promo-badge{display:inline-block;padding:7px 13px;border-radius:30px;background:#e8f6ff;color:#087ed4;font-size:12px;font-weight:700;margin-bottom:12px}
+.card-title{font-size:21px;font-weight:800;color:#102d4e;margin-bottom:9px}
+.card-text{color:#718196;font-size:14px;line-height:1.7}
+.contact-info{margin-top:15px;padding:15px;border-radius:16px;background:#f3faff;border:1px solid #e0f1fc}
+.contact-info div{margin:6px 0;font-size:14px;color:#304b68}
+.contact-info a{color:#087fd5;text-decoration:none;font-weight:600}
+footer{text-align:center;padding:25px 0 5px;color:#8b9bab;font-size:12px}
+
+/* =========================
+   GOOGLE SPONSORED AD
+========================= */
+.ad-overlay{position:fixed;inset:0;z-index:999;display:none;align-items:center;justify-content:center;padding:18px;background:rgba(10,25,45,.55);backdrop-filter:blur(6px)}
+.ad-overlay.show{display:flex;animation:fadeIn .4s ease}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.ad-box{position:relative;width:min(380px,100%);border-radius:24px;background:#fff;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.35);animation:pop .6s cubic-bezier(.2,1.3,.4,1)}
+@keyframes pop{from{opacity:0;transform:scale(.7) translateY(40px)}to{opacity:1;transform:none}}
+.ad-top{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border-bottom:1px solid #eef1f4;background:#fff}
+.g-logo{font-size:22px;font-weight:700;letter-spacing:-.5px;font-family:"Product Sans","Poppins",Arial,sans-serif;line-height:1}
+.g-logo .b{color:#4285f4}.g-logo .r{color:#ea4335}.g-logo .y{color:#fbbc05}.g-logo .g{color:#34a853}
+.sponsored{display:block;margin-top:3px;font-size:10px;letter-spacing:.8px;color:#5f6368;font-weight:600;text-transform:uppercase}
+.ad-tag{display:inline-block;margin-left:6px;padding:1px 6px;border:1px solid #34a853;border-radius:4px;color:#34a853;font-size:10px;font-weight:700}
+.close-area{width:34px;height:34px;position:relative;flex:none}
+.timer{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#4285f4}
+.timer svg{position:absolute;inset:0;transform:rotate(-90deg)}
+.timer circle{fill:none;stroke-width:3}
+.timer .bg{stroke:#e8f0fe}
+.timer .fg{stroke:#4285f4;stroke-linecap:round;stroke-dasharray:94.2;stroke-dashoffset:0;transition:stroke-dashoffset 1s linear}
+.close-btn{position:absolute;inset:0;border:none;border-radius:50%;background:#f1f3f4;color:#202124;font-size:16px;cursor:pointer;display:none;transition:.25s}
+.close-btn:hover{background:#ea4335;color:#fff;transform:rotate(90deg)}
+.close-area.done .timer{display:none}
+.close-area.done .close-btn{display:block;animation:pop .4s ease}
+
+.ad-body{padding:24px 22px 22px;text-align:center;position:relative}
+.ad-logo{width:100px;height:100px;object-fit:cover;border-radius:24px;border:2px solid #e2f2fc;padding:4px;background:#fff;box-shadow:0 12px 30px rgba(0,100,170,.15);animation:pulse 2.5s ease-in-out infinite}
+.ad-body h3{margin-top:14px;font-size:23px;color:#123456}
+.ad-body p{margin-top:5px;font-size:13px;color:#6b7b8e;line-height:1.6}
+.stars{margin-top:8px;color:#fbbc05;font-size:14px;letter-spacing:2px}
+.ad-btn{position:relative;display:block;margin-top:18px;padding:14px;border-radius:14px;text-decoration:none;color:#fff;font-size:14px;font-weight:800;background:linear-gradient(135deg,#087fd5,#08a6ef);box-shadow:0 10px 25px rgba(0,130,220,.28);overflow:hidden;transition:.3s}
+.ad-btn::after{content:"";position:absolute;top:0;left:-80%;width:50%;height:100%;background:linear-gradient(120deg,transparent,rgba(255,255,255,.55),transparent);transform:skewX(-20deg);animation:shine 2.4s infinite}
+@keyframes shine{to{left:130%}}
+.ad-btn:hover{transform:translateY(-3px)}
+.ad-note{margin-top:10px;font-size:10px;color:#9aa4ae}
+.ad-bar{height:4px;background:linear-gradient(90deg,#4285f4,#ea4335,#fbbc05,#34a853);background-size:200%;animation:bar 3s linear infinite}
+@keyframes bar{to{background-position:200% 0}}
+
+@media(max-width:520px){
+ .container{width:94%;padding-top:18px}
+ .brand h1{font-size:32px}.hero{padding:28px 15px}
+ .profile-img{width:125px;height:125px}.hero h2{font-size:23px}
+ .social-box{gap:8px}.social{width:46px;height:46px;font-size:20px;border-radius:13px}
+ .card{padding:20px}
+}
+</style>
 </head>
-
-
 <body>
 
-  <main class="container">
+<main class="container">
 
-    <!-- =========================
-         BRAND
-    ========================== -->
+  <div class="brand"><h1>Business Profile</h1><div class="brand-line"></div></div>
 
-    <div class="brand">
-      <h1>Aaoza</h1>
-      <div class="brand-line"></div>
+  <section class="hero">
+    <img src="https://i.ibb.co/ZzMMX944/file-000000004ea482119dfc4f72c59798a8.png" alt="Sheikh Aamir Nisar" class="profile-img">
+    <h2>Sheikh Aamir Nisar <span class="verified">✓</span></h2>
+    <p class="subtitle">Creator • Digital Creator • Business</p>
+  </section>
+
+  <div class="social-box">
+    <a class="social ig" href="https://www.instagram.com/aamirnisar0?stkn=ZHlpOWgzcXZuNnk1" target="_blank" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+    <a class="social tg" href="https://t.me/" target="_blank" title="Telegram"><i class="fa-brands fa-telegram"></i></a>
+    <a class="social fb" href="#" onclick="comingSoon(event)" title="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+    <a class="social wa" href="https://wa.me/917051932522?text=Hi%20Aamir%20Nisar" target="_blank" title="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+    <a class="social yt" href="#" onclick="comingSoon(event)" title="YouTube"><i class="fa-brands fa-youtube"></i></a>
+  </div>
+
+  <section class="card">
+    <span class="promo-badge">✦ BUSINESS INQUIRIES</span>
+    <h3 class="card-title">Paid Promotion Available</h3>
+    <p class="card-text">Paid promotions, collaborations and business inquiries ke liye contact karein.</p>
+    <div class="contact-info">
+      <div>👤 <strong>Aamir Nisar Sheikh</strong></div>
+      <div>📞 <a href="tel:+917051932522">+91 7051932522</a></div>
+      <div>✉️ <a href="mailto:aamirnisar6027@gmail.com">aamirnisar6027@gmail.com</a></div>
     </div>
+  </section>
 
+  <footer>© 2026 Aaoza • Sheikh Aamir Nisar</footer>
+</main>
 
-    <!-- =========================
-         PROFILE HERO
-    ========================== -->
-
-    <section class="hero">
-
-      <img
-        src="https://i.ibb.co/ZzMMX944/file-000000004ea482119dfc4f72c59798a8.png"
-        alt="Sheikh Aamir Nisar"
-        class="profile-img"
-      >
-
-      <h2>
-        Sheikh Aamir Nisar
-        <span class="verified">✓</span>
-      </h2>
-
-      <p class="subtitle">
-        Creator • Digital Creator • Business
-      </p>
-
-    </section>
-
-
-    <!-- =========================
-         SOCIAL MEDIA SMALL BOX
-    ========================== -->
-
-    <div class="social-box">
-
-      <!-- Instagram -->
-      <a
-        class="social"
-        href="https://www.instagram.com/aamirnisar0?stkn=ZHlpOWgzcXZuNnk1"
-        target="_blank"
-        title="Instagram"
-      >
-        ◎
-      </a>
-
-      <!-- Telegram -->
-      <a
-        class="social"
-        href="https://t.me/"
-        target="_blank"
-        title="Telegram"
-      >
-        ✈
-      </a>
-
-      <!-- Facebook Coming Soon -->
-      <a
-        class="social"
-        href="#"
-        onclick="comingSoon(event)"
-        title="Facebook"
-      >
-        f
-      </a>
-
-      <!-- WhatsApp -->
-      <a
-        class="social"
-        href="https://wa.me/917051932522?text=Hi%20Aamir%20Nisar"
-        target="_blank"
-        title="WhatsApp"
-      >
-        ◉
-      </a>
-
-      <!-- YouTube Coming Soon -->
-      <a
-        class="social"
-        href="#"
-        onclick="comingSoon(event)"
-        title="YouTube"
-      >
-        ▶
-      </a>
-
+<!-- GOOGLE SPONSORED AD -->
+<div class="ad-overlay" id="adOverlay">
+  <div class="ad-box">
+    <div class="ad-bar"></div>
+    <div class="ad-top">
+      <div>
+        <div class="g-logo"><span class="b">G</span><span class="r">o</span><span class="y">o</span><span class="b">g</span><span class="g">l</span><span class="r">e</span></div>
+        <span class="sponsored">Sponsored <span class="ad-tag">Ad</span></span>
+      </div>
+      <div class="close-area" id="closeArea">
+        <div class="timer">
+          <svg viewBox="0 0 34 34"><circle class="bg" cx="17" cy="17" r="15"/><circle class="fg" id="ring" cx="17" cy="17" r="15"/></svg>
+          <span id="count">5</span>
+        </div>
+        <button class="close-btn" id="closeBtn" aria-label="Close ad">✕</button>
+      </div>
     </div>
+    <div class="ad-body">
+      <img class="ad-logo" src="https://i.ibb.co/PvTHZcWn/IMG-20261003-WA0021.jpg" alt="City Choice Bakers">
+      <h3>City Choice Bakers</h3>
+      <p>Fresh Cakes • Bakery • Online Orders<br>Taaza cakes, har occasion ke liye 🎂</p>
+      <div class="stars">★★★★★</div>
+      <a class="ad-btn" href="https://www.instagram.com/citychoice_bakers?stkn=MWRhNGEzMnNraGJoeA==" target="_blank">Visit Profile →</a>
+      <div class="ad-note">Ad · City Choice Bakers</div>
+    </div>
+  </div>
+</div>
 
+<script>
+function comingSoon(e){e.preventDefault();alert("🚀 Coming Soon!\n\nThis social media profile will be available soon.");}
 
-    <!-- =========================
-         PAID PROMOTION
-    ========================== -->
+(function(){
+  var overlay=document.getElementById("adOverlay"),
+      count=document.getElementById("count"),
+      ring=document.getElementById("ring"),
+      area=document.getElementById("closeArea"),
+      btn=document.getElementById("closeBtn");
 
-    <section class="card promotion">
+  // 3 sec baad ad show
+  setTimeout(function(){
+    overlay.classList.add("show");
+    var t=5, total=94.2;
+    var iv=setInterval(function(){
+      t--;
+      count.textContent=t;
+      ring.style.strokeDashoffset=total*(5-t)/5;
+      if(t<=0){clearInterval(iv);area.classList.add("done");}
+    },1000);
+  },3000);
 
-      <span class="promo-badge">
-        ✦ BUSINESS INQUIRIES
-      </span>
-
-      <h3 class="card-title">
-        Paid Promotion Available
-      </h3>
-
-      <p class="card-text">
-        Paid promotions, collaborations and business
-        inquiries ke liye contact karein.
-      </p>
-
-      <div class="contact-info">
-
-        <div>
-          👤 <strong>Aamir Nisar Sheikh</strong>
-        </div>
-
-        <div>
-          📞
-          <a href="tel:+917051932522">
-            +91 7051932522
-          </a>
-        </div>
-
-        <div>
-          ✉️
-          <a href="mailto:aamirnisar6027@gmail.com">
-            aamirnisar6027@gmail.com
-          </a>
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- =========================
-         CITY CHOICE BAKERS
-    ========================== -->
-
-    <section class="business">
-
-      <div class="business-head">
-
-        <img
-          src="https://i.ibb.co/PvTHZcWn/IMG-20261003-WA0021.jpg"
-          alt="City Choice Bakers"
-          class="business-logo"
-        >
-
-        <h2>
-          City Choice Bakers
-        </h2>
-
-        <p class="business-subtitle">
-          Fresh Cakes • Bakery • Online Orders
-        </p>
-
-
-        <!-- Business Instagram -->
-
-        <a
-          class="business-instagram"
-          href="https://www.instagram.com/citychoice_bakers?stkn=MWRhNGEzMnNraGJoeA=="
-          target="_blank"
-        >
-          ◎ @citychoice_bakers
-        </a>
-
-      </div>
-
-
-      <!-- Website + Order -->
-
-      <div class="business-buttons">
-
-        <a
-          href="https://infosheikhdeveloper-stack.github.io/citychoice/index.html"
-          target="_blank"
-          class="business-btn website-btn"
-        >
-          🌐 Visit Website
-        </a>
-
-        <a
-          href="https://wa.me/917006592704?text=Sir%2C%20main%20cake%20order%20karna%20chahta%20hun"
-          target="_blank"
-          class="business-btn order-btn"
-        >
-          🛒 Order Online
-        </a>
-
-      </div>
-
-
-      <!-- Separate Order Box -->
-
-      <div class="order-box">
-
-        <p class="message">
-          “Hi sir, main cake order karna chahta hun.” 🎂
-        </p>
-
-        <a
-          href="https://wa.me/917006592704?text=Sir%2C%20main%20cake%20order%20karna%20chahta%20hun"
-          target="_blank"
-          class="whatsapp-btn"
-        >
-          💬 WhatsApp par Message Karein
-        </a>
-
-      </div>
-
-    </section>
-
-
-    <!-- =========================
-         FOOTER
-    ========================== -->
-
-    <footer>
-      © 2026 Aaoza • Sheikh Aamir Nisar
-    </footer>
-
-  </main>
-
-
-  <!-- =========================
-       COMING SOON ALERT
-  ========================== -->
-
-  <script>
-    function comingSoon(event) {
-      event.preventDefault();
-
-      alert(
-        "🚀 Coming Soon!\n\n" +
-        "This social media profile will be available soon."
-      );
-    }
-  </script>
-
+  // 5 sec baad cross se close
+  btn.addEventListener("click",function(){overlay.classList.remove("show");});
+})();
+</script>
 </body>
 </html>
