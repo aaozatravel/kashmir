@@ -1,0 +1,3228 @@
+
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>i.Box18 — Built Different. Worn Different.</title>
+  <!-- Google Fonts: Cinzel & Syne for Dark Luxury Rock Display, Plus Jakarta Sans for UI -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            obsidian: '#080808',
+            charcoal: '#111111',
+            cardbg: '#171717',
+            fire: '#FF2727',
+            ember: '#FF6B00',
+            muted: '#999999',
+          },
+          fontFamily: {
+            display: ['Syne', 'sans-serif'],
+            rock: ['Cinzel', 'serif'],
+            sans: ['Plus Jakarta Sans', 'sans-serif'],
+          },
+          boxShadow: {
+            'fire-glow': '0 0 24px rgba(255, 39, 39, 0.45)',
+            'ember-glow': '0 0 30px rgba(255, 107, 0, 0.35)',
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    /* ==========================================================================
+       i.Box18 — DARK LUXURY + ROCK + FIRE CUSTOM STYLES
+       ========================================================================== */
+    :root {
+      --bg-primary: #080808;
+      --bg-secondary: #111111;
+      --bg-card: #171717;
+      --text-primary: #FFFFFF;
+      --text-secondary: #999999;
+      --accent-fire: #FF2727;
+      --accent-orange: #FF6B00;
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #080808;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #2b2b2b;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #FF2727;
+    }
+
+    /* Hide scrollbar utility */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    /* Fire Gradients & Typography */
+    .fire-gradient {
+      background: linear-gradient(135deg, #FF2727 0%, #FF6B00 100%);
+    }
+    .fire-gradient-hover {
+      background: linear-gradient(135deg, #FF2727 0%, #FF6B00 100%);
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+    .fire-gradient-hover:hover {
+      box-shadow: 0 0 28px rgba(255, 39, 39, 0.6), 0 0 12px rgba(255, 107, 0, 0.4);
+      transform: translateY(-1px);
+    }
+    .fire-text-gradient {
+      background: linear-gradient(135deg, #FFFFFF 15%, #FF6B00 65%, #FF2727 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .fire-border-glow {
+      border: 1px solid rgba(255, 39, 39, 0.35);
+      box-shadow: inset 0 0 20px rgba(255, 39, 39, 0.08);
+    }
+
+    /* Glassmorphism */
+    .glass-dark {
+      background: rgba(14, 14, 14, 0.82);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    }
+    .glass-bottom-nav {
+      background: rgba(12, 12, 12, 0.92);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    /* Ambient Ember Canvas */
+    #ember-canvas {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.45;
+    }
+
+    /* View Transitions */
+    .view-animate {
+      animation: fadeSlideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    @keyframes fadeSlideUp {
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Shake validation animation */
+    @keyframes shakeX {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-6px); }
+      40%, 80% { transform: translateX(6px); }
+    }
+    .shake-anim {
+      animation: shakeX 0.35s ease-in-out;
+    }
+
+    /* Cart Badge Pop */
+    @keyframes badgePop {
+      0% { transform: scale(1); }
+      45% { transform: scale(1.38); }
+      100% { transform: scale(1); }
+    }
+    .badge-pop {
+      animation: badgePop 0.32s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    /* Product Card Hover */
+    .product-card {
+      background: #171717;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    .product-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(255, 39, 39, 0.45);
+      box-shadow: 0 14px 34px -10px rgba(255, 39, 39, 0.22);
+    }
+    .product-card img {
+      transition: transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .product-card:hover img {
+      transform: scale(1.06);
+    }
+
+    /* Skeleton Shimmer */
+    .skeleton {
+      background: linear-gradient(90deg, #151515 25%, #222222 50%, #151515 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.4s infinite;
+    }
+    @keyframes shimmer {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+
+    /* Bottom Nav Active Indicator */
+    .nav-btn.active {
+      color: #FFFFFF;
+    }
+    .nav-btn.active .nav-icon-wrap {
+      color: #FF2727;
+      filter: drop-shadow(0 0 10px rgba(255, 39, 39, 0.85));
+    }
+    .nav-btn.active::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      width: 28px;
+      height: 3px;
+      border-radius: 0 0 6px 6px;
+      background: linear-gradient(90deg, #FF2727, #FF6B00);
+      box-shadow: 0 2px 12px #FF2727;
+    }
+  </style>
+</head>
+<body class="bg-obsidian text-white min-h-screen flex flex-col selection:bg-fire selection:text-white">
+
+  <!-- Ambient Fire Ember Canvas -->
+  <canvas id="ember-canvas"></canvas>
+
+  <!-- ==========================================================================
+       STICKY TOP HEADER
+       ========================================================================== -->
+  <header class="sticky top-0 z-40 glass-dark">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 sm:h-18 flex items-center justify-between gap-3">
+      <!-- Brand Logo (Clicking 5x rapidly opens hidden Admin Login Modal) -->
+      <div class="flex items-center gap-3 select-none">
+        <button id="brand-logo-btn" type="button" aria-label="i.Box18 Home" class="flex items-center gap-2.5 group focus:outline-none text-left">
+          <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl fire-gradient flex items-center justify-center shadow-fire-glow relative overflow-hidden">
+            <svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2c.5 3.5-2 5.5-2 8.5a4 4 0 0 0 8 0c0-2-1-3.5-1-3.5s2.5 1.5 2.5 5.5a7.5 7.5 0 0 1-15 0c0-4.5 3.5-7.5 7.5-10.5z"/>
+            </svg>
+          </div>
+          <div>
+            <span class="font-display font-extrabold text-xl sm:text-2xl tracking-tight text-white group-hover:text-fire transition-colors">
+              i.Box<span class="text-fire">18</span>
+            </span>
+            <span class="hidden sm:block text-[10px] uppercase tracking-[0.24em] text-muted leading-none">
+              Men's Luxury Streetwear
+            </span>
+          </div>
+        </button>
+      </div>
+
+      <!-- Desktop Inline Navigation Links (Clean & Minimal) -->
+      <nav class="hidden lg:flex items-center gap-7 text-sm font-semibold tracking-wide text-muted">
+        <button onclick="App.navigate('home')" data-top-nav="home" class="hover:text-white transition-colors py-1">HOME</button>
+        <button onclick="App.navigate('category', { category: 'All' })" data-top-nav="category" class="hover:text-white transition-colors py-1">COLLECTION</button>
+        <button onclick="App.navigate('category', { category: 'Hoodies' })" class="hover:text-white transition-colors py-1">HOODIES</button>
+        <button onclick="App.navigate('category', { category: 'Shoes' })" class="hover:text-white transition-colors py-1">FOOTWEAR</button>
+        <button onclick="App.navigate('orders')" data-top-nav="orders" class="hover:text-white transition-colors py-1">YOUR ORDERS</button>
+        <button onclick="App.navigate('account')" data-top-nav="account" class="hover:text-white transition-colors py-1">ACCOUNT</button>
+      </nav>
+
+      <!-- Right Action Buttons: Search & Cart -->
+      <div class="flex items-center gap-2 sm:gap-3">
+        <!-- Search Trigger -->
+        <button onclick="App.openSearchOverlay()" aria-label="Search Products" class="p-2.5 sm:px-3.5 sm:py-2 rounded-xl bg-cardbg hover:bg-neutral-800 border border-white/10 text-white/90 hover:text-white transition-all flex items-center gap-2">
+          <svg class="w-5 h-5 text-fire" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <circle cx="11" cy="11" r="8"></circle>
+            <path d="m21 21-4.3-4.3"></path>
+          </svg>
+          <span class="hidden md:inline text-xs font-medium text-muted">Search menswear...</span>
+        </button>
+
+        <!-- Cart Button with Live Item Count -->
+        <button onclick="App.navigate('cart')" aria-label="Shopping Cart" class="relative p-2.5 sm:px-4 sm:py-2 rounded-xl bg-cardbg hover:bg-neutral-800 border border-white/10 hover:border-fire/50 text-white transition-all flex items-center gap-2 group">
+          <svg class="w-5 h-5 text-white group-hover:text-fire transition-colors" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path>
+            <path d="M3 6h18"></path>
+            <path d="M16 10a4 4 0 0 1-8 0"></path>
+          </svg>
+          <span class="hidden sm:inline text-xs font-bold tracking-wider uppercase">Bag</span>
+          <span id="header-cart-badge" class="min-w-[20px] h-5 px-1.5 rounded-full fire-gradient text-[11px] font-extrabold text-white flex items-center justify-center shadow-fire-glow">
+            0
+          </span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==========================================================================
+       MAIN DYNAMIC VIEW CONTAINER
+       ========================================================================== -->
+  <main id="app-main" class="relative z-10 flex-1 pb-24 lg:pb-14">
+    <!-- Content dynamically rendered by script.js -->
+  </main>
+
+  <!-- ==========================================================================
+       PREMIUM FOOTER (Desktop & Mobile Bottom Clearance)
+       ========================================================================== -->
+  <footer class="relative z-10 bg-charcoal border-t border-white/5 pb-24 lg:pb-10 pt-12 px-4 sm:px-6 mt-auto">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
+      <div class="md:col-span-2">
+        <div class="flex items-center gap-2.5 mb-3">
+          <div class="w-8 h-8 rounded-lg fire-gradient flex items-center justify-center">
+            <span class="font-display font-black text-sm">18</span>
+          </div>
+          <span class="font-display font-extrabold text-xl tracking-tight">i.Box<span class="text-fire">18</span></span>
+        </div>
+        <p class="text-sm text-muted max-w-md leading-relaxed">
+          Built Different. Worn Different. Engineered exclusively for men who command attention—fusing dark luxury silhouettes, rock attitude, and fiery precision.
+        </p>
+        <div class="mt-4 inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-cardbg border border-white/10 text-xs text-muted">
+          <span class="w-2 h-2 rounded-full bg-fire animate-pulse"></span>
+          Exclusively Men's Fashion • Local Vault Storage Active
+        </div>
+      </div>
+
+      <div>
+        <h4 class="font-display font-bold text-xs uppercase tracking-widest text-white mb-3">Categories</h4>
+        <ul class="space-y-2 text-sm text-muted">
+          <li><button onclick="App.navigate('category', { category: 'Hoodies' })" class="hover:text-fire transition-colors">Hoodies</button></li>
+          <li><button onclick="App.navigate('category', { category: 'Trousers' })" class="hover:text-fire transition-colors">Trousers</button></li>
+          <li><button onclick="App.navigate('category', { category: 'Pants' })" class="hover:text-fire transition-colors">Pants</button></li>
+          <li><button onclick="App.navigate('category', { category: 'Shirts' })" class="hover:text-fire transition-colors">Shirts</button></li>
+          <li><button onclick="App.navigate('category', { category: 'Shoes' })" class="hover:text-fire transition-colors">Shoes</button></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="font-display font-bold text-xs uppercase tracking-widest text-white mb-3">Client Care</h4>
+        <ul class="space-y-2 text-sm text-muted">
+          <li><button onclick="App.navigate('orders')" class="hover:text-fire transition-colors">Track Your Order</button></li>
+          <li><button onclick="App.navigate('account')" class="hover:text-fire transition-colors">Wishlist & Profile</button></li>
+          <li><button onclick="App.navigate('cart')" class="hover:text-fire transition-colors">Shopping Bag</button></li>
+        </ul>
+      </div>
+    </div>
+    <div class="max-w-7xl mx-auto mt-10 pt-6 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-muted">
+      <p>© 2026 i.Box18 Men's Luxury Apparel. All rights reserved.</p>
+      <p class="uppercase tracking-widest text-[10px]">Built Different • Worn Different</p>
+    </div>
+  </footer>
+
+  <!-- ==========================================================================
+       FIXED BOTTOM NAVIGATION BAR (5 Buttons as Specified)
+       ========================================================================== -->
+  <nav aria-label="Bottom Navigation" class="fixed bottom-0 inset-x-0 z-40 glass-bottom-nav lg:hidden">
+    <div class="max-w-lg mx-auto grid grid-cols-5 h-16 px-1">
+      <!-- 1. Home -->
+      <button onclick="App.navigate('home')" data-bottom-nav="home" class="nav-btn relative flex flex-col items-center justify-center gap-1 text-muted hover:text-white transition-colors">
+        <div class="nav-icon-wrap">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+          </svg>
+        </div>
+        <span class="text-[10px] font-bold tracking-wide">Home</span>
+      </button>
+
+      <!-- 2. Category -->
+      <button onclick="App.navigate('category', { category: 'All' })" data-bottom-nav="category" class="nav-btn relative flex flex-col items-center justify-center gap-1 text-muted hover:text-white transition-colors">
+        <div class="nav-icon-wrap">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <rect x="3" y="3" width="7" height="7" rx="1.5"></rect>
+            <rect x="14" y="3" width="7" height="7" rx="1.5"></rect>
+            <rect x="14" y="14" width="7" height="7" rx="1.5"></rect>
+            <rect x="3" y="14" width="7" height="7" rx="1.5"></rect>
+          </svg>
+        </div>
+        <span class="text-[10px] font-bold tracking-wide">Category</span>
+      </button>
+
+      <!-- 3. Cart Shortcut (5th slot integrated in center for ergonomic thumb reach) -->
+      <button onclick="App.navigate('cart')" data-bottom-nav="cart" class="nav-btn relative flex flex-col items-center justify-center gap-1 text-muted hover:text-white transition-colors">
+        <div class="nav-icon-wrap relative">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <circle cx="9" cy="21" r="1"></circle>
+            <circle cx="20" cy="21" r="1"></circle>
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+          </svg>
+          <span id="bottom-cart-badge" class="absolute -top-1.5 -right-2.5 min-w-[16px] h-4 px-1 rounded-full fire-gradient text-[9px] font-extrabold text-white flex items-center justify-center">0</span>
+        </div>
+        <span class="text-[10px] font-bold tracking-wide">Cart</span>
+      </button>
+
+      <!-- 4. Your Order -->
+      <button onclick="App.navigate('orders')" data-bottom-nav="orders" class="nav-btn relative flex flex-col items-center justify-center gap-1 text-muted hover:text-white transition-colors">
+        <div class="nav-icon-wrap">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path>
+            <path d="M3 6h18"></path>
+            <path d="M16 10a4 4 0 0 1-8 0"></path>
+          </svg>
+        </div>
+        <span class="text-[10px] font-bold tracking-wide">Your Order</span>
+      </button>
+
+      <!-- 5. Account -->
+      <button onclick="App.navigate('account')" data-bottom-nav="account" class="nav-btn relative flex flex-col items-center justify-center gap-1 text-muted hover:text-white transition-colors">
+        <div class="nav-icon-wrap">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+        </div>
+        <span class="text-[10px] font-bold tracking-wide">Account</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ==========================================================================
+       LIVE SEARCH OVERLAY MODAL
+       ========================================================================== -->
+  <div id="search-overlay" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-xl hidden flex-col">
+    <div class="max-w-4xl w-full mx-auto px-4 pt-6 pb-4 flex items-center gap-3 border-b border-white/10">
+      <svg class="w-5 h-5 text-fire shrink-0" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+        <circle cx="11" cy="11" r="8"></circle>
+        <path d="m21 21-4.3-4.3"></path>
+      </svg>
+      <input id="global-search-input" type="text" placeholder="Search hoodies, cargo pants, leather boots, shirts..." class="w-full bg-transparent text-white text-base sm:text-lg placeholder-muted focus:outline-none" autocomplete="off" />
+      <button onclick="App.closeSearchOverlay()" class="px-3 py-1.5 rounded-lg bg-cardbg border border-white/10 text-xs font-bold uppercase tracking-wider text-muted hover:text-white">
+        ESC
+      </button>
+    </div>
+    <div class="max-w-4xl w-full mx-auto px-4 py-4 overflow-y-auto flex-1">
+      <div class="flex flex-wrap gap-2 mb-5">
+        <span class="text-xs text-muted uppercase tracking-wider py-1">Quick Tags:</span>
+        <button onclick="App.quickSearch('Hoodies')" class="px-3 py-1 rounded-full bg-cardbg hover:border-fire border border-white/10 text-xs font-semibold">Hoodies</button>
+        <button onclick="App.quickSearch('Trousers')" class="px-3 py-1 rounded-full bg-cardbg hover:border-fire border border-white/10 text-xs font-semibold">Trousers</button>
+        <button onclick="App.quickSearch('Pants')" class="px-3 py-1 rounded-full bg-cardbg hover:border-fire border border-white/10 text-xs font-semibold">Pants</button>
+        <button onclick="App.quickSearch('Shirts')" class="px-3 py-1 rounded-full bg-cardbg hover:border-fire border border-white/10 text-xs font-semibold">Shirts</button>
+        <button onclick="App.quickSearch('Shoes')" class="px-3 py-1 rounded-full bg-cardbg hover:border-fire border border-white/10 text-xs font-semibold">Shoes</button>
+      </div>
+      <div id="search-results-grid" class="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4"></div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       HIDDEN ADMIN LOGIN MODAL (Triggered via 5x Logo Tap or #admin hash)
+       ========================================================================== -->
+  <div id="admin-login-modal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md hidden items-center justify-center p-4">
+    <div class="bg-charcoal border border-fire/40 rounded-2xl max-w-md w-full p-6 shadow-fire-glow relative">
+      <button onclick="App.closeAdminLogin()" class="absolute top-4 right-4 text-muted hover:text-white p-1">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
+      <div class="w-12 h-12 rounded-xl fire-gradient flex items-center justify-center mb-4 shadow-fire-glow">
+        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+          <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+        </svg>
+      </div>
+      <h3 class="font-display font-extrabold text-xl text-white">i.Box18 Command Vault</h3>
+      <p class="text-xs text-muted mt-1">Local prototype owner access. Manage inventory, promotional banners, and orders.</p>
+
+      <form id="admin-login-form" class="mt-5 space-y-4">
+        <div>
+          <label class="block text-xs font-bold uppercase tracking-wider text-muted mb-1.5">Admin Passcode</label>
+          <input id="admin-password-input" type="password" placeholder="Enter local admin passcode" class="w-full px-4 py-3 rounded-xl bg-obsidian border border-white/15 text-white text-sm focus:outline-none focus:border-fire" required />
+          <p class="text-[11px] text-muted mt-1.5">Default prototype passcode: <code class="text-ember font-mono">ibox18admin</code> (changeable inside dashboard)</p>
+        </div>
+        <button type="submit" class="w-full py-3 rounded-xl fire-gradient-hover font-display font-bold text-sm uppercase tracking-wider text-white">
+          Unlock Admin Dashboard
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       TOAST NOTIFICATION CONTAINER (Replaces alert() / confirm())
+       ========================================================================== -->
+  <div id="toast-container" class="fixed top-20 right-4 z-50 flex flex-col gap-2.5 max-w-xs w-full pointer-events-none"></div>
+
+  <!-- ==========================================================================
+       APPLICATION JAVASCRIPT (Data Store, Seed Catalog, Router & UI Views)
+       ========================================================================== -->
+  <script>
+    /**
+     * i.Box18 — Complete Client-Side E-Commerce Engine
+     * Pure Vanilla JS + LocalStorage Database Persistence
+     */
+
+    // --------------------------------------------------------------------------
+    // 1. LOCALSTORAGE KEYS & SAFE PERSISTENCE LAYER
+    // --------------------------------------------------------------------------
+    const STORAGE_KEYS = {
+      PRODUCTS: 'ibox18_products',
+      CART: 'ibox18_cart',
+      ORDERS: 'ibox18_orders',
+      USERS: 'ibox18_users',
+      PROFILE: 'ibox18_profile',
+      WISHLIST: 'ibox18_wishlist',
+      BANNERS: 'ibox18_banners',
+      ADMIN_SETTINGS: 'ibox18_admin_settings',
+    };
+
+    const Store = {
+      get(key, fallback) {
+        try {
+          const raw = localStorage.getItem(key);
+          if (raw === null || raw === undefined) return fallback;
+          const parsed = JSON.parse(raw);
+          return parsed !== null ? parsed : fallback;
+        } catch (err) {
+          console.warn(`[i.Box18 Store] Failed reading ${key}, using fallback.`, err);
+          return fallback;
+        }
+      },
+      set(key, value) {
+        try {
+          localStorage.setItem(key, JSON.stringify(value));
+          return true;
+        } catch (err) {
+          console.error(`[i.Box18 Store] Failed saving ${key}:`, err);
+          UI.toast('Storage quota warning: Image size may be too large.', 'error');
+          return false;
+        }
+      }
+    };
+
+    // --------------------------------------------------------------------------
+    // 2. CURATED FIRST-LAUNCH MEN'S LUXURY STREETWEAR SEED DATA
+    // --------------------------------------------------------------------------
+    const SEED_PRODUCTS = [
+      {
+        id: 'IBX-PRD-101',
+        name: 'Inferno Heavyweight Boxy Hoodie',
+        category: 'Hoodies',
+        description: '480 GSM loop-back French terry cotton in washed obsidian black. Features raised crimson ember puff-print typography, dropped shoulders, and double-lined structured hood.',
+        price: 3499,
+        originalPrice: 4999,
+        images: [
+          'https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=900&q=85',
+          'https://images.unsplash.com/photo-1578768079052-aa76e52ff62e?auto=format&fit=crop&w=900&q=85'
+        ],
+        sizes: ['S', 'M', 'L', 'XL', 'XXL'],
+        colors: ['Obsidian Black', 'Charcoal Ash'],
+        stock: 28,
+        badge: 'Best Seller',
+        available: true
+      },
+      {
+        id: 'IBX-PRD-102',
+        name: 'Obsidian Rock Distressed Zip Hoodie',
+        category: 'Hoodies',
+        description: 'Custom enzyme-washed heavyweight fleece with matte gunmetal YKK hardware, subtle hand-distressed hem detailing, and fiery spine graphics.',
+        price: 3899,
+        originalPrice: 5499,
+        images: [
+          'https://images.unsplash.com/photo-1509942774463-acf339cf87d5?auto=format&fit=crop&w=900&q=85',
+          'https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=900&q=85'
+        ],
+        sizes: ['M', 'L', 'XL'],
+        colors: ['Vintage Black', 'Blood Ember'],
+        stock: 16,
+        badge: 'New Arrival',
+        available: true
+      },
+      {
+        id: 'IBX-PRD-103',
+        name: 'Apex Pleated Tailored Trousers',
+        category: 'Trousers',
+        description: 'Architectural wide-taper men’s trousers crafted from wrinkle-resistant Japanese twill. Sharp front pleats, concealed hook closure, and effortless drape.',
+        price: 2999,
+        originalPrice: 4299,
+        images: [
+          'https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?auto=format&fit=crop&w=900&q=85',
+          'https://images.unsplash.com/photo-1473966968600-fa801b869a1a?auto=format&fit=crop&w=900&q=85'
+        ],
+        sizes: ['30', '32', '34', '36'],
+        colors: ['Jet Black', 'Graphite'],
+        stock: 22,
+        badge: 'Trending',
+        available: true
+      },
+      {
+        id: 'IBX-PRD-104',
+        name: 'Shadow Stride Tactical Cargo Pants',
+        category: 'Pants',
+        description: 'Multi-pocket ripstop nylon-cotton blend cargo pants engineered for street dominance. Adjustable ankle toggles, gusseted knees, and matte black D-ring hardware.',
+        price: 3299,
+        originalPrice: 4599,
+        images: [
+          'https://images.unsplash.com/photo-1517445312882-bc9910d016b7?auto=format&fit=crop&w=900&q=85',
+          'https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?auto=format&fit=crop&w=900&q=85'
+        ],
+        sizes: ['30', '32', '34', '36'],
+        colors: ['Stealth Black', 'Onyx Olive'],
+        stock: 19,
+        badge: 'Best Seller',
+        available: true
+      },
+      {
+        id: 'IBX-PRD-105',
+        name: 'Nocturne Cuban Collar Silk-Blend Shirt',
+        category: 'Shirts',
+        description: 'Fluid matte-satin drape shirt with an open camp collar and tonal embossed rock-flame motif. Designed for late-night luxury and sharp layering.',
+        price: 2499,
+        originalPrice: 3499,
+        images: [
+          'https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?auto=format&fit=crop&w=900&q=85',
+          'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?auto=format&fit=crop&w=900&q=85'
+        ],
+        sizes: ['S', 'M', 'L', 'XL'],
+        colors: ['Midnight Black', 'Crimson Dusk'],
+        stock: 30,
+        badge: 'New Arrival',
+        available: true
+      },
+      {
+        id: 'IBX-PRD-106',
+        name: 'Vanguard Oversized Heavy Poplin Shirt',
+        category: 'Shirts',
+        description: 'Crisp high-density cotton poplin shirt with dropped shoulder seams, concealed placket, and metallic i.Box18 chest emblem.',
+        price: 2699,
+        originalPrice: 3799,
+        images: [
+          'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?auto=format&fit=crop&w=900&q=85',
+          'https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?auto=format&fit=crop&w=900&q=85'
+        ],
+        sizes: ['M', 'L', 'XL', 'XXL'],
+        colors: ['Pitch Black', 'Ash Slate'],
+        stock: 15,
+        badge: 'Sale',
+        available: true
+      },
+      {
+        id: 'IBX-PRD-107',
+        name: 'Pyro-Core Chunky Leather Sneakers',
+        category: 'Shoes',
+        description: 'Full-grain matte black calfskin leather upper paired with an aggressive sculpted outsole and subtle fire-red heel stabilizer.',
+        price: 5999,
+        originalPrice: 8499,
+        images: [
+          'https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=900&q=85',
+          'https://images.unsplash.com/photo-1608231387042-66d1773070a5?auto=format&fit=crop&w=900&q=85'
+        ],
+        sizes: ['UK 7', 'UK 8', 'UK 9', 'UK 10', 'UK 11'],
+        colors: ['Triple Black / Fire', 'Obsidian'],
+        stock: 12,
+        badge: 'Trending',
+        available: true
+      },
+      {
+        id: 'IBX-PRD-108',
+        name: 'Hellfire Chelsea Lug-Sole Boots',
+        category: 'Shoes',
+        description: 'Full-grain weatherproof black leather boots featuring heavy commando lug soles, elastic side gussets, and crimson pull-tabs.',
+        price: 6499,
+        originalPrice: 8999,
+        images: [
+          'https://images.unsplash.com/photo-1638247025967-b4e38f787b76?auto=format&fit=crop&w=900&q=85',
+          'https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=900&q=85'
+        ],
+        sizes: ['UK 8', 'UK 9', 'UK 10', 'UK 11'],
+        colors: ['Matte Black'],
+        stock: 9,
+        badge: 'Best Seller',
+        available: true
+      }
+    ];
+
+    const SEED_BANNERS = [
+      {
+        id: 'BNR-01',
+        slot: 1,
+        heading: 'THE DARK COLLECTION',
+        subtitle: 'Elevate Your Everyday Style.',
+        buttonText: 'SHOP DARK DROP',
+        destinationCategory: 'All',
+        image: 'https://images.unsplash.com/photo-1534030347209-467a5b0ad3e6?auto=format&fit=crop&w=1400&q=85',
+        enabled: true
+      },
+      {
+        id: 'BNR-02',
+        slot: 2,
+        heading: 'NO RULES. JUST STYLE.',
+        subtitle: 'Discover Your New Look.',
+        buttonText: 'EXPLORE HOODIES',
+        destinationCategory: 'Hoodies',
+        image: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=1400&q=85',
+        enabled: true
+      },
+      {
+        id: 'BNR-03',
+        slot: 3,
+        heading: 'BUILT FOR THE BOLD',
+        subtitle: "Explore Premium Men's Fashion.",
+        buttonText: 'SHOP FOOTWEAR',
+        destinationCategory: 'Shoes',
+        image: 'https://images.unsplash.com/photo-1490578474895-699cd4e2cf59?auto=format&fit=crop&w=1400&q=85',
+        enabled: true
+      }
+    ];
+
+    const CATEGORY_META = [
+      {
+        name: 'Hoodies',
+        tagline: '480GSM Heavyweight Street Armor',
+        image: 'https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=700&q=80'
+      },
+      {
+        name: 'Trousers',
+        tagline: 'Architectural Tailored Silhouettes',
+        image: 'https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?auto=format&fit=crop&w=700&q=80'
+      },
+      {
+        name: 'Pants',
+        tagline: 'Tactical Cargos & Street Utility',
+        image: 'https://images.unsplash.com/photo-1517445312882-bc9910d016b7?auto=format&fit=crop&w=700&q=80'
+      },
+      {
+        name: 'Shirts',
+        tagline: 'Nocturne Drape & Crisp Poplin',
+        image: 'https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?auto=format&fit=crop&w=700&q=80'
+      },
+      {
+        name: 'Shoes',
+        tagline: 'Lug Boots & Sculpted Sneakers',
+        image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=700&q=80'
+      }
+    ];
+
+    // --------------------------------------------------------------------------
+    // 3. UI HELPERS (Toasts, Formatting, Image Fallback)
+    // --------------------------------------------------------------------------
+    const UI = {
+      formatCurrency(amount) {
+        const num = Number(amount) || 0;
+        return '₹' + num.toLocaleString('en-IN');
+      },
+      calcDiscount(price, originalPrice) {
+        if (!originalPrice || originalPrice <= price) return 0;
+        return Math.round(((originalPrice - price) / originalPrice) * 100);
+      },
+      escapeHTML(str) {
+        if (str === null || str === undefined) return '';
+        return String(str)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;')
+          .replace(/'/g, '&#39;');
+      },
+      fallbackImg(title = 'i.Box18') {
+        return `https://placehold.co/600x750/171717/FF2727?text=${encodeURIComponent(title)}`;
+      },
+      toast(message, type = 'success') {
+        const container = document.getElementById('toast-container');
+        if (!container) return;
+        const el = document.createElement('div');
+        const borderClass =
+          type === 'error'
+            ? 'border-fire bg-neutral-950/95 text-white'
+            : type === 'warning'
+            ? 'border-ember bg-neutral-950/95 text-white'
+            : 'border-white/15 bg-neutral-950/95 text-white';
+        const icon =
+          type === 'error'
+            ? `<span class="w-2.5 h-2.5 rounded-full bg-fire shrink-0"></span>`
+            : type === 'warning'
+            ? `<span class="w-2.5 h-2.5 rounded-full bg-ember shrink-0"></span>`
+            : `<span class="w-2.5 h-2.5 rounded-full bg-emerald-400 shrink-0"></span>`;
+
+        el.className = `pointer-events-auto flex items-center gap-3 px-4 py-3 rounded-xl border ${borderClass} shadow-2xl backdrop-blur-md text-xs sm:text-sm font-medium view-animate`;
+        el.innerHTML = `${icon}<span class="flex-1">${this.escapeHTML(message)}</span>`;
+        container.appendChild(el);
+        setTimeout(() => {
+          el.style.opacity = '0';
+          el.style.transform = 'translateY(-6px)';
+          el.style.transition = 'all 0.25s ease';
+          setTimeout(() => el.remove(), 260);
+        }, 2800);
+      }
+    };
+
+    // --------------------------------------------------------------------------
+    // 4. MAIN APPLICATION CONTROLLER
+    // --------------------------------------------------------------------------
+    const App = {
+      state: {
+        currentView: 'home',
+        params: {},
+        pdpSelectedSize: null,
+        pdpSelectedColor: null,
+        pdpQuantity: 1,
+        pdpActiveImageIdx: 0,
+        catFilters: {
+          category: 'All',
+          search: '',
+          maxPrice: 15000,
+          size: 'All',
+          sort: 'featured'
+        },
+        adminUnlocked: false,
+        adminTab: 'products', // 'products' | 'banners' | 'orders' | 'settings'
+        editingProductId: null,
+        editingBannerId: null
+      },
+
+      init() {
+        this.initDatabase();
+        this.initEmberParticles();
+        this.bindGlobalEvents();
+        this.updateCartBadges();
+
+        // Check if user opened directly with #admin hash
+        if (window.location.hash === '#admin') {
+          this.openAdminLogin();
+        }
+
+        this.navigate('home');
+      },
+
+      /**
+       * Initialize LocalStorage ONLY on first launch; never overwrite existing user/owner data.
+       */
+      initDatabase() {
+        if (localStorage.getItem(STORAGE_KEYS.PRODUCTS) === null) {
+          Store.set(STORAGE_KEYS.PRODUCTS, SEED_PRODUCTS);
+        }
+        if (localStorage.getItem(STORAGE_KEYS.BANNERS) === null) {
+          Store.set(STORAGE_KEYS.BANNERS, SEED_BANNERS);
+        }
+        if (localStorage.getItem(STORAGE_KEYS.CART) === null) {
+          Store.set(STORAGE_KEYS.CART, []);
+        }
+        if (localStorage.getItem(STORAGE_KEYS.ORDERS) === null) {
+          Store.set(STORAGE_KEYS.ORDERS, []);
+        }
+        if (localStorage.getItem(STORAGE_KEYS.WISHLIST) === null) {
+          Store.set(STORAGE_KEYS.WISHLIST, []);
+        }
+        if (localStorage.getItem(STORAGE_KEYS.PROFILE) === null) {
+          Store.set(STORAGE_KEYS.PROFILE, {
+            fullName: '',
+            mobile: '',
+            whatsapp: '',
+            address: '',
+            city: '',
+            district: '',
+            pincode: ''
+          });
+        }
+        if (localStorage.getItem(STORAGE_KEYS.USERS) === null) {
+          Store.set(STORAGE_KEYS.USERS, []);
+        }
+        if (localStorage.getItem(STORAGE_KEYS.ADMIN_SETTINGS) === null) {
+          Store.set(STORAGE_KEYS.ADMIN_SETTINGS, {
+            password: 'ibox18admin',
+            storeName: 'i.Box18',
+            freeShippingThreshold: 1999,
+            standardShippingFee: 99
+          });
+        }
+      },
+
+      // Data Accessors
+      getProducts() {
+        return Store.get(STORAGE_KEYS.PRODUCTS, []);
+      },
+      getActiveProducts() {
+        return this.getProducts().filter(p => p.available !== false);
+      },
+      getBanners() {
+        return Store.get(STORAGE_KEYS.BANNERS, []);
+      },
+      getCart() {
+        return Store.get(STORAGE_KEYS.CART, []);
+      },
+      getOrders() {
+        return Store.get(STORAGE_KEYS.ORDERS, []);
+      },
+      getWishlist() {
+        return Store.get(STORAGE_KEYS.WISHLIST, []);
+      },
+      getProfile() {
+        return Store.get(STORAGE_KEYS.PROFILE, {});
+      },
+      getAdminSettings() {
+        return Store.get(STORAGE_KEYS.ADMIN_SETTINGS, {
+          password: 'ibox18admin',
+          freeShippingThreshold: 1999,
+          standardShippingFee: 99
+        });
+      },
+
+      // ------------------------------------------------------------------------
+      // GLOBAL EVENTS & SECRET ADMIN ACCESS
+      // ------------------------------------------------------------------------
+      bindGlobalEvents() {
+        // 5-Tap Secret Trigger on Brand Logo for Hidden Admin Access
+        let tapCount = 0;
+        let tapTimer = null;
+        const logoBtn = document.getElementById('brand-logo-btn');
+        if (logoBtn) {
+          logoBtn.addEventListener('click', () => {
+            tapCount++;
+            clearTimeout(tapTimer);
+            tapTimer = setTimeout(() => {
+              tapCount = 0;
+            }, 1400);
+
+            if (tapCount >= 5) {
+              tapCount = 0;
+              if (this.state.adminUnlocked) {
+                this.navigate('admin');
+              } else {
+                this.openAdminLogin();
+              }
+            } else {
+              this.navigate('home');
+            }
+          });
+        }
+
+        // Hash listener (#admin)
+        window.addEventListener('hashchange', () => {
+          if (window.location.hash === '#admin') {
+            if (this.state.adminUnlocked) {
+              this.navigate('admin');
+            } else {
+              this.openAdminLogin();
+            }
+          }
+        });
+
+        // Search input live filtering
+        const searchInput = document.getElementById('global-search-input');
+        if (searchInput) {
+          searchInput.addEventListener('input', (e) => {
+            this.renderSearchResults(e.target.value);
+          });
+        }
+
+        // Escape key closes modals
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape') {
+            this.closeSearchOverlay();
+            this.closeAdminLogin();
+          }
+        });
+
+        // Admin Login Form Submit
+        const adminForm = document.getElementById('admin-login-form');
+        if (adminForm) {
+          adminForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const input = document.getElementById('admin-password-input');
+            const settings = this.getAdminSettings();
+            if (input && input.value === settings.password) {
+              this.state.adminUnlocked = true;
+              input.value = '';
+              this.closeAdminLogin();
+              UI.toast('Command Vault unlocked.', 'success');
+              this.navigate('admin');
+            } else {
+              UI.toast('Invalid admin passcode.', 'error');
+              input?.classList.add('shake-anim');
+              setTimeout(() => input?.classList.remove('shake-anim'), 400);
+            }
+          });
+        }
+      },
+
+      openAdminLogin() {
+        const modal = document.getElementById('admin-login-modal');
+        if (modal) {
+          modal.classList.remove('hidden');
+          modal.classList.add('flex');
+          setTimeout(() => document.getElementById('admin-password-input')?.focus(), 80);
+        }
+      },
+
+      closeAdminLogin() {
+        const modal = document.getElementById('admin-login-modal');
+        if (modal) {
+          modal.classList.add('hidden');
+          modal.classList.remove('flex');
+        }
+      },
+
+      // ------------------------------------------------------------------------
+      // SPA ROUTER & NAVIGATION STATE
+      // ------------------------------------------------------------------------
+      navigate(view, params = {}) {
+        this.state.currentView = view;
+        this.state.params = params;
+
+        // Sync category filter if navigating to category
+        if (view === 'category' && params.category) {
+          this.state.catFilters.category = params.category;
+        }
+
+        // Reset PDP state when opening a product
+        if (view === 'product' && params.productId) {
+          const prod = this.getProducts().find(p => p.id === params.productId);
+          this.state.pdpSelectedSize = null; // Force explicit size selection as required
+          this.state.pdpSelectedColor = prod && prod.colors && prod.colors.length ? prod.colors[0] : 'Standard';
+          this.state.pdpQuantity = 1;
+          this.state.pdpActiveImageIdx = 0;
+        }
+
+        this.updateActiveNavIndicators(view);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        this.renderView();
+      },
+
+      updateActiveNavIndicators(view) {
+        // Bottom Nav
+        document.querySelectorAll('[data-bottom-nav]').forEach(btn => {
+          const target = btn.getAttribute('data-bottom-nav');
+          const isMatch =
+            target === view ||
+            (view === 'product' && target === 'category') ||
+            (view === 'checkout' && target === 'cart') ||
+            (view === 'order-success' && target === 'orders');
+          btn.classList.toggle('active', isMatch);
+        });
+
+        // Desktop Top Nav
+        document.querySelectorAll('[data-top-nav]').forEach(btn => {
+          const target = btn.getAttribute('data-top-nav');
+          btn.classList.toggle('text-fire', target === view);
+        });
+      },
+
+      renderView() {
+        const main = document.getElementById('app-main');
+        if (!main) return;
+
+        switch (this.state.currentView) {
+          case 'home':
+            main.innerHTML = this.renderHomeView();
+            break;
+          case 'category':
+            main.innerHTML = this.renderCategoryView();
+            break;
+          case 'product':
+            main.innerHTML = this.renderProductDetailView();
+            break;
+          case 'cart':
+            main.innerHTML = this.renderCartView();
+            break;
+          case 'checkout':
+            main.innerHTML = this.renderCheckoutView();
+            break;
+          case 'order-success':
+            main.innerHTML = this.renderOrderSuccessView();
+            break;
+          case 'orders':
+            main.innerHTML = this.renderOrdersView();
+            break;
+          case 'account':
+            main.innerHTML = this.renderAccountView();
+            break;
+          case 'admin':
+            if (!this.state.adminUnlocked) {
+              this.navigate('home');
+              this.openAdminLogin();
+              return;
+            }
+            main.innerHTML = this.renderAdminView();
+            break;
+          default:
+            main.innerHTML = this.renderHomeView();
+        }
+      },
+
+      // ------------------------------------------------------------------------
+      // CART, WISHLIST & ORDER ACTIONS
+      // ------------------------------------------------------------------------
+      updateCartBadges(animate = false) {
+        const cart = this.getCart();
+        const totalQty = cart.reduce((sum, item) => sum + (Number(item.quantity) || 1), 0);
+        ['header-cart-badge', 'bottom-cart-badge'].forEach(id => {
+          const el = document.getElementById(id);
+          if (el) {
+            el.textContent = totalQty;
+            if (animate) {
+              el.classList.remove('badge-pop');
+              void el.offsetWidth;
+              el.classList.add('badge-pop');
+            }
+          }
+        });
+      },
+
+      toggleWishlist(productId, event) {
+        if (event) event.stopPropagation();
+        let wishlist = this.getWishlist();
+        const exists = wishlist.includes(productId);
+        if (exists) {
+          wishlist = wishlist.filter(id => id !== productId);
+          UI.toast('Removed from Wishlist.', 'warning');
+        } else {
+          wishlist.push(productId);
+          UI.toast('Saved to Wishlist!', 'success');
+        }
+        Store.set(STORAGE_KEYS.WISHLIST, wishlist);
+        this.renderView();
+      },
+
+      quickAddToCart(productId, event) {
+        if (event) event.stopPropagation();
+        const product = this.getProducts().find(p => p.id === productId);
+        if (!product || !product.available || product.stock <= 0) {
+          UI.toast('This item is currently out of stock.', 'error');
+          return;
+        }
+        // Open PDP so user selects required size explicitly, or if only 1 size exists add directly
+        if (product.sizes && product.sizes.length === 1) {
+          this.addToCart(product.id, product.sizes[0], product.colors?.[0] || 'Standard', 1);
+        } else {
+          UI.toast('Select your size to add to bag.', 'warning');
+          this.navigate('product', { productId: product.id });
+        }
+      },
+
+      addToCart(productId, size, color, quantity = 1, redirectCheckout = false) {
+        const product = this.getProducts().find(p => p.id === productId);
+        if (!product) return;
+
+        if (!size) {
+          UI.toast('Please select a size first.', 'error');
+          const sizeBox = document.getElementById('pdp-size-selector');
+          if (sizeBox) {
+            sizeBox.classList.add('shake-anim', 'border-fire');
+            setTimeout(() => sizeBox.classList.remove('shake-anim', 'border-fire'), 500);
+          }
+          return;
+        }
+
+        const cart = this.getCart();
+        const existingIndex = cart.findIndex(
+          item => item.productId === productId && item.size === size && item.color === color
+        );
+
+        if (existingIndex > -1) {
+          cart[existingIndex].quantity += Number(quantity);
+        } else {
+          cart.push({
+            cartItemId: 'CRT-' + Date.now() + '-' + Math.floor(Math.random() * 999),
+            productId: product.id,
+            name: product.name,
+            price: Number(product.price),
+            image: product.images?.[0] || UI.fallbackImg(product.name),
+            size,
+            color: color || 'Obsidian',
+            quantity: Number(quantity)
+          });
+        }
+
+        Store.set(STORAGE_KEYS.CART, cart);
+        this.updateCartBadges(true);
+
+        if (redirectCheckout) {
+          this.navigate('checkout');
+        } else {
+          UI.toast(`${product.name} (${size}) added to bag!`, 'success');
+        }
+      },
+
+      updateCartItemQty(cartItemId, delta) {
+        let cart = this.getCart();
+        const idx = cart.findIndex(i => i.cartItemId === cartItemId);
+        if (idx === -1) return;
+
+        cart[idx].quantity += delta;
+        if (cart[idx].quantity <= 0) {
+          cart.splice(idx, 1);
+          UI.toast('Item removed from bag.', 'warning');
+        }
+        Store.set(STORAGE_KEYS.CART, cart);
+        this.updateCartBadges(true);
+        this.renderView();
+      },
+
+      removeCartItem(cartItemId) {
+        const cart = this.getCart().filter(i => i.cartItemId !== cartItemId);
+        Store.set(STORAGE_KEYS.CART, cart);
+        this.updateCartBadges(true);
+        UI.toast('Item removed from bag.', 'warning');
+        this.renderView();
+      },
+
+      getCartTotals() {
+        const cart = this.getCart();
+        const settings = this.getAdminSettings();
+        const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+        const threshold = Number(settings.freeShippingThreshold) || 1999;
+        const standardFee = Number(settings.standardShippingFee) || 99;
+        const delivery = subtotal === 0 ? 0 : subtotal >= threshold ? 0 : standardFee;
+        return {
+          subtotal,
+          delivery,
+          total: subtotal + delivery,
+          threshold
+        };
+      },
+
+      // ------------------------------------------------------------------------
+      // SEARCH OVERLAY HANDLERS
+      // ------------------------------------------------------------------------
+      openSearchOverlay() {
+        const overlay = document.getElementById('search-overlay');
+        const input = document.getElementById('global-search-input');
+        if (overlay) {
+          overlay.classList.remove('hidden');
+          overlay.classList.add('flex');
+          this.renderSearchResults(input ? input.value : '');
+          setTimeout(() => input?.focus(), 60);
+        }
+      },
+
+      closeSearchOverlay() {
+        const overlay = document.getElementById('search-overlay');
+        if (overlay) {
+          overlay.classList.add('hidden');
+          overlay.classList.remove('flex');
+        }
+      },
+
+      quickSearch(term) {
+        const input = document.getElementById('global-search-input');
+        if (input) {
+          input.value = term;
+          this.renderSearchResults(term);
+        }
+      },
+
+      renderSearchResults(query) {
+        const grid = document.getElementById('search-results-grid');
+        if (!grid) return;
+        const q = (query || '').trim().toLowerCase();
+        const products = this.getActiveProducts();
+        const matches = q
+          ? products.filter(
+              p =>
+                p.name.toLowerCase().includes(q) ||
+                p.category.toLowerCase().includes(q) ||
+                (p.description && p.description.toLowerCase().includes(q))
+            )
+          : products.slice(0, 6);
+
+        if (matches.length === 0) {
+          grid.innerHTML = `
+            <div class="col-span-full py-12 text-center">
+              <p class="font-display font-bold text-lg text-white">No menswear matched "${UI.escapeHTML(query)}"</p>
+              <p class="text-xs text-muted mt-1">Try searching Hoodies, Trousers, Pants, Shirts, or Shoes.</p>
+            </div>
+          `;
+          return;
+        }
+
+        grid.innerHTML = matches
+          .map(
+            p => `
+            <div onclick="App.closeSearchOverlay(); App.navigate('product', { productId: '${p.id}' })" class="bg-cardbg border border-white/10 hover:border-fire/60 rounded-xl p-2.5 cursor-pointer transition-all flex gap-3 items-center">
+              <img src="${UI.escapeHTML(p.images?.[0] || '')}" onerror="this.src='${UI.fallbackImg(p.name)}'" alt="${UI.escapeHTML(p.name)}" class="w-16 h-20 object-cover rounded-lg bg-obsidian shrink-0" />
+              <div class="min-w-0 flex-1">
+                <span class="text-[10px] uppercase tracking-wider text-fire font-bold">${UI.escapeHTML(p.category)}</span>
+                <h4 class="text-xs sm:text-sm font-bold text-white truncate">${UI.escapeHTML(p.name)}</h4>
+                <div class="flex items-center gap-2 mt-1">
+                  <span class="text-sm font-extrabold text-white">${UI.formatCurrency(p.price)}</span>
+                  ${p.originalPrice > p.price ? `<span class="text-[11px] text-muted line-through">${UI.formatCurrency(p.originalPrice)}</span>` : ''}
+                </div>
+              </div>
+            </div>
+          `
+          )
+          .join('');
+      },
+
+      // ------------------------------------------------------------------------
+      // REUSABLE PRODUCT CARD COMPONENT
+      // ------------------------------------------------------------------------
+      renderProductCard(product) {
+        const wishlist = this.getWishlist();
+        const isWished = wishlist.includes(product.id);
+        const discount = UI.calcDiscount(product.price, product.originalPrice);
+        const imgUrl = product.images?.[0] || UI.fallbackImg(product.name);
+        const outOfStock = !product.available || Number(product.stock) <= 0;
+
+        return `
+          <article onclick="App.navigate('product', { productId: '${product.id}' })" class="product-card rounded-2xl overflow-hidden flex flex-col cursor-pointer group relative">
+            <!-- Product Image Container -->
+            <div class="relative aspect-[4/5] bg-obsidian overflow-hidden">
+              <img src="${UI.escapeHTML(imgUrl)}" onerror="this.src='${UI.fallbackImg(product.name)}'" alt="${UI.escapeHTML(product.name)}" loading="lazy" class="w-full h-full object-cover" />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-black/20 opacity-80"></div>
+
+              <!-- Top Left Badge -->
+              <div class="absolute top-2.5 left-2.5 flex flex-col gap-1.5">
+                ${
+                  outOfStock
+                    ? `<span class="px-2.5 py-1 rounded-md bg-neutral-900/90 border border-white/15 text-[10px] font-extrabold uppercase tracking-wider text-muted">Sold Out</span>`
+                    : product.badge
+                    ? `<span class="px-2.5 py-1 rounded-md fire-gradient text-[10px] font-extrabold uppercase tracking-wider text-white shadow-fire-glow">${UI.escapeHTML(product.badge)}</span>`
+                    : ''
+                }
+                ${
+                  discount > 0 && !outOfStock
+                    ? `<span class="px-2 py-0.5 rounded-md bg-black/80 border border-ember/40 text-[10px] font-bold text-ember">-${discount}%</span>`
+                    : ''
+                }
+              </div>
+
+              <!-- Top Right Wishlist Heart -->
+              <button type="button" onclick="App.toggleWishlist('${product.id}', event)" aria-label="Toggle Wishlist" class="absolute top-2.5 right-2.5 w-8 h-8 rounded-full bg-black/65 backdrop-blur-md border border-white/10 hover:border-fire flex items-center justify-center transition-all">
+                <svg class="w-4 h-4 ${isWished ? 'text-fire fill-fire' : 'text-white'}" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                </svg>
+              </button>
+
+              <!-- Bottom Size Pills Overlay -->
+              <div class="absolute bottom-2.5 inset-x-2.5 flex items-center justify-between gap-1">
+                <div class="flex flex-wrap gap-1">
+                  ${(product.sizes || [])
+                    .slice(0, 4)
+                    .map(
+                      sz => `<span class="px-1.5 py-0.5 rounded bg-black/75 backdrop-blur-sm border border-white/10 text-[9px] font-bold text-white/90">${UI.escapeHTML(sz)}</span>`
+                    )
+                    .join('')}
+                  ${(product.sizes || []).length > 4 ? `<span class="px-1.5 py-0.5 rounded bg-black/75 text-[9px] text-muted">+</span>` : ''}
+                </div>
+              </div>
+            </div>
+
+            <!-- Card Details -->
+            <div class="p-3 sm:p-4 flex-1 flex flex-col justify-between">
+              <div>
+                <p class="text-[10px] font-bold uppercase tracking-widest text-muted">${UI.escapeHTML(product.category)}</p>
+                <h3 class="font-display font-bold text-xs sm:text-sm text-white group-hover:text-fire transition-colors line-clamp-2 mt-0.5">
+                  ${UI.escapeHTML(product.name)}
+                </h3>
+              </div>
+
+              <div class="mt-3 pt-2.5 border-t border-white/5 flex items-center justify-between gap-2">
+                <div>
+                  <div class="flex items-baseline gap-1.5 flex-wrap">
+                    <span class="font-extrabold text-sm sm:text-base text-white">${UI.formatCurrency(product.price)}</span>
+                    ${
+                      product.originalPrice > product.price
+                        ? `<span class="text-[11px] text-muted line-through">${UI.formatCurrency(product.originalPrice)}</span>`
+                        : ''
+                    }
+                  </div>
+                </div>
+
+                <button type="button" ${outOfStock ? 'disabled' : ''} onclick="App.quickAddToCart('${product.id}', event)" class="px-2.5 sm:px-3 py-1.5 rounded-lg ${
+                  outOfStock
+                    ? 'bg-neutral-800 text-muted cursor-not-allowed'
+                    : 'fire-gradient-hover text-white'
+                } text-[11px] font-extrabold uppercase tracking-wider shrink-0">
+                  ${outOfStock ? 'Out' : '+ Bag'}
+                </button>
+              </div>
+            </div>
+          </article>
+        `;
+      },
+
+      // ------------------------------------------------------------------------
+      // PROMOTIONAL BANNER RENDERER
+      // ------------------------------------------------------------------------
+      renderPromoBanner(banner) {
+        if (!banner || !banner.enabled) return '';
+        return `
+          <section class="max-w-7xl mx-auto px-4 sm:px-6 my-8 sm:my-12">
+            <div class="relative rounded-3xl overflow-hidden border border-white/10 fire-border-glow min-h-[220px] sm:min-h-[280px] flex items-center">
+              <img src="${UI.escapeHTML(banner.image)}" onerror="this.src='${UI.fallbackImg(banner.heading)}'" alt="${UI.escapeHTML(banner.heading)}" class="absolute inset-0 w-full h-full object-cover object-center opacity-55" />
+              <div class="absolute inset-0 bg-gradient-to-r from-obsidian via-obsidian/85 to-transparent"></div>
+              <div class="relative z-10 p-6 sm:p-10 md:p-12 max-w-xl">
+                <span class="inline-block px-3 py-1 rounded-full bg-fire/20 border border-fire/40 text-fire text-[10px] font-extrabold uppercase tracking-[0.22em] mb-3">
+                  i.Box18 Exclusive Drop
+                </span>
+                <h2 class="font-display font-extrabold text-2xl sm:text-4xl text-white tracking-tight leading-tight">
+                  ${UI.escapeHTML(banner.heading)}
+                </h2>
+                <p class="text-sm sm:text-base text-neutral-300 mt-2">
+                  ${UI.escapeHTML(banner.subtitle)}
+                </p>
+                <button onclick="App.navigate('category', { category: '${UI.escapeHTML(banner.destinationCategory || 'All')}' })" class="mt-5 px-6 py-3 rounded-xl fire-gradient-hover font-display font-bold text-xs sm:text-sm uppercase tracking-wider text-white inline-flex items-center gap-2">
+                  ${UI.escapeHTML(banner.buttonText || 'EXPLORE NOW')}
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </button>
+              </div>
+            </div>
+          </section>
+        `;
+      },
+
+      // ------------------------------------------------------------------------
+      // VIEW 1: HOME PAGE
+      // ------------------------------------------------------------------------
+      renderHomeView() {
+        const products = this.getActiveProducts();
+        const banners = this.getBanners().filter(b => b.enabled);
+
+        const banner1 = banners[0] || null;
+        const banner2 = banners[1] || null;
+        const banner3 = banners[2] || null;
+        const extraBanners = banners.slice(3);
+
+        const newArrivals = products.filter(p => p.badge === 'New Arrival').slice(0, 4);
+        const trending = products.filter(p => p.badge === 'Trending').slice(0, 4);
+        const bestSellers = products.filter(p => p.badge === 'Best Seller').slice(0, 4);
+
+        const displayNew = newArrivals.length ? newArrivals : products.slice(0, 4);
+        const displayTrending = trending.length ? trending : products.slice(2, 6);
+        const displayBest = bestSellers.length ? bestSellers : products.slice(0, 4);
+
+        return `
+          <div class="view-animate">
+            <!-- HERO BANNER -->
+            <section class="relative overflow-hidden border-b border-white/10">
+              <div class="max-w-7xl mx-auto px-4 sm:px-6 py-10 sm:py-16 lg:py-20">
+                <div class="relative rounded-3xl overflow-hidden bg-charcoal border border-white/10 min-h-[430px] sm:min-h-[520px] flex items-center shadow-2xl">
+                  <!-- Dark Rock/Fire Background Visual -->
+                  <img src="https://images.unsplash.com/photo-1552374196-1ab2a1c593e8?auto=format&fit=crop&w=1600&q=85" onerror="this.src='${UI.fallbackImg('i.Box18 RULE YOUR STYLE')}'" alt="i.Box18 Men's Luxury Streetwear" class="absolute inset-0 w-full h-full object-cover object-top opacity-60 scale-105" />
+                  <!-- Atmospheric Red/Orange & Obsidian Gradient Overlays -->
+                  <div class="absolute inset-0 bg-gradient-to-r from-[#080808] via-[#080808]/85 to-transparent"></div>
+                  <div class="absolute inset-0 bg-gradient-to-t from-[#080808] via-transparent to-black/30"></div>
+                  <div class="absolute -bottom-24 -left-24 w-96 h-96 rounded-full bg-fire/25 blur-3xl pointer-events-none"></div>
+                  <div class="absolute top-10 right-10 w-72 h-72 rounded-full bg-ember/15 blur-3xl pointer-events-none"></div>
+
+                  <div class="relative z-10 p-6 sm:p-12 lg:p-16 max-w-2xl">
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-black/70 border border-fire/40 backdrop-blur-md mb-5">
+                      <span class="w-2 h-2 rounded-full bg-fire animate-ping"></span>
+                      <span class="text-[11px] font-extrabold uppercase tracking-[0.22em] text-white">Exclusively For Men • AW/26</span>
+                    </div>
+
+                    <h1 class="font-display font-extrabold text-4xl sm:text-6xl lg:text-7xl tracking-tight leading-[0.98] text-white">
+                      RULE YOUR <span class="fire-text-gradient block sm:inline">STYLE.</span>
+                    </h1>
+
+                    <p class="text-base sm:text-xl text-neutral-300 font-medium mt-4 max-w-lg leading-relaxed">
+                      Premium Fashion. Made For Men. Built Different. Worn Different.
+                    </p>
+
+                    <div class="mt-7 sm:mt-9 flex flex-wrap items-center gap-3.5">
+                      <button onclick="App.navigate('category', { category: 'All' })" class="px-7 py-4 rounded-xl fire-gradient-hover font-display font-extrabold text-xs sm:text-sm uppercase tracking-widest text-white shadow-fire-glow flex items-center gap-2.5">
+                        EXPLORE COLLECTION
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                      </button>
+                      <button onclick="App.navigate('category', { category: 'Hoodies' })" class="px-6 py-4 rounded-xl bg-white/5 hover:bg-white/10 border border-white/15 backdrop-blur-md font-display font-bold text-xs sm:text-sm uppercase tracking-wider text-white transition-all">
+                        Shop Heavy Hoodies
+                      </button>
+                    </div>
+
+                    <!-- Brand Pillars -->
+                    <div class="mt-10 pt-6 border-t border-white/10 grid grid-cols-3 gap-4 max-w-md">
+                      <div>
+                        <p class="font-display font-extrabold text-lg sm:text-xl text-white">480<span class="text-fire">GSM</span></p>
+                        <p class="text-[11px] text-muted">Heavyweight Craft</p>
+                      </div>
+                      <div>
+                        <p class="font-display font-extrabold text-lg sm:text-xl text-white">100<span class="text-ember">%</span></p>
+                        <p class="text-[11px] text-muted">Men's Exclusive</p>
+                      </div>
+                      <div>
+                        <p class="font-display font-extrabold text-lg sm:text-xl text-white">COD<span class="text-fire">/UPI</span></p>
+                        <p class="text-[11px] text-muted">Express Dispatch</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <!-- PROMOTIONAL BANNER 1 ("THE DARK COLLECTION") -->
+            ${this.renderPromoBanner(banner1)}
+
+            <!-- SHOP BY CATEGORY SECTION -->
+            <section class="max-w-7xl mx-auto px-4 sm:px-6 my-10 sm:my-14">
+              <div class="flex items-end justify-between mb-6">
+                <div>
+                  <span class="text-[11px] font-extrabold uppercase tracking-[0.24em] text-fire">Curated Armor</span>
+                  <h2 class="font-display font-extrabold text-2xl sm:text-3xl text-white mt-1">SHOP BY CATEGORY</h2>
+                </div>
+                <button onclick="App.navigate('category', { category: 'All' })" class="text-xs font-bold uppercase tracking-wider text-muted hover:text-fire transition-colors">
+                  View All →
+                </button>
+              </div>
+
+              <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4">
+                ${CATEGORY_META.map(
+                  cat => `
+                  <div onclick="App.navigate('category', { category: '${cat.name}' })" class="group relative rounded-2xl overflow-hidden aspect-[4/5] bg-cardbg border border-white/10 hover:border-fire/60 cursor-pointer transition-all">
+                    <img src="${cat.image}" onerror="this.src='${UI.fallbackImg(cat.name)}'" alt="${cat.name}" class="w-full h-full object-cover opacity-75 group-hover:scale-105 transition-transform duration-500" />
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent"></div>
+                    <div class="absolute bottom-3.5 inset-x-3.5">
+                      <h3 class="font-display font-extrabold text-base sm:text-lg text-white group-hover:text-fire transition-colors">${cat.name}</h3>
+                      <p class="text-[11px] text-neutral-300 line-clamp-1 mt-0.5">${cat.tagline}</p>
+                    </div>
+                  </div>
+                `
+                ).join('')}
+              </div>
+            </section>
+
+            <!-- NEW ARRIVALS SECTION -->
+            <section class="max-w-7xl mx-auto px-4 sm:px-6 my-12">
+              <div class="flex items-end justify-between mb-6">
+                <div>
+                  <span class="text-[11px] font-extrabold uppercase tracking-[0.24em] text-ember">Fresh From The Forge</span>
+                  <h2 class="font-display font-extrabold text-2xl sm:text-3xl text-white mt-1">NEW ARRIVALS</h2>
+                </div>
+                <button onclick="App.navigate('category', { category: 'All' })" class="text-xs font-bold uppercase tracking-wider text-muted hover:text-fire transition-colors">
+                  Explore All →
+                </button>
+              </div>
+              <div class="grid grid-cols-2 md:grid-cols-4 gap-3.5 sm:gap-5">
+                ${displayNew.map(p => this.renderProductCard(p)).join('')}
+              </div>
+            </section>
+
+            <!-- PROMOTIONAL BANNER 2 ("NO RULES. JUST STYLE.") -->
+            ${this.renderPromoBanner(banner2)}
+
+            <!-- TRENDING PRODUCTS SECTION -->
+            <section class="max-w-7xl mx-auto px-4 sm:px-6 my-12">
+              <div class="flex items-end justify-between mb-6">
+                <div>
+                  <span class="text-[11px] font-extrabold uppercase tracking-[0.24em] text-fire">High Heat</span>
+                  <h2 class="font-display font-extrabold text-2xl sm:text-3xl text-white mt-1">TRENDING NOW</h2>
+                </div>
+                <button onclick="App.navigate('category', { category: 'All' })" class="text-xs font-bold uppercase tracking-wider text-muted hover:text-fire transition-colors">
+                  Shop Trending →
+                </button>
+              </div>
+              <div class="grid grid-cols-2 md:grid-cols-4 gap-3.5 sm:gap-5">
+                ${displayTrending.map(p => this.renderProductCard(p)).join('')}
+              </div>
+            </section>
+
+            <!-- PROMOTIONAL BANNER 3 ("BUILT FOR THE BOLD") -->
+            ${this.renderPromoBanner(banner3)}
+
+            <!-- BEST SELLERS SECTION -->
+            <section class="max-w-7xl mx-auto px-4 sm:px-6 my-12">
+              <div class="flex items-end justify-between mb-6">
+                <div>
+                  <span class="text-[11px] font-extrabold uppercase tracking-[0.24em] text-ember">Icons Of i.Box18</span>
+                  <h2 class="font-display font-extrabold text-2xl sm:text-3xl text-white mt-1">BEST SELLERS</h2>
+                </div>
+                <button onclick="App.navigate('category', { category: 'All' })" class="text-xs font-bold uppercase tracking-wider text-muted hover:text-fire transition-colors">
+                  Full Catalog →
+                </button>
+              </div>
+              <div class="grid grid-cols-2 md:grid-cols-4 gap-3.5 sm:gap-5">
+                ${displayBest.map(p => this.renderProductCard(p)).join('')}
+              </div>
+            </section>
+
+            <!-- ANY ADDITIONAL ADMIN-CREATED BANNERS -->
+            ${extraBanners.map(b => this.renderPromoBanner(b)).join('')}
+          </div>
+        `;
+      },
+
+      // ------------------------------------------------------------------------
+      // VIEW 2: CATEGORY & CATALOG PAGE
+      // ------------------------------------------------------------------------
+      renderCategoryView() {
+        const { category, search, maxPrice, size, sort } = this.state.catFilters;
+        const allProducts = this.getActiveProducts();
+
+        // Filter pipeline
+        let filtered = allProducts.filter(p => {
+          const matchCat = category === 'All' || p.category.toLowerCase() === category.toLowerCase();
+          const matchSearch =
+            !search ||
+            p.name.toLowerCase().includes(search.toLowerCase()) ||
+            p.category.toLowerCase().includes(search.toLowerCase());
+          const matchPrice = Number(p.price) <= Number(maxPrice);
+          const matchSize = size === 'All' || (p.sizes && p.sizes.includes(size));
+          return matchCat && matchSearch && matchPrice && matchSize;
+        });
+
+        // Sorting
+        if (sort === 'price-asc') {
+          filtered.sort((a, b) => Number(a.price) - Number(b.price));
+        } else if (sort === 'price-desc') {
+          filtered.sort((a, b) => Number(b.price) - Number(a.price));
+        }
+
+        const categories = ['All', 'Hoodies', 'Trousers', 'Pants', 'Shirts', 'Shoes'];
+        const sizeOptions = ['All', 'S', 'M', 'L', 'XL', 'XXL', '30', '32', '34', '36', 'UK 8', 'UK 9', 'UK 10'];
+        const meta = CATEGORY_META.find(c => c.name === category);
+
+        return `
+          <div class="view-animate max-w-7xl mx-auto px-4 sm:px-6 pt-6 pb-12">
+            <!-- Category Banner -->
+            <div class="relative rounded-3xl overflow-hidden bg-charcoal border border-white/10 p-6 sm:p-10 mb-6">
+              <img src="${meta ? meta.image : 'https://images.unsplash.com/photo-1552374196-1ab2a1c593e8?auto=format&fit=crop&w=1400&q=80'}" class="absolute inset-0 w-full h-full object-cover opacity-30" alt="${UI.escapeHTML(category)}" />
+              <div class="absolute inset-0 bg-gradient-to-r from-obsidian via-obsidian/90 to-transparent"></div>
+              <div class="relative z-10">
+                <span class="text-[11px] font-extrabold uppercase tracking-[0.24em] text-fire">Men's Collection</span>
+                <h1 class="font-display font-extrabold text-3xl sm:text-5xl text-white mt-1 uppercase">
+                  ${category === 'All' ? 'ALL MENSWEAR' : UI.escapeHTML(category)}
+                </h1>
+                <p class="text-xs sm:text-sm text-muted mt-2 max-w-lg">
+                  ${meta ? meta.tagline : 'Explore the complete i.Box18 dark luxury menswear arsenal.'}
+                </p>
+              </div>
+            </div>
+
+            <!-- Category Horizontal Pills -->
+            <div class="flex items-center gap-2 overflow-x-auto no-scrollbar pb-3 mb-5">
+              ${categories
+                .map(
+                  cat => `
+                <button onclick="App.setCategoryFilter('category', '${cat}')" class="px-4 py-2.5 rounded-xl text-xs font-extrabold uppercase tracking-wider shrink-0 transition-all ${
+                  category === cat
+                    ? 'fire-gradient text-white shadow-fire-glow'
+                    : 'bg-cardbg text-muted hover:text-white border border-white/10'
+                }">
+                  ${cat}
+                </button>
+              `
+                )
+                .join('')}
+            </div>
+
+            <!-- Filter & Sort Bar -->
+            <div class="bg-charcoal border border-white/10 rounded-2xl p-4 mb-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 items-end">
+              <!-- Search within category -->
+              <div>
+                <label class="block text-[10px] font-bold uppercase tracking-wider text-muted mb-1">Search Items</label>
+                <input type="text" value="${UI.escapeHTML(search)}" oninput="App.setCategoryFilter('search', this.value)" placeholder="Filter by keyword..." class="w-full px-3.5 py-2.5 rounded-xl bg-obsidian border border-white/10 text-xs text-white focus:outline-none focus:border-fire" />
+              </div>
+
+              <!-- Filter by Size -->
+              <div>
+                <label class="block text-[10px] font-bold uppercase tracking-wider text-muted mb-1">Filter Size</label>
+                <select onchange="App.setCategoryFilter('size', this.value)" class="w-full px-3.5 py-2.5 rounded-xl bg-obsidian border border-white/10 text-xs text-white focus:outline-none focus:border-fire">
+                  ${sizeOptions
+                    .map(sz => `<option value="${sz}" ${size === sz ? 'selected' : ''}>${sz === 'All' ? 'All Sizes' : sz}</option>`)
+                    .join('')}
+                </select>
+              </div>
+
+              <!-- Filter by Max Price -->
+              <div>
+                <div class="flex justify-between text-[10px] font-bold uppercase tracking-wider text-muted mb-1">
+                  <span>Max Price</span>
+                  <span class="text-fire font-extrabold">${UI.formatCurrency(maxPrice)}</span>
+                </div>
+                <input type="range" min="1000" max="15000" step="500" value="${maxPrice}" oninput="App.setCategoryFilter('maxPrice', this.value)" class="w-full accent-[#FF2727] cursor-pointer" />
+              </div>
+
+              <!-- Sort by Price -->
+              <div>
+                <label class="block text-[10px] font-bold uppercase tracking-wider text-muted mb-1">Sort By</label>
+                <select onchange="App.setCategoryFilter('sort', this.value)" class="w-full px-3.5 py-2.5 rounded-xl bg-obsidian border border-white/10 text-xs text-white focus:outline-none focus:border-fire">
+                  <option value="featured" ${sort === 'featured' ? 'selected' : ''}>Featured Drops</option>
+                  <option value="price-asc" ${sort === 'price-asc' ? 'selected' : ''}>Price: Low to High</option>
+                  <option value="price-desc" ${sort === 'price-desc' ? 'selected' : ''}>Price: High to Low</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Results Count & Reset -->
+            <div class="flex items-center justify-between mb-4 text-xs text-muted">
+              <span>Showing <strong class="text-white">${filtered.length}</strong> men's pieces</span>
+              ${
+                category !== 'All' || search || size !== 'All' || Number(maxPrice) < 15000
+                  ? `<button onclick="App.resetCategoryFilters()" class="text-fire font-bold hover:underline">Reset Filters</button>`
+                  : ''
+              }
+            </div>
+
+            <!-- Product Grid (2 Col Mobile, 3-4 Col Desktop) -->
+            ${
+              filtered.length === 0
+                ? `
+              <div class="bg-cardbg border border-white/10 rounded-3xl p-12 text-center my-6">
+                <h3 class="font-display font-bold text-xl text-white">No Products Match Your Filters</h3>
+                <p class="text-xs text-muted mt-2">Adjust your price ceiling, size, or category selection.</p>
+                <button onclick="App.resetCategoryFilters()" class="mt-5 px-6 py-3 rounded-xl fire-gradient-hover text-xs font-extrabold uppercase tracking-wider text-white">
+                  Show All Menswear
+                </button>
+              </div>
+            `
+                : `
+              <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3.5 sm:gap-5">
+                ${filtered.map(p => this.renderProductCard(p)).join('')}
+              </div>
+            `
+            }
+          </div>
+        `;
+      },
+
+      setCategoryFilter(key, value) {
+        this.state.catFilters[key] = value;
+        this.renderView();
+      },
+
+      resetCategoryFilters() {
+        this.state.catFilters = {
+          category: 'All',
+          search: '',
+          maxPrice: 15000,
+          size: 'All',
+          sort: 'featured'
+        };
+        this.renderView();
+      },
+
+      // ------------------------------------------------------------------------
+      // VIEW 3: PRODUCT DETAILS PAGE (PDP)
+      // ------------------------------------------------------------------------
+      renderProductDetailView() {
+        const productId = this.state.params.productId;
+        const product = this.getProducts().find(p => p.id === productId);
+
+        if (!product) {
+          return `
+            <div class="max-w-xl mx-auto px-4 py-20 text-center">
+              <h2 class="font-display font-bold text-2xl text-white">Piece Not Found</h2>
+              <button onclick="App.navigate('category', { category: 'All' })" class="mt-4 px-6 py-3 rounded-xl fire-gradient text-xs font-bold uppercase">Back to Collection</button>
+            </div>
+          `;
+        }
+
+        const images = product.images && product.images.length ? product.images : [UI.fallbackImg(product.name)];
+        const activeImg = images[this.state.pdpActiveImageIdx] || images[0];
+        const discount = UI.calcDiscount(product.price, product.originalPrice);
+        const isWished = this.getWishlist().includes(product.id);
+        const outOfStock = !product.available || Number(product.stock) <= 0;
+
+        const related = this.getActiveProducts()
+          .filter(p => p.id !== product.id && p.category === product.category)
+          .slice(0, 4);
+        const fallbackRelated = related.length
+          ? related
+          : this.getActiveProducts().filter(p => p.id !== product.id).slice(0, 4);
+
+        return `
+          <div class="view-animate max-w-7xl mx-auto px-4 sm:px-6 pt-5 pb-14">
+            <!-- Breadcrumb -->
+            <div class="flex items-center gap-2 text-xs text-muted mb-5">
+              <button onclick="App.navigate('home')" class="hover:text-white">Home</button>
+              <span>/</span>
+              <button onclick="App.navigate('category', { category: '${UI.escapeHTML(product.category)}' })" class="hover:text-white">${UI.escapeHTML(product.category)}</button>
+              <span>/</span>
+              <span class="text-white truncate">${UI.escapeHTML(product.name)}</span>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
+              <!-- Left: Image Gallery -->
+              <div class="lg:col-span-6 space-y-3">
+                <div class="relative aspect-[4/5] rounded-3xl overflow-hidden bg-cardbg border border-white/10">
+                  <img src="${UI.escapeHTML(activeImg)}" onerror="this.src='${UI.fallbackImg(product.name)}'" alt="${UI.escapeHTML(product.name)}" class="w-full h-full object-cover" />
+                  ${
+                    product.badge
+                      ? `<span class="absolute top-4 left-4 px-3 py-1 rounded-lg fire-gradient text-xs font-extrabold uppercase tracking-wider text-white shadow-fire-glow">${UI.escapeHTML(product.badge)}</span>`
+                      : ''
+                  }
+                  <button onclick="App.toggleWishlist('${product.id}', event)" class="absolute top-4 right-4 w-10 h-10 rounded-full bg-black/70 backdrop-blur-md border border-white/15 flex items-center justify-center hover:border-fire">
+                    <svg class="w-5 h-5 ${isWished ? 'text-fire fill-fire' : 'text-white'}" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                      <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                    </svg>
+                  </button>
+                </div>
+
+                ${
+                  images.length > 1
+                    ? `
+                  <div class="flex gap-3 overflow-x-auto pb-1">
+                    ${images
+                      .map(
+                        (img, idx) => `
+                      <button onclick="App.setPdpImage(${idx})" class="w-20 h-24 rounded-xl overflow-hidden border-2 transition-all shrink-0 ${
+                        this.state.pdpActiveImageIdx === idx ? 'border-fire shadow-fire-glow' : 'border-white/10 opacity-60 hover:opacity-100'
+                      }">
+                        <img src="${UI.escapeHTML(img)}" onerror="this.src='${UI.fallbackImg(product.name)}'" class="w-full h-full object-cover" />
+                      </button>
+                    `
+                      )
+                      .join('')}
+                  </div>
+                `
+                    : ''
+                }
+              </div>
+
+              <!-- Right: Product Info & Purchase Controls -->
+              <div class="lg:col-span-6 flex flex-col justify-between">
+                <div>
+                  <div class="flex items-center gap-2.5">
+                    <span class="text-xs font-extrabold uppercase tracking-[0.22em] text-fire">${UI.escapeHTML(product.category)}</span>
+                    <span class="text-muted">•</span>
+                    <span class="text-xs font-semibold ${outOfStock ? 'text-fire' : 'text-emerald-400'}">
+                      ${outOfStock ? 'Out of Stock' : `In Stock (${product.stock} left)`}
+                    </span>
+                  </div>
+
+                  <h1 class="font-display font-extrabold text-2xl sm:text-4xl text-white mt-2 leading-tight">
+                    ${UI.escapeHTML(product.name)}
+                  </h1>
+
+                  <!-- Pricing -->
+                  <div class="flex items-baseline gap-3 mt-4 pb-5 border-b border-white/10">
+                    <span class="font-display font-extrabold text-3xl text-white">${UI.formatCurrency(product.price)}</span>
+                    ${
+                      product.originalPrice > product.price
+                        ? `<span class="text-base text-muted line-through">${UI.formatCurrency(product.originalPrice)}</span>`
+                        : ''
+                    }
+                    ${
+                      discount > 0
+                        ? `<span class="px-2.5 py-1 rounded-md bg-fire/20 border border-fire/40 text-xs font-extrabold text-fire">SAVE ${discount}%</span>`
+                        : ''
+                    }
+                  </div>
+
+                  <!-- Description -->
+                  <p class="text-sm text-neutral-300 leading-relaxed mt-5">
+                    ${UI.escapeHTML(product.description)}
+                  </p>
+
+                  <!-- Color Selection -->
+                  ${
+                    product.colors && product.colors.length
+                      ? `
+                    <div class="mt-6">
+                      <span class="block text-xs font-bold uppercase tracking-wider text-muted mb-2.5">
+                        Colorway: <strong class="text-white">${UI.escapeHTML(this.state.pdpSelectedColor)}</strong>
+                      </span>
+                      <div class="flex flex-wrap gap-2.5">
+                        ${product.colors
+                          .map(
+                            col => `
+                          <button type="button" onclick="App.selectPdpColor('${UI.escapeHTML(col)}')" class="px-4 py-2 rounded-xl text-xs font-bold border transition-all ${
+                            this.state.pdpSelectedColor === col
+                              ? 'border-fire bg-fire/15 text-white shadow-fire-glow'
+                              : 'border-white/10 bg-cardbg text-muted hover:text-white'
+                          }">
+                            ${UI.escapeHTML(col)}
+                          </button>
+                        `
+                          )
+                          .join('')}
+                      </div>
+                    </div>
+                  `
+                      : ''
+                  }
+
+                  <!-- Mandatory Size Selection -->
+                  <div id="pdp-size-selector" class="mt-6 p-3.5 rounded-2xl bg-charcoal border border-white/10 transition-colors">
+                    <div class="flex items-center justify-between mb-2.5">
+                      <span class="text-xs font-bold uppercase tracking-wider text-muted">
+                        Select Size <span class="text-fire">*</span>
+                      </span>
+                      <span class="text-xs font-bold text-white">
+                        ${this.state.pdpSelectedSize ? `Selected: ${UI.escapeHTML(this.state.pdpSelectedSize)}` : 'Required'}
+                      </span>
+                    </div>
+                    <div class="grid grid-cols-4 sm:grid-cols-5 gap-2">
+                      ${(product.sizes || [])
+                        .map(
+                          sz => `
+                        <button type="button" onclick="App.selectPdpSize('${UI.escapeHTML(sz)}')" class="py-2.5 rounded-xl text-xs font-extrabold uppercase border transition-all ${
+                          this.state.pdpSelectedSize === sz
+                            ? 'fire-gradient border-transparent text-white shadow-fire-glow'
+                            : 'bg-obsidian border-white/10 text-white hover:border-fire/60'
+                        }">
+                          ${UI.escapeHTML(sz)}
+                        </button>
+                      `
+                        )
+                        .join('')}
+                    </div>
+                  </div>
+
+                  <!-- Quantity Selector -->
+                  <div class="mt-6 flex items-center gap-4">
+                    <span class="text-xs font-bold uppercase tracking-wider text-muted">Quantity</span>
+                    <div class="inline-flex items-center bg-cardbg border border-white/10 rounded-xl overflow-hidden">
+                      <button type="button" onclick="App.changePdpQty(-1)" class="w-10 h-10 flex items-center justify-center text-white hover:bg-white/10 font-bold">−</button>
+                      <span class="w-10 text-center text-sm font-extrabold">${this.state.pdpQuantity}</span>
+                      <button type="button" onclick="App.changePdpQty(1)" class="w-10 h-10 flex items-center justify-center text-white hover:bg-white/10 font-bold">+</button>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- CTA Buttons: Add to Cart & Buy Now -->
+                <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                  <button type="button" ${outOfStock ? 'disabled' : ''} onclick="App.handlePdpAdd('${product.id}', false)" class="py-4 px-6 rounded-xl bg-cardbg hover:bg-neutral-800 border border-fire/50 font-display font-extrabold text-xs sm:text-sm uppercase tracking-wider text-white transition-all disabled:opacity-40">
+                    Add to Bag
+                  </button>
+                  <button type="button" ${outOfStock ? 'disabled' : ''} onclick="App.handlePdpAdd('${product.id}', true)" class="py-4 px-6 rounded-xl fire-gradient-hover font-display font-extrabold text-xs sm:text-sm uppercase tracking-wider text-white shadow-fire-glow disabled:opacity-40">
+                    Buy Now
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Related Products -->
+            ${
+              fallbackRelated.length
+                ? `
+              <section class="mt-16 pt-10 border-t border-white/10">
+                <span class="text-[11px] font-extrabold uppercase tracking-[0.22em] text-fire">Complete The Fit</span>
+                <h2 class="font-display font-extrabold text-2xl text-white mt-1 mb-6">RELATED PIECES</h2>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-3.5 sm:gap-5">
+                  ${fallbackRelated.map(p => this.renderProductCard(p)).join('')}
+                </div>
+              </section>
+            `
+                : ''
+            }
+          </div>
+        `;
+      },
+
+      setPdpImage(idx) {
+        this.state.pdpActiveImageIdx = idx;
+        this.renderView();
+      },
+      selectPdpSize(size) {
+        this.state.pdpSelectedSize = size;
+        this.renderView();
+      },
+      selectPdpColor(color) {
+        this.state.pdpSelectedColor = color;
+        this.renderView();
+      },
+      changePdpQty(delta) {
+        this.state.pdpQuantity = Math.max(1, Math.min(10, this.state.pdpQuantity + delta));
+        this.renderView();
+      },
+      handlePdpAdd(productId, buyNow) {
+        this.addToCart(
+          productId,
+          this.state.pdpSelectedSize,
+          this.state.pdpSelectedColor,
+          this.state.pdpQuantity,
+          buyNow
+        );
+      },
+
+      // ------------------------------------------------------------------------
+      // VIEW 4: SHOPPING CART PAGE
+      // ------------------------------------------------------------------------
+      renderCartView() {
+        const cart = this.getCart();
+        const totals = this.getCartTotals();
+
+        return `
+          <div class="view-animate max-w-5xl mx-auto px-4 sm:px-6 pt-6 pb-14">
+            <div class="flex items-center justify-between mb-6">
+              <div>
+                <span class="text-[11px] font-extrabold uppercase tracking-[0.22em] text-fire">Your Arsenal</span>
+                <h1 class="font-display font-extrabold text-2xl sm:text-4xl text-white mt-0.5">SHOPPING BAG</h1>
+              </div>
+              <span class="px-3 py-1 rounded-full bg-cardbg border border-white/10 text-xs font-bold text-muted">
+                ${cart.reduce((s, i) => s + i.quantity, 0)} Items
+              </span>
+            </div>
+
+            ${
+              cart.length === 0
+                ? `
+              <div class="bg-cardbg border border-white/10 rounded-3xl p-12 text-center my-8">
+                <div class="w-16 h-16 rounded-2xl bg-obsidian border border-white/10 flex items-center justify-center mx-auto mb-4 text-fire">
+                  <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                    <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path>
+                    <path d="M3 6h18"></path>
+                    <path d="M16 10a4 4 0 0 1-8 0"></path>
+                  </svg>
+                </div>
+                <h2 class="font-display font-extrabold text-xl text-white">Your Bag Is Empty</h2>
+                <p class="text-xs sm:text-sm text-muted mt-2 max-w-sm mx-auto">
+                  Explore i.Box18 heavyweight hoodies, tactical cargos, tailored trousers, and luxury footwear.
+                </p>
+                <button onclick="App.navigate('category', { category: 'All' })" class="mt-6 px-7 py-3.5 rounded-xl fire-gradient-hover font-display font-extrabold text-xs uppercase tracking-widest text-white">
+                  Explore Menswear
+                </button>
+              </div>
+            `
+                : `
+              <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+                <!-- Cart Items List -->
+                <div class="lg:col-span-7 space-y-3.5">
+                  ${cart
+                    .map(
+                      item => `
+                    <div class="bg-cardbg border border-white/10 rounded-2xl p-3.5 sm:p-4 flex gap-3.5 sm:gap-4 items-center">
+                      <img onclick="App.navigate('product', { productId: '${item.productId}' })" src="${UI.escapeHTML(item.image)}" onerror="this.src='${UI.fallbackImg(item.name)}'" alt="${UI.escapeHTML(item.name)}" class="w-20 h-24 sm:w-24 sm:h-28 rounded-xl object-cover bg-obsidian cursor-pointer shrink-0" />
+                      <div class="flex-1 min-w-0">
+                        <div class="flex items-start justify-between gap-2">
+                          <h3 onclick="App.navigate('product', { productId: '${item.productId}' })" class="font-display font-bold text-sm sm:text-base text-white hover:text-fire cursor-pointer truncate">
+                            ${UI.escapeHTML(item.name)}
+                          </h3>
+                          <button onclick="App.removeCartItem('${item.cartItemId}')" aria-label="Remove item" class="text-muted hover:text-fire p-1 transition-colors">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                          </button>
+                        </div>
+
+                        <div class="flex items-center gap-2 mt-1 text-xs text-muted">
+                          <span class="px-2 py-0.5 rounded bg-obsidian border border-white/10 text-white font-bold">Size: ${UI.escapeHTML(item.size)}</span>
+                          <span>${UI.escapeHTML(item.color)}</span>
+                        </div>
+
+                        <div class="mt-3 flex items-center justify-between">
+                          <span class="font-extrabold text-sm sm:text-base text-white">${UI.formatCurrency(item.price * item.quantity)}</span>
+                          <div class="inline-flex items-center bg-obsidian border border-white/10 rounded-lg">
+                            <button onclick="App.updateCartItemQty('${item.cartItemId}', -1)" class="w-8 h-8 flex items-center justify-center text-white hover:text-fire font-bold">−</button>
+                            <span class="w-7 text-center text-xs font-extrabold">${item.quantity}</span>
+                            <button onclick="App.updateCartItemQty('${item.cartItemId}', 1)" class="w-8 h-8 flex items-center justify-center text-white hover:text-fire font-bold">+</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  `
+                    )
+                    .join('')}
+                </div>
+
+                <!-- Order Summary Box -->
+                <div class="lg:col-span-5 bg-charcoal border border-white/10 rounded-3xl p-5 sm:p-6 sticky top-24">
+                  <h2 class="font-display font-extrabold text-lg text-white mb-4">ORDER SUMMARY</h2>
+
+                  <div class="space-y-3 text-sm pb-4 border-b border-white/10">
+                    <div class="flex justify-between text-muted">
+                      <span>Subtotal</span>
+                      <span class="text-white font-semibold">${UI.formatCurrency(totals.subtotal)}</span>
+                    </div>
+                    <div class="flex justify-between text-muted">
+                      <span>Delivery Charge</span>
+                      <span class="${totals.delivery === 0 ? 'text-emerald-400 font-bold' : 'text-white font-semibold'}">
+                        ${totals.delivery === 0 ? 'FREE' : UI.formatCurrency(totals.delivery)}
+                      </span>
+                    </div>
+                    ${
+                      totals.delivery > 0
+                        ? `<p class="text-[11px] text-ember">Add ${UI.formatCurrency(totals.threshold - totals.subtotal)} more for Free Express Delivery.</p>`
+                        : `<p class="text-[11px] text-emerald-400">Unlocked Free Priority Shipping!</p>`
+                    }
+                  </div>
+
+                  <div class="flex justify-between items-baseline py-4">
+                    <span class="font-display font-bold text-base text-white">Grand Total</span>
+                    <span class="font-display font-extrabold text-2xl text-white">${UI.formatCurrency(totals.total)}</span>
+                  </div>
+
+                  <button onclick="App.navigate('checkout')" class="w-full py-4 rounded-xl fire-gradient-hover font-display font-extrabold text-xs sm:text-sm uppercase tracking-widest text-white shadow-fire-glow">
+                    Proceed to Checkout
+                  </button>
+                </div>
+              </div>
+            `
+            }
+          </div>
+        `;
+      },
+
+      // ------------------------------------------------------------------------
+      // VIEW 5: CHECKOUT PAGE
+      // ------------------------------------------------------------------------
+      renderCheckoutView() {
+        const cart = this.getCart();
+        if (cart.length === 0) {
+          this.navigate('cart');
+          return '';
+        }
+        const totals = this.getCartTotals();
+        const profile = this.getProfile();
+
+        return `
+          <div class="view-animate max-w-6xl mx-auto px-4 sm:px-6 pt-6 pb-16">
+            <div class="mb-6">
+              <button onclick="App.navigate('cart')" class="text-xs text-muted hover:text-white mb-2 inline-flex items-center gap-1">← Back to Bag</button>
+              <h1 class="font-display font-extrabold text-2xl sm:text-4xl text-white">SECURE CHECKOUT</h1>
+            </div>
+
+            <form onsubmit="App.submitOrder(event)" class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+              <!-- Customer & Delivery Details -->
+              <div class="lg:col-span-7 space-y-6">
+                <div class="bg-charcoal border border-white/10 rounded-3xl p-5 sm:p-7">
+                  <h2 class="font-display font-extrabold text-base uppercase tracking-wider text-white mb-4 flex items-center gap-2">
+                    <span class="w-6 h-6 rounded-full fire-gradient text-xs flex items-center justify-center">1</span>
+                    Delivery Details
+                  </h2>
+
+                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div class="sm:col-span-2">
+                      <label class="block text-xs font-bold uppercase tracking-wider text-muted mb-1.5">Full Name *</label>
+                      <input name="fullName" type="text" required value="${UI.escapeHTML(profile.fullName || '')}" placeholder="e.g. Aryan Verma" class="w-full px-4 py-3 rounded-xl bg-obsidian border border-white/15 text-sm text-white focus:outline-none focus:border-fire" />
+                    </div>
+
+                    <div>
+                      <label class="block text-xs font-bold uppercase tracking-wider text-muted mb-1.5">Mobile Number *</label>
+                      <input name="mobile" type="tel" required pattern="[0-9]{10}" maxlength="10" value="${UI.escapeHTML(profile.mobile || '')}" placeholder="10-digit mobile number" class="w-full px-4 py-3 rounded-xl bg-obsidian border border-white/15 text-sm text-white focus:outline-none focus:border-fire" />
+                    </div>
+
+                    <div>
+                      <label class="block text-xs font-bold uppercase tracking-wider text-muted mb-1.5">WhatsApp Number *</label>
+                      <input name="whatsapp" type="tel" required pattern="[0-9]{10}" maxlength="10" value="${UI.escapeHTML(profile.whatsapp || profile.mobile || '')}" placeholder="10-digit WhatsApp number" class="w-full px-4 py-3 rounded-xl bg-obsidian border border-white/15 text-sm text-white focus:outline-none focus:border-fire" />
+                    </div>
+
+                    <div class="sm:col-span-2">
+                      <label class="block text-xs font-bold uppercase tracking-wider text-muted mb-1.5">Complete Street Address *</label>
+                      <textarea name="address" rows="2" required placeholder="House/Flat No., Building, Street, Landmark" class="w-full px-4 py-3 rounded-xl bg-obsidian border border-white/15 text-sm text-white focus:outline-none focus:border-fire">${UI.escapeHTML(profile.address || '')}</textarea>
+                    </div>
+
+                    <div>
+                      <label class="block text-xs font-bold uppercase tracking-wider text-muted mb-1.5">City *</label>
+                      <input name="city" type="text" required value="${UI.escapeHTML(profile.city || '')}" placeholder="City" class="w-full px-4 py-3 rounded-xl bg-obsidian border border-white/15 text-sm text-white focus:outline-none focus:border-fire" />
+                    </div>
+
+                    <div>
+                      <label class="block text-xs font-bold uppercase tracking-wider text-muted mb-1.5">District *</label>
+                      <input name="district" type="text" required value="${UI.escapeHTML(profile.district || '')}" placeholder="District" class="w-full px-4 py-3 rounded-xl bg-obsidian border border-white/15 text-sm text-white focus:outline-none focus:border-fire" />
+                    </div>
+
+                    <div class="sm:col-span-2">
+                      <label class="block text-xs font-bold uppercase tracking-wider text-muted mb-1.5">Pincode *</label>
+                      <input name="pincode" type="text" required pattern="[0-9]{6}" maxlength="6" value="${UI.escapeHTML(profile.pincode || '')}" placeholder="6-digit Pincode" class="w-full px-4 py-3 rounded-xl bg-obsidian border border-white/15 text-sm text-white focus:outline-none focus:border-fire" />
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Payment Method Selection -->
+                <div class="bg-charcoal border border-white/10 rounded-3xl p-5 sm:p-7">
+                  <h2 class="font-display font-extrabold text-base uppercase tracking-wider text-white mb-4 flex items-center gap-2">
+                    <span class="w-6 h-6 rounded-full fire-gradient text-xs flex items-center justify-center">2</span>
+                    Payment Option
+                  </h2>
+
+                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                    <label class="cursor-pointer">
+                      <input type="radio" name="paymentMethod" value="COD" checked onchange="App.toggleUpiBox(false)" class="peer sr-only" />
+                      <div class="p-4 rounded-2xl bg-obsidian border border-white/15 peer-checked:border-fire peer-checked:bg-fire/10 transition-all">
+                        <div class="flex items-center justify-between">
+                          <span class="font-display font-bold text-sm text-white">Cash on Delivery</span>
+                          <span class="text-xs font-extrabold text-ember">COD</span>
+                        </div>
+                        <p class="text-xs text-muted mt-1">Pay in cash upon doorstep delivery.</p>
+                      </div>
+                    </label>
+
+                    <label class="cursor-pointer">
+                      <input type="radio" name="paymentMethod" value="UPI" onchange="App.toggleUpiBox(true)" class="peer sr-only" />
+                      <div class="p-4 rounded-2xl bg-obsidian border border-white/15 peer-checked:border-fire peer-checked:bg-fire/10 transition-all">
+                        <div class="flex items-center justify-between">
+                          <span class="font-display font-bold text-sm text-white">UPI Transfer</span>
+                          <span class="text-xs font-extrabold text-fire">UPI</span>
+                        </div>
+                        <p class="text-xs text-muted mt-1">Manual UPI transfer instructions.</p>
+                      </div>
+                    </label>
+                  </div>
+
+                  <!-- Placeholder UPI Instructions (Explicitly states manual confirmation, no fake verification) -->
+                  <div id="upi-instructions-box" class="hidden mt-4 p-4 rounded-2xl bg-obsidian border border-ember/40 text-xs space-y-2">
+                    <p class="font-bold text-white uppercase tracking-wider">UPI Payment Instructions (Prototype)</p>
+                    <p class="text-muted">Transfer <strong class="text-white">${UI.formatCurrency(totals.total)}</strong> to UPI ID: <code class="px-2 py-0.5 rounded bg-cardbg text-ember font-mono">ibox18.store@upi</code></p>
+                    <p class="text-[11px] text-neutral-400">
+                      Note: Payment verification is handled manually after order placement. Your order will be recorded with status <strong>Pending</strong>.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Right: Final Order Summary -->
+              <div class="lg:col-span-5 bg-charcoal border border-white/10 rounded-3xl p-5 sm:p-6 sticky top-24">
+                <h2 class="font-display font-extrabold text-lg text-white mb-4">FINAL SUMMARY</h2>
+
+                <div class="space-y-3 max-h-64 overflow-y-auto pr-1 pb-4 border-b border-white/10">
+                  ${cart
+                    .map(
+                      item => `
+                    <div class="flex items-center justify-between gap-3 text-xs">
+                      <div class="min-w-0">
+                        <p class="font-bold text-white truncate">${UI.escapeHTML(item.name)}</p>
+                        <p class="text-muted">Size: ${UI.escapeHTML(item.size)} • Qty: ${item.quantity}</p>
+                      </div>
+                      <span class="font-bold text-white shrink-0">${UI.formatCurrency(item.price * item.quantity)}</span>
+                    </div>
+                  `
+                    )
+                    .join('')}
+                </div>
+
+                <div class="space-y-2.5 py-4 border-b border-white/10 text-sm">
+                  <div class="flex justify-between text-muted">
+                    <span>Subtotal</span>
+                    <span class="text-white">${UI.formatCurrency(totals.subtotal)}</span>
+                  </div>
+                  <div class="flex justify-between text-muted">
+                    <span>Delivery Charges</span>
+                    <span class="${totals.delivery === 0 ? 'text-emerald-400 font-bold' : 'text-white'}">
+                      ${totals.delivery === 0 ? 'FREE' : UI.formatCurrency(totals.delivery)}
+                    </span>
+                  </div>
+                </div>
+
+                <div class="flex justify-between items-baseline py-4">
+                  <span class="font-display font-bold text-base text-white">Final Amount</span>
+                  <span class="font-display font-extrabold text-2xl text-fire">${UI.formatCurrency(totals.total)}</span>
+                </div>
+
+                <button type="submit" class="w-full py-4 rounded-xl fire-gradient-hover font-display font-extrabold text-xs sm:text-sm uppercase tracking-widest text-white shadow-fire-glow">
+                  Confirm Order • ${UI.formatCurrency(totals.total)}
+                </button>
+              </div>
+            </form>
+          </div>
+        `;
+      },
+
+      toggleUpiBox(show) {
+        const box = document.getElementById('upi-instructions-box');
+        if (box) {
+          box.classList.toggle('hidden', !show);
+        }
+      },
+
+      submitOrder(event) {
+        event.preventDefault();
+        const form = event.target;
+        const formData = new FormData(form);
+        const cart = this.getCart();
+        if (cart.length === 0) return;
+
+        const totals = this.getCartTotals();
+        const orderId = 'IBX-' + Date.now().toString().slice(-6) + Math.floor(10 + Math.random() * 89);
+
+        const customer = {
+          fullName: formData.get('fullName').trim(),
+          mobile: formData.get('mobile').trim(),
+          whatsapp: formData.get('whatsapp').trim(),
+          address: formData.get('address').trim(),
+          city: formData.get('city').trim(),
+          district: formData.get('district').trim(),
+          pincode: formData.get('pincode').trim(),
+        };
+
+        const newOrder = {
+          orderId,
+          date: new Date().toLocaleString('en-IN', {
+            day: '2-digit',
+            month: 'short',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+          }),
+          items: cart,
+          subtotal: totals.subtotal,
+          delivery: totals.delivery,
+          totalAmount: totals.total,
+          paymentMethod: formData.get('paymentMethod') || 'COD',
+          status: 'Pending',
+          customer
+        };
+
+        // Save order history
+        const orders = this.getOrders();
+        orders.unshift(newOrder);
+        Store.set(STORAGE_KEYS.ORDERS, orders);
+
+        // Save/update local customer profile & users list
+        Store.set(STORAGE_KEYS.PROFILE, customer);
+        const users = Store.get(STORAGE_KEYS.USERS, []);
+        if (!users.some(u => u.mobile === customer.mobile)) {
+          users.push({ ...customer, createdAt: new Date().toISOString() });
+          Store.set(STORAGE_KEYS.USERS, users);
+        }
+
+        // Decrement stock in products catalog
+        const products = this.getProducts().map(prod => {
+          const orderedQty = cart
+            .filter(c => c.productId === prod.id)
+            .reduce((sum, c) => sum + c.quantity, 0);
+          if (orderedQty > 0) {
+            return { ...prod, stock: Math.max(0, Number(prod.stock) - orderedQty) };
+          }
+          return prod;
+        });
+        Store.set(STORAGE_KEYS.PRODUCTS, products);
+
+        // Clear purchased cart items
+        Store.set(STORAGE_KEYS.CART, []);
+        this.updateCartBadges(true);
+
+        this.navigate('order-success', { orderId });
+      },
+
+      // ------------------------------------------------------------------------
+      // VIEW 6: ORDER SUCCESS SCREEN
+      // ------------------------------------------------------------------------
+      renderOrderSuccessView() {
+        const orderId = this.state.params.orderId;
+        const order = this.getOrders().find(o => o.orderId === orderId);
+
+        return `
+          <div class="view-animate max-w-xl mx-auto px-4 py-14 text-center">
+            <div class="bg-charcoal border border-fire/40 rounded-3xl p-8 sm:p-10 shadow-fire-glow relative overflow-hidden">
+              <div class="w-20 h-20 rounded-full fire-gradient flex items-center justify-center mx-auto mb-5 shadow-fire-glow">
+                <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" stroke-width="2.8" viewBox="0 0 24 24">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+              </div>
+
+              <span class="text-[11px] font-extrabold uppercase tracking-[0.24em] text-ember">Order Confirmed Locally</span>
+              <h1 class="font-display font-extrabold text-3xl sm:text-4xl text-white mt-1">BUILT FOR YOU.</h1>
+              <p class="text-sm text-muted mt-2">
+                Your i.Box18 order has been locked in. Track its status anytime under Your Orders.
+              </p>
+
+              <div class="mt-6 p-4 rounded-2xl bg-obsidian border border-white/10 text-left space-y-2 text-xs">
+                <div class="flex justify-between">
+                  <span class="text-muted">Order ID</span>
+                  <span class="font-mono font-extrabold text-fire">${UI.escapeHTML(orderId || 'IBX-ORDER')}</span>
+                </div>
+                ${
+                  order
+                    ? `
+                  <div class="flex justify-between">
+                    <span class="text-muted">Total Payable (${UI.escapeHTML(order.paymentMethod)})</span>
+                    <span class="font-extrabold text-white">${UI.formatCurrency(order.totalAmount)}</span>
+                  </div>
+                  <div class="flex justify-between">
+                    <span class="text-muted">Delivering To</span>
+                    <span class="text-white font-semibold truncate max-w-[200px]">${UI.escapeHTML(order.customer.city)}, ${UI.escapeHTML(order.customer.pincode)}</span>
+                  </div>
+                `
+                    : ''
+                }
+              </div>
+
+              <div class="mt-7 grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <button onclick="App.navigate('orders')" class="py-3.5 px-5 rounded-xl fire-gradient-hover font-display font-extrabold text-xs uppercase tracking-wider text-white">
+                  View Your Orders
+                </button>
+                <button onclick="App.navigate('home')" class="py-3.5 px-5 rounded-xl bg-cardbg border border-white/15 hover:border-white/30 font-display font-bold text-xs uppercase tracking-wider text-white">
+                  Continue Shopping
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+      },
+
+      // ------------------------------------------------------------------------
+      // VIEW 7: YOUR ORDERS PAGE
+      // ------------------------------------------------------------------------
+      renderOrdersView() {
+        const orders = this.getOrders();
+
+        const statusBadge = (status) => {
+          const map = {
+            Pending: 'bg-amber-500/15 text-amber-400 border-amber-500/40',
+            Confirmed: 'bg-sky-500/15 text-sky-400 border-sky-500/40',
+            Shipped: 'bg-ember/20 text-ember border-ember/40',
+            Delivered: 'bg-emerald-500/15 text-emerald-400 border-emerald-500/40',
+            Cancelled: 'bg-fire/15 text-fire border-fire/40'
+          };
+          return map[status] || map.Pending;
+        };
+
+        return `
+          <div class="view-animate max-w-4xl mx-auto px-4 sm:px-6 pt-6 pb-16">
+            <div class="mb-6">
+              <span class="text-[11px] font-extrabold uppercase tracking-[0.22em] text-fire">Dispatch History</span>
+              <h1 class="font-display font-extrabold text-2xl sm:text-4xl text-white mt-0.5">YOUR ORDERS</h1>
+            </div>
+
+            ${
+              orders.length === 0
+                ? `
+              <div class="bg-cardbg border border-white/10 rounded-3xl p-12 text-center">
+                <h2 class="font-display font-bold text-xl text-white">No Orders Yet</h2>
+                <p class="text-xs sm:text-sm text-muted mt-2">When you place an order on i.Box18, it will appear here with live status tracking.</p>
+                <button onclick="App.navigate('category', { category: 'All' })" class="mt-6 px-7 py-3.5 rounded-xl fire-gradient-hover font-display font-extrabold text-xs uppercase tracking-widest text-white">
+                  Start Shopping
+                </button>
+              </div>
+            `
+                : `
+              <div class="space-y-4">
+                ${orders
+                  .map(
+                    ord => `
+                  <div class="bg-charcoal border border-white/10 rounded-3xl p-5 sm:p-6">
+                    <div class="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-white/10">
+                      <div>
+                        <span class="text-[11px] text-muted">Order ID</span>
+                        <h3 class="font-mono font-extrabold text-base text-white">${UI.escapeHTML(ord.orderId)}</h3>
+                        <p class="text-[11px] text-muted mt-0.5">Placed on ${UI.escapeHTML(ord.date)}</p>
+                      </div>
+                      <div class="flex items-center gap-3">
+                        <span class="px-3 py-1 rounded-full border text-xs font-extrabold uppercase tracking-wider ${statusBadge(ord.status)}">
+                          ${UI.escapeHTML(ord.status)}
+                        </span>
+                      </div>
+                    </div>
+
+                    <!-- Ordered Items -->
+                    <div class="py-4 space-y-3 border-b border-white/10">
+                      ${(ord.items || [])
+                        .map(
+                          it => `
+                        <div class="flex items-center gap-3">
+                          <img src="${UI.escapeHTML(it.image)}" onerror="this.src='${UI.fallbackImg(it.name)}'" class="w-12 h-14 rounded-lg object-cover bg-obsidian shrink-0" />
+                          <div class="flex-1 min-w-0">
+                            <p class="text-xs sm:text-sm font-bold text-white truncate">${UI.escapeHTML(it.name)}</p>
+                            <p class="text-[11px] text-muted">Size: <strong class="text-white">${UI.escapeHTML(it.size)}</strong> • Qty: ${it.quantity}</p>
+                          </div>
+                          <span class="text-xs sm:text-sm font-bold text-white">${UI.formatCurrency(it.price * it.quantity)}</span>
+                        </div>
+                      `
+                        )
+                        .join('')}
+                    </div>
+
+                    <!-- Address & Total -->
+                    <div class="pt-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-xs">
+                      <div class="text-muted">
+                        <p class="text-white font-semibold">${UI.escapeHTML(ord.customer?.fullName || '')} (${UI.escapeHTML(ord.customer?.mobile || '')})</p>
+                        <p>${UI.escapeHTML(ord.customer?.address || '')}, ${UI.escapeHTML(ord.customer?.city || '')}, ${UI.escapeHTML(ord.customer?.district || '')} - ${UI.escapeHTML(ord.customer?.pincode || '')}</p>
+                      </div>
+                      <div class="flex items-center justify-between sm:justify-end gap-4">
+                        <div class="text-right">
+                          <span class="text-muted block">Total (${UI.escapeHTML(ord.paymentMethod || 'COD')})</span>
+                          <span class="font-display font-extrabold text-lg text-white">${UI.formatCurrency(ord.totalAmount)}</span>
+                        </div>
+                        ${
+                          ord.status === 'Pending'
+                            ? `<button onclick="App.cancelCustomerOrder('${ord.orderId}')" class="px-3.5 py-2 rounded-xl bg-fire/15 hover:bg-fire text-fire hover:text-white border border-fire/40 font-bold transition-all">Cancel</button>`
+                            : ''
+                        }
+                      </div>
+                    </div>
+                  </div>
+                `
+                  )
+                  .join('')}
+              </div>
+            `
+            }
+          </div>
+        `;
+      },
+
+      cancelCustomerOrder(orderId) {
+        const orders = this.getOrders().map(o => (o.orderId === orderId ? { ...o, status: 'Cancelled' } : o));
+        Store.set(STORAGE_KEYS.ORDERS, orders);
+        UI.toast(`Order ${orderId} cancelled.`, 'warning');
+        this.renderView();
+      },
+
+      // ------------------------------------------------------------------------
+      // VIEW 8: ACCOUNT PAGE
+      // ------------------------------------------------------------------------
+      renderAccountView() {
+        const profile = this.getProfile();
+        const wishlistIds = this.getWishlist();
+        const wishProducts = this.getProducts().filter(p => wishlistIds.includes(p.id));
+        const orders = this.getOrders();
+
+        return `
+          <div class="view-animate max-w-5xl mx-auto px-4 sm:px-6 pt-6 pb-16">
+            <div class="flex flex-wrap items-center justify-between gap-4 mb-6">
+              <div>
+                <span class="text-[11px] font-extrabold uppercase tracking-[0.22em] text-fire">Member Vault</span>
+                <h1 class="font-display font-extrabold text-2xl sm:text-4xl text-white mt-0.5">MY ACCOUNT</h1>
+              </div>
+              <button onclick="App.resetLocalProfile()" class="px-4 py-2 rounded-xl bg-cardbg border border-white/10 hover:border-fire text-xs font-bold text-muted hover:text-fire transition-all">
+                Reset Local Profile
+              </button>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+              <!-- Edit Customer Profile Card -->
+              <div class="lg:col-span-5 bg-charcoal border border-white/10 rounded-3xl p-5 sm:p-6">
+                <div class="flex items-center gap-3.5 pb-5 border-b border-white/10">
+                  <div class="w-14 h-14 rounded-2xl fire-gradient flex items-center justify-center font-display font-extrabold text-xl text-white shadow-fire-glow">
+                    ${UI.escapeHTML((profile.fullName || 'M')[0].toUpperCase())}
+                  </div>
+                  <div>
+                    <h2 class="font-display font-bold text-lg text-white">${UI.escapeHTML(profile.fullName || 'i.Box18 Member')}</h2>
+                    <p class="text-xs text-muted">${UI.escapeHTML(profile.mobile || 'Add your mobile number below')}</p>
+                  </div>
+                </div>
+
+                <form onsubmit="App.saveCustomerProfile(event)" class="mt-5 space-y-3.5">
+                  <div>
+                    <label class="block text-[11px] font-bold uppercase tracking-wider text-muted mb-1">Full Name</label>
+                    <input name="fullName" type="text" value="${UI.escapeHTML(profile.fullName || '')}" placeholder="Your Name" class="w-full px-3.5 py-2.5 rounded-xl bg-obsidian border border-white/10 text-xs text-white focus:outline-none focus:border-fire" />
+                  </div>
+                  <div class="grid grid-cols-2 gap-3">
+                    <div>
+                      <label class="block text-[11px] font-bold uppercase tracking-wider text-muted mb-1">Mobile</label>
+                      <input name="mobile" type="tel" value="${UI.escapeHTML(profile.mobile || '')}" placeholder="Mobile No." class="w-full px-3.5 py-2.5 rounded-xl bg-obsidian border border-white/10 text-xs text-white focus:outline-none focus:border-fire" />
+                    </div>
+                    <div>
+                      <label class="block text-[11px] font-bold uppercase tracking-wider text-muted mb-1">WhatsApp</label>
+                      <input name="whatsapp" type="tel" value="${UI.escapeHTML(profile.whatsapp || '')}" placeholder="WhatsApp No." class="w-full px-3.5 py-2.5 rounded-xl bg-obsidian border border-white/10 text-xs text-white focus:outline-none focus:border-fire" />
+                    </div>
+                  </div>
+                  <div>
+                    <label class="block text-[11px] font-bold uppercase tracking-wider text-muted mb-1">Saved Address</label>
+                    <textarea name="address" rows="2" placeholder="Street address..." class="w-full px-3.5 py-2.5 rounded-xl bg-obsidian border border-white/10 text-xs text-white focus:outline-none focus:border-fire">${UI.escapeHTML(profile.address || '')}</textarea>
+                  </div>
+                  <div class="grid grid-cols-3 gap-2.5">
+                    <input name="city" type="text" value="${UI.escapeHTML(profile.city || '')}" placeholder="City" class="w-full px-3 py-2.5 rounded-xl bg-obsidian border border-white/10 text-xs text-white focus:outline-none focus:border-fire" />
+                    <input name="district" type="text" value="${UI.escapeHTML(profile.district || '')}" placeholder="District" class="w-full px-3 py-2.5 rounded-xl bg-obsidian border border-white/10 text-xs text-white focus:outline-none focus:border-fire" />
+                    <input name="pincode" type="text" value="${UI.escapeHTML(profile.pincode || '')}" placeholder="Pincode" class="w-full px-3 py-2.5 rounded-xl bg-obsidian border border-white/10 text-xs text-white focus:outline-none focus:border-fire" />
+                  </div>
+                  <button type="submit" class="w-full py-3 rounded-xl fire-gradient-hover font-display font-extrabold text-xs uppercase tracking-wider text-white">
+                    Save Profile
+                  </button>
+                </form>
+              </div>
+
+              <!-- Right Column: Wishlist & Quick Orders Summary -->
+              <div class="lg:col-span-7 space-y-6">
+                <!-- Quick Orders Card -->
+                <div class="bg-charcoal border border-white/10 rounded-3xl p-5 sm:p-6 flex items-center justify-between">
+                  <div>
+                    <h3 class="font-display font-bold text-base text-white">My Orders (${orders.length})</h3>
+                    <p class="text-xs text-muted mt-0.5">Track deliveries and view order receipts.</p>
+                  </div>
+                  <button onclick="App.navigate('orders')" class="px-4 py-2.5 rounded-xl bg-cardbg border border-white/15 hover:border-fire text-xs font-extrabold uppercase tracking-wider text-white">
+                    Open Orders →
+                  </button>
+                </div>
+
+                <!-- Saved Wishlist -->
+                <div class="bg-charcoal border border-white/10 rounded-3xl p-5 sm:p-6">
+                  <h3 class="font-display font-bold text-base text-white mb-4">Saved Wishlist (${wishProducts.length})</h3>
+                  ${
+                    wishProducts.length === 0
+                      ? `<p class="text-xs text-muted py-6 text-center">Tap the heart icon on any piece to save it here.</p>`
+                      : `
+                    <div class="grid grid-cols-2 gap-3.5">
+                      ${wishProducts.map(p => this.renderProductCard(p)).join('')}
+                    </div>
+                  `
+                  }
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      },
+
+      saveCustomerProfile(event) {
+        event.preventDefault();
+        const fd = new FormData(event.target);
+        const updated = {
+          fullName: fd.get('fullName').trim(),
+          mobile: fd.get('mobile').trim(),
+          whatsapp: fd.get('whatsapp').trim(),
+          address: fd.get('address').trim(),
+          city: fd.get('city').trim(),
+          district: fd.get('district').trim(),
+          pincode: fd.get('pincode').trim(),
+        };
+        Store.set(STORAGE_KEYS.PROFILE, updated);
+        UI.toast('Local profile saved.', 'success');
+        this.renderView();
+      },
+
+      resetLocalProfile() {
+        Store.set(STORAGE_KEYS.PROFILE, {
+          fullName: '',
+          mobile: '',
+          whatsapp: '',
+          address: '',
+          city: '',
+          district: '',
+          pincode: ''
+        });
+        UI.toast('Local profile cleared.', 'warning');
+        this.renderView();
+      },
+
+      // ------------------------------------------------------------------------
+      // VIEW 9: HIDDEN ADMIN DASHBOARD (Products, Banners, Orders, Settings)
+      // ------------------------------------------------------------------------
+      renderAdminView() {
+        const tab = this.state.adminTab;
+        const products = this.getProducts();
+        const banners = this.getBanners();
+        const orders = this.getOrders();
+        const settings = this.getAdminSettings();
+
+        const editingProduct = this.state.editingProductId
+          ? products.find(p => p.id === this.state.editingProductId)
+          : null;
+
+        const editingBanner = this.state.editingBannerId
+          ? banners.find(b => b.id === this.state.editingBannerId)
+          : null;
+
+        return `
+          <div class="view-animate max-w-7xl mx-auto px-4 sm:px-6 pt-6 pb-20">
+            <!-- Admin Header -->
+            <div class="bg-charcoal border border-fire/40 rounded-3xl p-5 sm:p-7 mb-6 flex flex-wrap items-center justify-between gap-4 shadow-fire-glow">
+              <div>
+                <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-fire/20 text-fire text-[10px] font-extrabold uppercase tracking-widest mb-1.5">
+                  Local Owner Prototype Mode
+                </div>
+                <h1 class="font-display font-extrabold text-2xl sm:text-3xl text-white">i.Box18 COMMAND DASHBOARD</h1>
+              </div>
+              <button onclick="App.lockAdmin()" class="px-4 py-2.5 rounded-xl bg-obsidian border border-white/15 hover:border-fire text-xs font-extrabold uppercase tracking-wider text-white">
+                Lock & Exit Admin
+              </button>
+            </div>
+
+            <!-- Admin Tabs -->
+            <div class="flex gap-2 overflow-x-auto no-scrollbar pb-2 mb-6">
+              ${[
+                { id: 'products', label: `Products (${products.length})` },
+                { id: 'banners', label: `Advertisements (${banners.length})` },
+                { id: 'orders', label: `Orders (${orders.length})` },
+                { id: 'settings', label: 'Vault Settings' }
+              ]
+                .map(
+                  t => `
+                <button onclick="App.setAdminTab('${t.id}')" class="px-5 py-3 rounded-xl text-xs font-extrabold uppercase tracking-wider shrink-0 transition-all ${
+                  tab === t.id ? 'fire-gradient text-white shadow-fire-glow' : 'bg-cardbg text-muted hover:text-white border border-white/10'
+                }">
+                  ${t.label}
+                </button>
+              `
+                )
+                .join('')}
+            </div>
+
+            <!-- TAB 1: PRODUCTS MANAGER -->
+            ${
+              tab === 'products'
+                ? `
+              <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+                <!-- Add / Edit Product Form -->
+                <div class="lg:col-span-5 bg-charcoal border border-white/10 rounded-3xl p-5 sm:p-6">
+                  <div class="flex items-center justify-between mb-4">
+                    <h2 class="font-display font-extrabold text-lg text-white">
+                      ${editingProduct ? 'EDIT PRODUCT' : 'ADD NEW PRODUCT'}
+                    </h2>
+                    ${
+                      editingProduct
+                        ? `<button onclick="App.cancelAdminEditProduct()" class="text-xs text-fire font-bold">Cancel Edit</button>`
+                        : ''
+                    }
+                  </div>
+
+                  <form onsubmit="App.saveAdminProduct(event)" class="space-y-3.5">
+                    <div>
+                      <label class="block text-[11px] font-bold uppercase text-muted mb-1">Product Name *</label>
+                      <input name="name" type="text" required value="${UI.escapeHTML(editingProduct?.name || '')}" placeholder="e.g. Hellfire Heavy Hoodie" class="w-full px-3.5 py-2.5 rounded-xl bg-obsidian border border-white/15 text-xs text-white focus:border-fire focus:outline-none" />
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-3">
+                      <div>
+                        <label class="block text-[11px] font-bold uppercase text-muted mb-1">Category *</label>
+                        <select name="category" class="w-full px-3.5 py-2.5 rounded-xl bg-obsidian border border-white/15 text-xs text-white focus:border-fire focus:outline-none">
+                          ${['Hoodies', 'Trousers', 'Pants', 'Shirts', 'Shoes']
+                            .map(c => `<option value="${c}" ${editingProduct?.category === c ? 'selected' : ''}>${c}</option>`)
+                            .join('')}
+                        </select>
+                      </div>
+                      <div>
+                        <label class="block text-[11px] font-bold uppercase text-muted mb-1">Badge</label>
+                        <select name="badge" class="w-full px-3.5 py-2.5 rounded-xl bg-obsidian border border-white/15 text-xs text-white focus:border-fire focus:outline-none">
+                          ${['New Arrival', 'Trending', 'Best Seller', 'Sale', '']
+                            .map(b => `<option value="${b}" ${editingProduct?.badge === b ? 'selected' : ''}>${b || 'None'}</option>`)
+                            .join('')}
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="grid grid-cols-3 gap-2.5">
+                      <div>
+                        <label class="block text-[11px] font-bold uppercase text-muted mb-1">Price (₹) *</label>
+                        <input name="price" type="number" min="1" required value="${editingProduct?.price || ''}" placeholder="2999" class="w-full px-3 py-2.5 rounded-xl bg-obsidian border border-white/15 text-xs text-white focus:border-fire focus:outline-none" />
+                      </div>
+                      <div>
+                        <label class="block text-[11px] font-bold uppercase text-muted mb-1">MRP (₹)</label>
+                        <input name="originalPrice" type="number" min="0" value="${editingProduct?.originalPrice || ''}" placeholder="4499" class="w-full px-3 py-2.5 rounded-xl bg-obsidian border border-white/15 text-xs text-white focus:border-fire focus:outline-none" />
+                      </div>
+                      <div>
+                        <label class="block text-[11px] font-bold uppercase text-muted mb-1">Stock *</label>
+                        <input name="stock" type="number" min="0" required value="${editingProduct?.stock ?? 20}" class="w-full px-3 py-2.5 rounded-xl bg-obsidian border border-white/15 text-xs text-white focus:border-fire focus:outline-none" />
+                      </div>
+                    </div>
+
+                    <div>
+                      <label class="block text-[11px] font-bold uppercase text-muted mb-1">Description *</label>
+                      <textarea name="description" rows="2" required placeholder="Fabric GSM, fit, detailing..." class="w-full px-3.5 py-2.5 rounded-xl bg-obsidian border border-white/15 text-xs text-white focus:border-fire focus:outline-none">${UI.escapeHTML(editingProduct?.description || '')}</textarea>
+                    </div>
+
+                    <div>
+                      <label class="block text-[11px] font-bold uppercase text-muted mb-1">Image URLs (Comma-separated) *</label>
+                      <input id="admin-prod-images-input" name="images" type="text" required value="${UI.escapeHTML((editingProduct?.images || []).join(', '))}" placeholder="https://..." class="w-full px-3.5 py-2.5 rounded-xl bg-obsidian border border-white/15 text-xs text-white focus:border-fire focus:outline-none" />
+                      <label class="mt-2 inline-flex items-center gap-2 text-[11px] text-ember cursor-pointer hover:underline">
+                        <span>+ Or Upload Local Product Photo</span>
+                        <input type="file" accept="image/*" onchange="App.handleAdminImageUpload(event, 'admin-prod-images-input', true)" class="hidden" />
+                      </label>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-3">
+                      <div>
+                        <label class="block text-[11px] font-bold uppercase text-muted mb-1">Sizes (Comma-separated) *</label>
+                        <input name="sizes" type="text" required value="${UI.escapeHTML((editingProduct?.sizes || ['S', 'M', 'L', 'XL']).join(', '))}" placeholder="S, M, L, XL" class="w-full px-3.5 py-2.5 rounded-xl bg-obsidian border border-white/15 text-xs text-white focus:border-fire focus:outline-none" />
+                      </div>
+                      <div>
+                        <label class="block text-[11px] font-bold uppercase text-muted mb-1">Colors (Comma-separated)</label>
+                        <input name="colors" type="text" value="${UI.escapeHTML((editingProduct?.colors || ['Obsidian Black']).join(', '))}" placeholder="Obsidian Black, Crimson" class="w-full px-3.5 py-2.5 rounded-xl bg-obsidian border border-white/15 text-xs text-white focus:border-fire focus:outline-none" />
+                      </div>
+                    </div>
+
+                    <button type="submit" class="w-full py-3.5 rounded-xl fire-gradient-hover font-display font-extrabold text-xs uppercase tracking-widest text-white">
+                      ${editingProduct ? 'Update Product' : 'Publish Product'}
+                    </button>
+                  </form>
+                </div>
+
+                <!-- Existing Products List -->
+                <div class="lg:col-span-7 bg-charcoal border border-white/10 rounded-3xl p-5 sm:p-6">
+                  <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+                    <h2 class="font-display font-extrabold text-lg text-white">INVENTORY (${products.length})</h2>
+                    <input type="text" oninput="App.filterAdminProducts(this.value)" placeholder="Search inventory..." class="px-3.5 py-2 rounded-xl bg-obsidian border border-white/15 text-xs text-white focus:border-fire focus:outline-none" />
+                  </div>
+
+                  <div id="admin-products-list" class="space-y-3 max-h-[680px] overflow-y-auto pr-1">
+                    ${this.renderAdminProductsList(products)}
+                  </div>
+                </div>
+              </div>
+            `
+                : ''
+            }
+
+            <!-- TAB 2: ADVERTISEMENTS / BANNERS MANAGER -->
+            ${
+              tab === 'banners'
+                ? `
+              <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+                <!-- Add / Edit Banner Form -->
+                <div class="lg:col-span-5 bg-charcoal border border-white/10 rounded-3xl p-5 sm:p-6">
+                  <div class="flex items-center justify-between mb-4">
+                    <h2 class="font-display font-extrabold text-lg text-white">
+                      ${editingBanner ? 'EDIT BANNER' : 'CREATE PROMO BANNER'}
+                    </h2>
+                    ${
+                      editingBanner
+                        ? `<button onclick="App.cancelAdminEditBanner()" class="text-xs text-fire font-bold">Cancel</button>`
+                        : ''
+                    }
+                  </div>
+
+                  <form onsubmit="App.saveAdminBanner(event)" class="space-y-3.5">
+                    <div>
+                      <label class="block text-[11px] font-bold uppercase text-muted mb-1">Banner Heading *</label>
+                      <input name="heading" type="text" required value="${UI.escapeHTML(editingBanner?.heading || '')}" placeholder="e.g. THE DARK COLLECTION" class="w-full px-3.5 py-2.5 rounded-xl bg-obsidian border border-white/15 text-xs text-white focus:border-fire focus:outline-none" />
+                    </div>
+                    <div>
+                      <label class="block text-[11px] font-bold uppercase text-muted mb-1">Banner Subtitle *</label>
+                      <input name="subtitle" type="text" required value="${UI.escapeHTML(editingBanner?.subtitle || '')}" placeholder="e.g. Elevate Your Everyday Style." class="w-full px-3.5 py-2.5 rounded-xl bg-obsidian border border-white/15 text-xs text-white focus:border-fire focus:outline-none" />
+                    </div>
+                    <div class="grid grid-cols-2 gap-3">
+                      <div>
+                        <label class="block text-[11px] font-bold uppercase text-muted mb-1">Button Text *</label>
+                        <input name="buttonText" type="text" required value="${UI.escapeHTML(editingBanner?.buttonText || 'EXPLORE NOW')}" class="w-full px-3.5 py-2.5 rounded-xl bg-obsidian border border-white/15 text-xs text-white focus:border-fire focus:outline-none" />
+                      </div>
+                      <div>
+                        <label class="block text-[11px] font-bold uppercase text-muted mb-1">Destination Category</label>
+                        <select name="destinationCategory" class="w-full px-3.5 py-2.5 rounded-xl bg-obsidian border border-white/15 text-xs text-white focus:border-fire focus:outline-none">
+                          ${['All', 'Hoodies', 'Trousers', 'Pants', 'Shirts', 'Shoes']
+                            .map(c => `<option value="${c}" ${editingBanner?.destinationCategory === c ? 'selected' : ''}>${c}</option>`)
+                            .join('')}
+                        </select>
+                      </div>
+                    </div>
+                    <div>
+                      <label class="block text-[11px] font-bold uppercase text-muted mb-1">Banner Image URL *</label>
+                      <input id="admin-banner-img-input" name="image" type="text" required value="${UI.escapeHTML(editingBanner?.image || '')}" placeholder="https://..." class="w-full px-3.5 py-2.5 rounded-xl bg-obsidian border border-white/15 text-xs text-white focus:border-fire focus:outline-none" />
+                      <label class="mt-2 inline-flex items-center gap-2 text-[11px] text-ember cursor-pointer hover:underline">
+                        <span>+ Upload Banner Image File</span>
+                        <input type="file" accept="image/*" onchange="App.handleAdminImageUpload(event, 'admin-banner-img-input', false)" class="hidden" />
+                      </label>
+                    </div>
+                    <button type="submit" class="w-full py-3.5 rounded-xl fire-gradient-hover font-display font-extrabold text-xs uppercase tracking-widest text-white">
+                      ${editingBanner ? 'Save Banner' : 'Publish Banner'}
+                    </button>
+                  </form>
+                </div>
+
+                <!-- Banners List -->
+                <div class="lg:col-span-7 space-y-3.5">
+                  ${banners
+                    .map(
+                      b => `
+                    <div class="bg-charcoal border border-white/10 rounded-2xl p-4 flex flex-col sm:flex-row gap-4 items-center">
+                      <img src="${UI.escapeHTML(b.image)}" onerror="this.src='${UI.fallbackImg(b.heading)}'" class="w-full sm:w-36 h-24 rounded-xl object-cover bg-obsidian shrink-0" />
+                      <div class="flex-1 min-w-0">
+                        <div class="flex items-center gap-2">
+                          <span class="px-2 py-0.5 rounded text-[10px] font-bold ${b.enabled ? 'bg-emerald-500/20 text-emerald-400' : 'bg-neutral-800 text-muted'}">
+                            ${b.enabled ? 'ACTIVE' : 'DISABLED'}
+                          </span>
+                          <span class="text-[11px] text-muted">Links to: ${UI.escapeHTML(b.destinationCategory)}</span>
+                        </div>
+                        <h3 class="font-display font-bold text-base text-white mt-1 truncate">${UI.escapeHTML(b.heading)}</h3>
+                        <p class="text-xs text-muted truncate">${UI.escapeHTML(b.subtitle)}</p>
+                      </div>
+                      <div class="flex sm:flex-col gap-2 shrink-0 w-full sm:w-auto">
+                        <button onclick="App.toggleAdminBanner('${b.id}')" class="flex-1 px-3 py-1.5 rounded-lg bg-obsidian border border-white/15 text-[11px] font-bold text-white hover:border-ember">
+                          ${b.enabled ? 'Disable' : 'Enable'}
+                        </button>
+                        <button onclick="App.editAdminBanner('${b.id}')" class="flex-1 px-3 py-1.5 rounded-lg bg-obsidian border border-white/15 text-[11px] font-bold text-white hover:border-fire">
+                          Edit
+                        </button>
+                        <button onclick="App.deleteAdminBanner('${b.id}')" class="flex-1 px-3 py-1.5 rounded-lg bg-fire/15 text-fire text-[11px] font-bold hover:bg-fire hover:text-white">
+                          Delete
+                        </button>
+                      </div>
+                    </div>
+                  `
+                    )
+                    .join('')}
+                </div>
+              </div>
+            `
+                : ''
+            }
+
+            <!-- TAB 3: CUSTOMER ORDERS MANAGER -->
+            ${
+              tab === 'orders'
+                ? `
+              <div class="bg-charcoal border border-white/10 rounded-3xl p-5 sm:p-6">
+                <h2 class="font-display font-extrabold text-lg text-white mb-4">CUSTOMER ORDERS (${orders.length})</h2>
+                ${
+                  orders.length === 0
+                    ? `<p class="text-xs text-muted py-8 text-center">No customer orders recorded yet.</p>`
+                    : `
+                  <div class="space-y-3.5">
+                    ${orders
+                      .map(
+                        ord => `
+                      <div class="bg-obsidian border border-white/10 rounded-2xl p-4 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                        <div>
+                          <div class="flex items-center gap-2.5">
+                            <span class="font-mono font-extrabold text-sm text-fire">${UI.escapeHTML(ord.orderId)}</span>
+                            <span class="text-xs text-muted">• ${UI.escapeHTML(ord.date)}</span>
+                          </div>
+                          <p class="text-xs font-bold text-white mt-1">${UI.escapeHTML(ord.customer?.fullName)} • ${UI.escapeHTML(ord.customer?.mobile)}</p>
+                          <p class="text-[11px] text-muted">${UI.escapeHTML(ord.customer?.address)}, ${UI.escapeHTML(ord.customer?.city)} (${UI.escapeHTML(ord.customer?.pincode)})</p>
+                          <p class="text-xs text-white mt-1 font-semibold">Total: ${UI.formatCurrency(ord.totalAmount)} (${UI.escapeHTML(ord.paymentMethod)}) • ${(ord.items || []).length} items</p>
+                        </div>
+                        <div class="flex items-center gap-2">
+                          <label class="text-[11px] font-bold text-muted">Status:</label>
+                          <select onchange="App.updateAdminOrderStatus('${ord.orderId}', this.value)" class="px-3.5 py-2 rounded-xl bg-charcoal border border-white/15 text-xs font-bold text-white focus:border-fire focus:outline-none">
+                            ${['Pending', 'Confirmed', 'Shipped', 'Delivered', 'Cancelled']
+                              .map(st => `<option value="${st}" ${ord.status === st ? 'selected' : ''}>${st}</option>`)
+                              .join('')}
+                          </select>
+                        </div>
+                      </div>
+                    `
+                      )
+                      .join('')}
+                  </div>
+                `
+                }
+              </div>
+            `
+                : ''
+            }
+
+            <!-- TAB 4: VAULT SETTINGS -->
+            ${
+              tab === 'settings'
+                ? `
+              <div class="max-w-xl bg-charcoal border border-white/10 rounded-3xl p-6 space-y-6">
+                <div>
+                  <h2 class="font-display font-extrabold text-lg text-white">LOCAL ADMIN SETTINGS</h2>
+                  <p class="text-xs text-muted mt-1">Configure prototype passcode and delivery rules stored in LocalStorage.</p>
+                </div>
+
+                <form onsubmit="App.saveAdminSettingsForm(event)" class="space-y-4">
+                  <div>
+                    <label class="block text-xs font-bold uppercase text-muted mb-1">Local Admin Passcode</label>
+                    <input name="password" type="text" required value="${UI.escapeHTML(settings.password)}" class="w-full px-4 py-3 rounded-xl bg-obsidian border border-white/15 text-xs text-white focus:border-fire focus:outline-none" />
+                  </div>
+                  <div class="grid grid-cols-2 gap-3">
+                    <div>
+                      <label class="block text-xs font-bold uppercase text-muted mb-1">Free Delivery Over (₹)</label>
+                      <input name="freeShippingThreshold" type="number" required value="${settings.freeShippingThreshold}" class="w-full px-4 py-3 rounded-xl bg-obsidian border border-white/15 text-xs text-white focus:border-fire focus:outline-none" />
+                    </div>
+                    <div>
+                      <label class="block text-xs font-bold uppercase text-muted mb-1">Standard Delivery Fee (₹)</label>
+                      <input name="standardShippingFee" type="number" required value="${settings.standardShippingFee}" class="w-full px-4 py-3 rounded-xl bg-obsidian border border-white/15 text-xs text-white focus:border-fire focus:outline-none" />
+                    </div>
+                  </div>
+                  <button type="submit" class="px-6 py-3 rounded-xl fire-gradient-hover font-display font-extrabold text-xs uppercase tracking-wider text-white">
+                    Save Vault Settings
+                  </button>
+                </form>
+
+                <div class="pt-5 border-t border-white/10">
+                  <h3 class="font-display font-bold text-sm text-white">Restore Default Demo Catalog</h3>
+                  <p class="text-xs text-muted mt-1 mb-3">Re-seeds the initial 8 menswear products and 3 banners.</p>
+                  <button onclick="App.restoreDemoCatalog()" class="px-4 py-2.5 rounded-xl bg-fire/15 border border-fire/40 text-fire hover:bg-fire hover:text-white text-xs font-extrabold uppercase tracking-wider transition-all">
+                    Restore Default Products & Banners
+                  </button>
+                </div>
+              </div>
+            `
+                : ''
+            }
+          </div>
+        `;
+      },
+
+      renderAdminProductsList(products) {
+        if (products.length === 0) {
+          return `<p class="text-xs text-muted py-8 text-center">No products in inventory.</p>`;
+        }
+        return products
+          .map(
+            p => `
+          <div class="bg-obsidian border border-white/10 rounded-2xl p-3.5 flex items-center gap-3.5">
+            <img src="${UI.escapeHTML(p.images?.[0] || '')}" onerror="this.src='${UI.fallbackImg(p.name)}'" class="w-14 h-16 rounded-xl object-cover bg-cardbg shrink-0" />
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center gap-2">
+                <span class="text-[10px] font-extrabold uppercase text-fire">${UI.escapeHTML(p.category)}</span>
+                <span class="text-[10px] px-2 py-0.5 rounded ${p.available !== false ? 'bg-emerald-500/15 text-emerald-400' : 'bg-neutral-800 text-muted'}">
+                  ${p.available !== false ? `In Stock (${p.stock})` : 'Hidden'}
+                </span>
+              </div>
+              <h4 class="text-xs sm:text-sm font-bold text-white truncate mt-0.5">${UI.escapeHTML(p.name)}</h4>
+              <p class="text-xs font-extrabold text-white mt-0.5">${UI.formatCurrency(p.price)}</p>
+            </div>
+            <div class="flex flex-col sm:flex-row gap-1.5 shrink-0">
+              <button onclick="App.toggleAdminProductAvailability('${p.id}')" class="px-2.5 py-1.5 rounded-lg bg-cardbg border border-white/10 text-[10px] font-bold text-white hover:border-ember">
+                ${p.available !== false ? 'Hide' : 'Show'}
+              </button>
+              <button onclick="App.editAdminProduct('${p.id}')" class="px-2.5 py-1.5 rounded-lg bg-cardbg border border-white/10 text-[10px] font-bold text-white hover:border-fire">
+                Edit
+              </button>
+              <button onclick="App.deleteAdminProduct('${p.id}')" class="px-2.5 py-1.5 rounded-lg bg-fire/15 text-fire text-[10px] font-bold hover:bg-fire hover:text-white">
+                Del
+              </button>
+            </div>
+          </div>
+        `
+          )
+          .join('');
+      },
+
+      setAdminTab(tab) {
+        this.state.adminTab = tab;
+        this.renderView();
+      },
+
+      lockAdmin() {
+        this.state.adminUnlocked = false;
+        if (window.location.hash === '#admin') {
+          history.replaceState(null, '', window.location.pathname);
+        }
+        UI.toast('Admin Vault locked.', 'warning');
+        this.navigate('home');
+      },
+
+      filterAdminProducts(query) {
+        const q = (query || '').trim().toLowerCase();
+        const filtered = this.getProducts().filter(
+          p => p.name.toLowerCase().includes(q) || p.category.toLowerCase().includes(q)
+        );
+        const container = document.getElementById('admin-products-list');
+        if (container) container.innerHTML = this.renderAdminProductsList(filtered);
+      },
+
+      handleAdminImageUpload(event, targetInputId, appendMode) {
+        const file = event.target.files?.[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const dataUrl = e.target.result;
+          const input = document.getElementById(targetInputId);
+          if (input) {
+            if (appendMode && input.value.trim()) {
+              input.value = input.value.trim() + ', ' + dataUrl;
+            } else {
+              input.value = dataUrl;
+            }
+            UI.toast('Image attached!', 'success');
+          }
+        };
+        reader.readAsDataURL(file);
+      },
+
+      saveAdminProduct(event) {
+        event.preventDefault();
+        const fd = new FormData(event.target);
+        const products = this.getProducts();
+
+        const images = fd
+          .get('images')
+          .split(',')
+          .map(s => s.trim())
+          .filter(Boolean);
+
+        const sizes = fd
+          .get('sizes')
+          .split(',')
+          .map(s => s.trim())
+          .filter(Boolean);
+
+        const colors = fd
+          .get('colors')
+          .split(',')
+          .map(s => s.trim())
+          .filter(Boolean);
+
+        const payload = {
+          name: fd.get('name').trim(),
+          category: fd.get('category'),
+          badge: fd.get('badge'),
+          price: Number(fd.get('price')),
+          originalPrice: Number(fd.get('originalPrice')) || 0,
+          stock: Number(fd.get('stock')) || 0,
+          description: fd.get('description').trim(),
+          images: images.length ? images : [UI.fallbackImg(fd.get('name'))],
+          sizes: sizes.length ? sizes : ['M', 'L', 'XL'],
+          colors: colors.length ? colors : ['Obsidian Black'],
+          available: true
+        };
+
+        if (this.state.editingProductId) {
+          const idx = products.findIndex(p => p.id === this.state.editingProductId);
+          if (idx > -1) {
+            products[idx] = { ...products[idx], ...payload };
+            UI.toast('Product updated.', 'success');
+          }
+          this.state.editingProductId = null;
+        } else {
+          products.unshift({
+            id: 'IBX-PRD-' + Date.now().toString().slice(-5),
+            ...payload
+          });
+          UI.toast('New menswear product published!', 'success');
+        }
+
+        Store.set(STORAGE_KEYS.PRODUCTS, products);
+        this.renderView();
+      },
+
+      editAdminProduct(productId) {
+        this.state.editingProductId = productId;
+        this.renderView();
+      },
+
+      cancelAdminEditProduct() {
+        this.state.editingProductId = null;
+        this.renderView();
+      },
+
+      toggleAdminProductAvailability(productId) {
+        const products = this.getProducts().map(p =>
+          p.id === productId ? { ...p, available: p.available === false ? true : false } : p
+        );
+        Store.set(STORAGE_KEYS.PRODUCTS, products);
+        this.renderView();
+      },
+
+      deleteAdminProduct(productId) {
+        const products = this.getProducts().filter(p => p.id !== productId);
+        Store.set(STORAGE_KEYS.PRODUCTS, products);
+        if (this.state.editingProductId === productId) this.state.editingProductId = null;
+        UI.toast('Product deleted.', 'warning');
+        this.renderView();
+      },
+
+      saveAdminBanner(event) {
+        event.preventDefault();
+        const fd = new FormData(event.target);
+        const banners = this.getBanners();
+
+        const payload = {
+          heading: fd.get('heading').trim(),
+          subtitle: fd.get('subtitle').trim(),
+          buttonText: fd.get('buttonText').trim() || 'EXPLORE NOW',
+          destinationCategory: fd.get('destinationCategory') || 'All',
+          image: fd.get('image').trim(),
+          enabled: true
+        };
+
+        if (this.state.editingBannerId) {
+          const idx = banners.findIndex(b => b.id === this.state.editingBannerId);
+          if (idx > -1) {
+            banners[idx] = { ...banners[idx], ...payload };
+            UI.toast('Banner updated.', 'success');
+          }
+          this.state.editingBannerId = null;
+        } else {
+          banners.push({
+            id: 'BNR-' + Date.now().toString().slice(-4),
+            ...payload
+          });
+          UI.toast('Promotional banner added!', 'success');
+        }
+
+        Store.set(STORAGE_KEYS.BANNERS, banners);
+        this.renderView();
+      },
+
+      editAdminBanner(bannerId) {
+        this.state.editingBannerId = bannerId;
+        this.renderView();
+      },
+
+      cancelAdminEditBanner() {
+        this.state.editingBannerId = null;
+        this.renderView();
+      },
+
+      toggleAdminBanner(bannerId) {
+        const banners = this.getBanners().map(b =>
+          b.id === bannerId ? { ...b, enabled: !b.enabled } : b
+        );
+        Store.set(STORAGE_KEYS.BANNERS, banners);
+        this.renderView();
+      },
+
+      deleteAdminBanner(bannerId) {
+        const banners = this.getBanners().filter(b => b.id !== bannerId);
+        Store.set(STORAGE_KEYS.BANNERS, banners);
+        if (this.state.editingBannerId === bannerId) this.state.editingBannerId = null;
+        UI.toast('Banner removed.', 'warning');
+        this.renderView();
+      },
+
+      updateAdminOrderStatus(orderId, newStatus) {
+        const orders = this.getOrders().map(o =>
+          o.orderId === orderId ? { ...o, status: newStatus } : o
+        );
+        Store.set(STORAGE_KEYS.ORDERS, orders);
+        UI.toast(`Order ${orderId} set to ${newStatus}.`, 'success');
+      },
+
+      saveAdminSettingsForm(event) {
+        event.preventDefault();
+        const fd = new FormData(event.target);
+        const current = this.getAdminSettings();
+        Store.set(STORAGE_KEYS.ADMIN_SETTINGS, {
+          ...current,
+          password: fd.get('password').trim() || 'ibox18admin',
+          freeShippingThreshold: Number(fd.get('freeShippingThreshold')) || 1999,
+          standardShippingFee: Number(fd.get('standardShippingFee')) || 99
+        });
+        UI.toast('Admin vault settings saved.', 'success');
+      },
+
+      restoreDemoCatalog() {
+        Store.set(STORAGE_KEYS.PRODUCTS, SEED_PRODUCTS);
+        Store.set(STORAGE_KEYS.BANNERS, SEED_BANNERS);
+        UI.toast('Default catalog & banners restored.', 'success');
+        this.renderView();
+      },
+
+      // ------------------------------------------------------------------------
+      // AMBIENT FIRE EMBER PARTICLE SYSTEM (Lightweight Canvas)
+      // ------------------------------------------------------------------------
+      initEmberParticles() {
+        const canvas = document.getElementById('ember-canvas');
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        let width = (canvas.width = window.innerWidth);
+        let height = (canvas.height = window.innerHeight);
+
+        window.addEventListener('resize', () => {
+          width = canvas.width = window.innerWidth;
+          height = canvas.height = window.innerHeight;
+        });
+
+        const emberCount = window.innerWidth < 640 ? 18 : 34;
+        const embers = Array.from({ length: emberCount }, () => ({
+          x: Math.random() * width,
+          y: Math.random() * height,
+          r: Math.random() * 1.8 + 0.6,
+          vy: -(Math.random() * 0.45 + 0.15),
+          vx: (Math.random() - 0.5) * 0.3,
+          alpha: Math.random() * 0.6 + 0.2,
+          color: Math.random() > 0.45 ? '#FF2727' : '#FF6B00'
+        }));
+
+        function loop() {
+          ctx.clearRect(0, 0, width, height);
+          for (const e of embers) {
+            e.x += e.vx;
+            e.y += e.vy;
+            if (e.y < -10) {
+              e.y = height + 10;
+              e.x = Math.random() * width;
+            }
+            if (e.x < 0) e.x = width;
+            if (e.x > width) e.x = 0;
+
+            ctx.beginPath();
+            ctx.arc(e.x, e.y, e.r, 0, Math.PI * 2);
+            ctx.fillStyle = e.color;
+            ctx.globalAlpha = e.alpha;
+            ctx.fill();
+          }
+          ctx.globalAlpha = 1;
+          requestAnimationFrame(loop);
+        }
+        loop();
+      }
+    };
+
+    // Boot application when DOM is ready
+    window.addEventListener('DOMContentLoaded', () => App.init());
+  </script>
+</body>
+</html>
